@@ -1,0 +1,39 @@
+.toolbar {
+  background-color: rgb(107, 22, 22);
+  padding: 15px;
+  display: flex;
+}
+
+.app-name-icon {
+  display: flex;
+  cursor: pointer;
+}
+
+.buttons {
+  width: auto;
+  display: flex;
+  margin-left: auto;
+}
+
+.nav-button {
+  cursor: pointer;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  margin-left: 15px;
+  font-size: 20px;
+  display: flex;
+}
+
+.app-name {
+  display: flex;
+  font-size: 24px;
+  color: white;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.app-icon {
+  width: 40px;
+  display: flex;
+}
