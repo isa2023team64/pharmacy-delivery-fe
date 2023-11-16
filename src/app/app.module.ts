@@ -5,11 +5,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ComponentsModule } from './components/components.module';
 import { JwtInterceptor } from './infrastructure/auth/jwt/jwt.interceptor';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, ComponentsModule],
+  imports: [
+    BrowserModule, 
+    AppRoutingModule, 
+    ComponentsModule,
+    HttpClientModule
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
