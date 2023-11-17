@@ -32,7 +32,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private tokenStorage: TokenStorage,
-    private router: Router
+    private router: Router,
   ) {}
 
   login(login: Login): Observable<AuthenticationResponse> {
@@ -48,14 +48,33 @@ export class AuthService {
 
   register(registration: Registration): Observable<AuthenticationResponse> {
     return this.http
-      .post<AuthenticationResponse>(environment.apiHost + 'users', registration)
+      .post<AuthenticationResponse>(environment.apiHost + 'registration', registration)
       .pipe(
         tap((authenticationResponse) => {
           this.tokenStorage.saveAccessToken(authenticationResponse.accessToken);
-          this.setUser();
+          console.log(authenticationResponse.accessToken)
+          //this.setUser();
         })
       );
   }
+  
+  activateRegistratedUser(id: number): void {
+    console.log("Sad treba da se aktivira " + id);
+    
+    this.http
+      .put<AuthenticationResponse>(environment.apiHost + 'registration/activate/' + id, {})
+      .subscribe({
+        next: (authenticationResponse) => {
+          console.log("USER AKTIVIRAN");
+          // Handle the response or perform any other actions here
+        },
+        error: (error) => {
+          console.error("Error activating user:", error);
+          // Handle the error if needed
+        }
+      });
+  }
+  
 
   logout(): void {
     this.router.navigate(['/home']).then((_) => {
