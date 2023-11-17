@@ -14,7 +14,20 @@ import { Registration } from './model/registration.model';
   providedIn: 'root',
 })
 export class AuthService {
-  user$ = new BehaviorSubject<User>({ username: '', id: 0, role: '' });
+  user$ = new BehaviorSubject<User>({
+    id: 0,
+    name: '',
+    surname: '',
+    email: '',
+    password: '',
+    city: '',
+    country: '',
+    phoneNumber: '',
+    workplace: '',
+    companyName: '',
+    active: false,
+    lastPasswordResetDate: new Date()});
+    
 
   constructor(
     private http: HttpClient,
@@ -47,7 +60,19 @@ export class AuthService {
   logout(): void {
     this.router.navigate(['/home']).then((_) => {
       this.tokenStorage.clear();
-      this.user$.next({ username: '', id: 0, role: '' });
+      this.user$.next({
+        id: 0,
+        name: '',
+        surname: '',
+        email: '',
+        password: '',
+        city: '',
+        country: '',
+        phoneNumber: '',
+        workplace: '',
+        companyName: '',
+        active: false,
+        lastPasswordResetDate: new Date()});
     });
   }
 
@@ -64,10 +89,18 @@ export class AuthService {
     const accessToken = this.tokenStorage.getAccessToken() || '';
     const user: User = {
       id: +jwtHelperService.decodeToken(accessToken).id,
-      username: jwtHelperService.decodeToken(accessToken).username,
-      role: jwtHelperService.decodeToken(accessToken)[
-        'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
-      ],
+      email: jwtHelperService.decodeToken(accessToken).email,
+      name: jwtHelperService.decodeToken(accessToken).name,
+      surname: jwtHelperService.decodeToken(accessToken).surname,
+      password: jwtHelperService.decodeToken(accessToken).password,
+      city: jwtHelperService.decodeToken(accessToken).city,
+      country: jwtHelperService.decodeToken(accessToken).country,
+      phoneNumber: jwtHelperService.decodeToken(accessToken).phoneNumber,
+      workplace: jwtHelperService.decodeToken(accessToken).workplace,
+      companyName: jwtHelperService.decodeToken(accessToken).companyName,
+      active: jwtHelperService.decodeToken(accessToken).active,
+      lastPasswordResetDate: jwtHelperService.decodeToken(accessToken).lastPasswordResetDate,
+      
     };
     this.user$.next(user);
   }
