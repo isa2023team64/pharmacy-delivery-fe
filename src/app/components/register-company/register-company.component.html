@@ -1,0 +1,39 @@
+<div class="registration-container">
+    <h1>COMPANY REGISTRATION</h1>
+  </div>
+  <div class="registration-container">
+    <form [formGroup]="registrationForm" (ngSubmit)="register()" class="registration-form">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input id="name" formControlName="name" type="text" class="form-control" />
+  
+        <label for="address">Address</label>
+        <input id="address" formControlName="address" type="text" class="form-control" />
+  
+        <label for="city">City</label>
+        <input id="city" formControlName="city" type="text" class="form-control" />
+  
+        <label for="country">Country</label>
+        <input id="country" formControlName="country" type="text" class="form-control" />
+  
+        <label for="openingTime">Opening Time</label>        
+        <mat-form-field>
+            <input id="openingTime" matInput type="time" formControlName="openingTime" placeholder="Select a Time">
+        </mat-form-field>
+
+        <label for="closingTime">Closing Time</label>
+        <mat-form-field>
+            <input id="closingTime" type="time" formControlName="openingTime" placeholder="Select a Time">
+        </mat-form-field>
+  
+        <label for="description">Description</label>
+        <textarea id="description" formControlName="description" class="form-control"></textarea>
+  
+        <label for="averageRating">Average Rating</label>
+        <input id="averageRating" formControlName="averageRating" type="number" class="form-control" />
+  
+        <button type="submit" class="submit-button">REGISTER</button>
+      </div>
+    </form>
+  </div>
+  
