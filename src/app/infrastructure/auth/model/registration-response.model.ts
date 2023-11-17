@@ -1,4 +1,7 @@
-export interface Registration {
+export interface RegistrationResponse {
+    id: number;
+    active: boolean;
+    lastPasswordResetDate: Date;
     firstName: string;
     lastName: string;
     email: string;
@@ -8,5 +11,4 @@ export interface Registration {
     phoneNumber: string;
     workplace: string;
     company: string;
-  }
-  
+}

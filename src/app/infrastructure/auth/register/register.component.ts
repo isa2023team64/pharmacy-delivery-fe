@@ -17,8 +17,8 @@ export class RegisterComponent {
   ) {}
 
   registrationForm = new FormGroup({
-    firstname: new FormControl('', [Validators.required]),
-    lastname: new FormControl('', [Validators.required]),
+    firstName: new FormControl('', [Validators.required]),
+    lastName: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
     confirmPassword: new FormControl('', [Validators.required]),
@@ -31,8 +31,8 @@ export class RegisterComponent {
 
   register(): void {
     const registration: Registration = {
-      firstname: this.registrationForm.value.firstname || "",
-      lastname: this.registrationForm.value.lastname || "",
+      firstName: this.registrationForm.value.firstName || "",
+      lastName: this.registrationForm.value.lastName || "",
       email: this.registrationForm.value.email || "",
       password: this.registrationForm.value.password || "",
       city: this.registrationForm.value.city || "", 

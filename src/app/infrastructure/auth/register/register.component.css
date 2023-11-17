@@ -24,9 +24,13 @@
   
   /* Style the form */
   .registration-form {
-    width: 30vw; /* Set the form width to 30% of the viewport width */
-    margin: 0 auto; /* Center the form horizontally */
+    
+    width: 40vw; /* Set the form width to 30% of the viewport width */
+    margin: 10 auto; /* Center the form horizontally */
     margin-top: 50px; /* Add space between h1 and the form */
+    border: 2px solid #ccc; /* Add border to the form */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    padding: 40px; /* Add padding to the form content */
   }
   
   /* Style the form group to create space between label and input */
@@ -59,4 +63,5 @@
     margin-top: 50px; /* Add margin to the top for spacing */
     margin-bottom: 50px;
   }
+  
   
