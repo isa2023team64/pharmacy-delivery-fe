@@ -1,6 +1,6 @@
 export interface Registration {
-    name: string;
-    surname: string;
+    firstname: string;
+    lastname: string;
     email: string;
     password: string;
     city: string;

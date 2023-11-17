@@ -17,8 +17,8 @@ export class RegisterComponent {
   ) {}
 
   registrationForm = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    surname: new FormControl('', [Validators.required]),
+    firstname: new FormControl('', [Validators.required]),
+    lastname: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
     confirmPassword: new FormControl('', [Validators.required]),
@@ -31,8 +31,8 @@ export class RegisterComponent {
 
   register(): void {
     const registration: Registration = {
-      name: this.registrationForm.value.name || "",
-      surname: this.registrationForm.value.surname || "",
+      firstname: this.registrationForm.value.firstname || "",
+      lastname: this.registrationForm.value.lastname || "",
       email: this.registrationForm.value.email || "",
       password: this.registrationForm.value.password || "",
       city: this.registrationForm.value.city || "", 
@@ -43,15 +43,14 @@ export class RegisterComponent {
     };
     
     console.log("Registration Data:", registration);
-    console.log("Uspesno registrovan korisnik111");
-    if (this.registrationForm.valid) {
-      
-      console.log("Uspesno registrovan korisnik");
-      /*this.authService.register(registration).subscribe({
+    console.log("Poslat zahtev auth servisu");
+    if (this.registrationForm.valid) {      
+      console.log("Uspesno popunjena forma");
+      this.authService.register(registration).subscribe({
         next: () => {
           this.router.navigate(['home']);
         },
-      });*/
+      });
     }
 }
 

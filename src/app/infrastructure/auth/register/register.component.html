@@ -2,11 +2,11 @@
 <div class="registration-container">  
   <form [formGroup]="registrationForm" (ngSubmit)="register()" class="registration-form">
       <div class="form-group">
-        <label for="name">Name</label>
-        <input id="name" formControlName="name" type="text" class="form-control" />
+        <label for="firstname">Name</label>
+        <input id="firstname" formControlName="firstname" type="text" class="form-control" />
 
-        <label for="surname">Surname</label>
-        <input id="surname" formControlName="surname" type="text" class="form-control" />
+        <label for="lastname">Surname</label>
+        <input id="lastname" formControlName="lastname" type="text" class="form-control" />
 
         <label for="email">Email</label>
         <input id="email" formControlName="email" type="email" class="form-control" />

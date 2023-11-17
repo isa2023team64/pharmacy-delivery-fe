@@ -3,12 +3,12 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { TokenStorage } from './jwt/token.service';
+import { environment } from '../../../env/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
-//import { Login } from './model/login.model';
+import { Login } from './model/login.model';
 import { AuthenticationResponse } from './model/authentication-response.model';
 import { User } from './model/user.model';
 import { Registration } from './model/registration.model';
-//import { environment } from '../../../env/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -29,21 +29,78 @@ export class AuthService {
     lastPasswordResetDate: new Date()});
 
   constructor(
-    //private http: HttpClient,
-    //private tokenStorage: TokenStorage,
+    private http: HttpClient,
+    private tokenStorage: TokenStorage,
     private router: Router
   ) {}
 
-  register(registration: Registration)//: Observable<AuthenticationResponse> 
-  {
-    /*return this.http
+  login(login: Login): Observable<AuthenticationResponse> {
+    return this.http
+      .post<AuthenticationResponse>(environment.apiHost + 'users/login', login)
+      .pipe(
+        tap((authenticationResponse) => {
+          this.tokenStorage.saveAccessToken(authenticationResponse.accessToken);
+          this.setUser();
+        })
+      );
+  }
+
+  register(registration: Registration): Observable<AuthenticationResponse> {
+    return this.http
       .post<AuthenticationResponse>(environment.apiHost + 'registration', registration)
       .pipe(
         tap((authenticationResponse) => {
-          console.log("hi");
+          this.tokenStorage.saveAccessToken(authenticationResponse.accessToken);
+          this.setUser();
         })
-      );*/
+      );
+  }
+
+  logout(): void {
+    this.router.navigate(['/home']).then((_) => {
+      this.tokenStorage.clear();
+      this.user$.next({
+        id: 0,
+        name: '',
+        surname: '',
+        email: '',
+        password: '',
+        city: '',
+        country: '',
+        phoneNumber: '',
+        workplace: '',
+        company: '',
+        active: false,
+        lastPasswordResetDate: new Date()});
+    });
+  }
+
+  checkIfUserExists(): void {
+    const accessToken = this.tokenStorage.getAccessToken();
+    if (accessToken == null) {
+      return;
+    }
+    this.setUser();
+  }
+
+  private setUser(): void {
+    const jwtHelperService = new JwtHelperService();
+    const accessToken = this.tokenStorage.getAccessToken() || '';
+    const user: User = {
+      id: +jwtHelperService.decodeToken(accessToken).id,
+      email: jwtHelperService.decodeToken(accessToken).email,
+      name: jwtHelperService.decodeToken(accessToken).name,
+      surname: jwtHelperService.decodeToken(accessToken).surname,
+      password: jwtHelperService.decodeToken(accessToken).password,
+      city: jwtHelperService.decodeToken(accessToken).city,
+      country: jwtHelperService.decodeToken(accessToken).country,
+      phoneNumber: jwtHelperService.decodeToken(accessToken).phoneNumber,
+      workplace: jwtHelperService.decodeToken(accessToken).workplace,
+      company: jwtHelperService.decodeToken(accessToken).company,
+      active: jwtHelperService.decodeToken(accessToken).active,
+      lastPasswordResetDate: jwtHelperService.decodeToken(accessToken).lastPasswordResetDate,
       
-    
+    };
+    this.user$.next(user);
   }
 }
