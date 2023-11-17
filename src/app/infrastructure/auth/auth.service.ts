@@ -14,12 +14,25 @@ import { Registration } from './model/registration.model';
   providedIn: 'root',
 })
 export class AuthService {
-  user$ = new BehaviorSubject<User>({ username: '', id: 0, role: '' });
+  user$ = new BehaviorSubject<User>({
+    id: 0,
+    name: '',
+    surname: '',
+    email: '',
+    password: '',
+    city: '',
+    country: '',
+    phoneNumber: '',
+    workplace: '',
+    companyName: '',
+    active: false,
+    lastPasswordResetDate: new Date()});
+    
 
   constructor(
     private http: HttpClient,
     private tokenStorage: TokenStorage,
-    private router: Router
+    private router: Router,
   ) {}
 
   login(login: Login): Observable<AuthenticationResponse> {
@@ -35,19 +48,50 @@ export class AuthService {
 
   register(registration: Registration): Observable<AuthenticationResponse> {
     return this.http
-      .post<AuthenticationResponse>(environment.apiHost + 'users', registration)
+      .post<AuthenticationResponse>(environment.apiHost + 'registration', registration)
       .pipe(
         tap((authenticationResponse) => {
           this.tokenStorage.saveAccessToken(authenticationResponse.accessToken);
-          this.setUser();
+          console.log(authenticationResponse.accessToken)
+          //this.setUser();
         })
       );
   }
+  
+  activateRegistratedUser(id: number): void {
+    console.log("Sad treba da se aktivira " + id);
+    
+    this.http
+      .put<AuthenticationResponse>(environment.apiHost + 'registration/activate/' + id, {})
+      .subscribe({
+        next: (authenticationResponse) => {
+          console.log("USER AKTIVIRAN");
+          // Handle the response or perform any other actions here
+        },
+        error: (error) => {
+          console.error("Error activating user:", error);
+          // Handle the error if needed
+        }
+      });
+  }
+  
 
   logout(): void {
     this.router.navigate(['/home']).then((_) => {
       this.tokenStorage.clear();
-      this.user$.next({ username: '', id: 0, role: '' });
+      this.user$.next({
+        id: 0,
+        name: '',
+        surname: '',
+        email: '',
+        password: '',
+        city: '',
+        country: '',
+        phoneNumber: '',
+        workplace: '',
+        companyName: '',
+        active: false,
+        lastPasswordResetDate: new Date()});
     });
   }
 
@@ -64,10 +108,18 @@ export class AuthService {
     const accessToken = this.tokenStorage.getAccessToken() || '';
     const user: User = {
       id: +jwtHelperService.decodeToken(accessToken).id,
-      username: jwtHelperService.decodeToken(accessToken).username,
-      role: jwtHelperService.decodeToken(accessToken)[
-        'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
-      ],
+      email: jwtHelperService.decodeToken(accessToken).email,
+      name: jwtHelperService.decodeToken(accessToken).name,
+      surname: jwtHelperService.decodeToken(accessToken).surname,
+      password: jwtHelperService.decodeToken(accessToken).password,
+      city: jwtHelperService.decodeToken(accessToken).city,
+      country: jwtHelperService.decodeToken(accessToken).country,
+      phoneNumber: jwtHelperService.decodeToken(accessToken).phoneNumber,
+      workplace: jwtHelperService.decodeToken(accessToken).workplace,
+      companyName: jwtHelperService.decodeToken(accessToken).companyName,
+      active: jwtHelperService.decodeToken(accessToken).active,
+      lastPasswordResetDate: jwtHelperService.decodeToken(accessToken).lastPasswordResetDate,
+      
     };
     this.user$.next(user);
   }
