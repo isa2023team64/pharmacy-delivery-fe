@@ -63,5 +63,12 @@
     margin-top: 50px; /* Add margin to the top for spacing */
     margin-bottom: 50px;
   }
+
+  .error-message {
+    color: #ff0000; /* Red color for the error message text */
+    font-size: 14px; /* Adjust the font size as needed */
+    margin-top: 5px; /* Provide some spacing at the top */
+    margin-bottom: 20px; 
+  }
   
   
