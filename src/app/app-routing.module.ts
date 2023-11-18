@@ -6,6 +6,7 @@ import { HomeComponent } from './components/home/home.component';
 import { RegisterComponent } from './infrastructure/auth/register/register.component';
 import { RegistrationRequestComfirmationComponent } from './infrastructure/auth/registration-request-comfirmation/registration-request-comfirmation.component';
 import { RegistrationRequestCompleteComponent } from './infrastructure/auth/registration-request-complete/registration-request-complete.component';
+import { RegisterCompanyComponent } from './company/register-company/register-company.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,11 @@ const routes: Routes = [
     path: 'registrationComplete/:id',
     component: RegistrationRequestCompleteComponent,
   },
+  {
+    path: 'registerCompany',
+    component: RegisterCompanyComponent,
+  },
+
 ];
 
 @NgModule({
