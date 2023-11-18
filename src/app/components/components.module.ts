@@ -16,7 +16,7 @@ import { MaterialModule } from '../infrastructure/material/material.module';
     NavbarComponent,
     CompanySearchComponent
   ],
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule],
   exports: [HomeComponent, LoginComponent,  NavbarComponent],
 })
 export class ComponentsModule {}

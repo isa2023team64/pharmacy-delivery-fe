@@ -19,7 +19,10 @@ import { UregisteredUserModule } from './unregistered-user/uregistered-user/ureg
     AppRoutingModule, 
     ComponentsModule,
     AuthModule,
-    HttpClientModule
+    HttpClientModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    UregisteredUserModule
   ],
   providers: [
     {
