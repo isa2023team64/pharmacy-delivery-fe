@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { UregisteredUserCompaniesComponent } from './uregistered-user-companies/uregistered-user-companies.component';
 import { UregisteredUserEquipmentComponent } from './uregistered-user-equipment/uregistered-user-equipment.component';
 import { RouterModule } from '@angular/router';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -13,7 +15,9 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule, 
-    RouterModule    
+    RouterModule,
+    FontAwesomeModule,
+    FormsModule
   ],
   exports: [
     UregisteredUserCompaniesComponent,

@@ -3,8 +3,9 @@
     <button class="menuButton mat-button" [matMenuTriggerFor]="menu">Menu</button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item [routerLink]="['home']">Home</button>
-      <button mat-menu-item [routerLink]="['unregisteredUserEquipment']">Equipment</button>
-      <button mat-menu-item [routerLink]="['unregisteredUserCompanies']">Companies</button>
+      <button mat-menu-item [routerLink]="['unregisteredUserEquipment']">Equipment (uregistered user)</button>
+      <button mat-menu-item [routerLink]="['unregisteredUserCompanies']">Companies (uregistered user)</button>
+      <button mat-menu-item [routerLink]="['company-search']">Company search (registered user)</button>
     </mat-menu>
   </div>
   <div class="app-name-icon" [routerLink]="['']"> 
