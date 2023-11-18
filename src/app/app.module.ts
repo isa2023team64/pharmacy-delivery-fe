@@ -10,6 +10,7 @@ import { JwtInterceptor } from './infrastructure/auth/jwt/jwt.interceptor';
 import { AuthService } from './infrastructure/auth/auth.service';
 import { AuthModule } from './infrastructure/auth/auth.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { CompanyModule } from './company/company.module';
 import { UregisteredUserModule } from './unregistered-user/uregistered-user/uregistered-user.module';
 
 @NgModule({
@@ -19,6 +20,7 @@ import { UregisteredUserModule } from './unregistered-user/uregistered-user/ureg
     AppRoutingModule, 
     ComponentsModule,
     AuthModule,
+    CompanyModule,
     HttpClientModule,
     HttpClientModule,
     BrowserAnimationsModule,

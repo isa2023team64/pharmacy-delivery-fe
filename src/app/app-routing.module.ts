@@ -7,8 +7,10 @@ import { CompanySearchComponent } from './components/company-search/company-sear
 import { RegisterComponent } from './infrastructure/auth/register/register.component';
 import { RegistrationRequestComfirmationComponent } from './infrastructure/auth/registration-request-comfirmation/registration-request-comfirmation.component';
 import { RegistrationRequestCompleteComponent } from './infrastructure/auth/registration-request-complete/registration-request-complete.component';
+import { RegisterCompanyComponent } from './company/register-company/register-company.component';
 import { UregisteredUserEquipmentComponent } from './unregistered-user/uregistered-user/uregistered-user-equipment/uregistered-user-equipment.component';
 import { UregisteredUserCompaniesComponent } from './unregistered-user/uregistered-user/uregistered-user-companies/uregistered-user-companies.component';
+
 
 const routes: Routes = [
   {
@@ -38,6 +40,10 @@ const routes: Routes = [
   {
     path: 'registrationComplete/:id',
     component: RegistrationRequestCompleteComponent,
+  },
+  {
+    path: 'registerCompany',
+    component: RegisterCompanyComponent,
   },
   {
     path: 'unregisteredUserCompanies',
