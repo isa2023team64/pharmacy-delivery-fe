@@ -1,12 +1,17 @@
+.app-name-icon {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin: 0 auto;
+  padding-left: 90px;
+}
+
 .toolbar {
   background-color: rgb(107, 22, 22);
   padding: 15px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center; /* Center all items in the toolbar */
 }
-
-
 
 .buttons {
   width: auto;
@@ -32,11 +37,6 @@
   margin-left: 10px;
 }
 
-.app-name-icon {
-  display: flex;
-  cursor: pointer;
-}
-
 .app-icon {
   width: 40px;
   display: flex;
@@ -47,7 +47,6 @@
   display: flex;
   align-items: center;
   font-weight: 350;
-
 }
 
 .navbar-right {
@@ -60,17 +59,11 @@
   cursor: pointer;
   color: white;
   font-size: 20px;
-  background-color: transparent; /* Set background to transparent */
-  border: none; /* Remove border */
-  padding: 0; /* Remove padding */
+  background-color: transparent;
+  border: none;
+  padding: 0;
   margin-left: 30px;
   display: flex;
   align-items: center;
   font-weight: 350;
 }
-
-
-
-
-
-
