@@ -10,6 +10,7 @@ import { RegistrationRequestCompleteComponent } from './infrastructure/auth/regi
 import { RegisterCompanyComponent } from './company/register-company/register-company.component';
 import { UregisteredUserEquipmentComponent } from './unregistered-user/uregistered-user/uregistered-user-equipment/uregistered-user-equipment.component';
 import { UregisteredUserCompaniesComponent } from './unregistered-user/uregistered-user/uregistered-user-companies/uregistered-user-companies.component';
+import { EquipmentSearchComponent } from './components/equipment-search/equipment-search.component';
 
 
 const routes: Routes = [
@@ -32,6 +33,10 @@ const routes: Routes = [
   {
     path: 'company-search',
     component: CompanySearchComponent   
+  },
+  {
+    path: 'equipment-search',
+    component: EquipmentSearchComponent   
   },
   {
     path: 'registrationConfirmation',

@@ -8,13 +8,15 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { CompanySearchComponent } from './company-search/company-search.component';
 import { MaterialModule } from '../infrastructure/material/material.module';
+import { EquipmentSearchComponent } from './equipment-search/equipment-search.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
     LoginComponent,
     NavbarComponent,
-    CompanySearchComponent
+    CompanySearchComponent,
+    EquipmentSearchComponent
   ],
   imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule],
   exports: [HomeComponent, LoginComponent,  NavbarComponent],
