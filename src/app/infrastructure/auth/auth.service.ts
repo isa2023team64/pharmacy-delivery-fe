@@ -24,7 +24,7 @@ export class AuthService {
     country: '',
     phoneNumber: '',
     workplace: '',
-    company: '',
+    companyName: '',
     active: false,
     lastPasswordResetDate: new Date()});
     
@@ -89,7 +89,7 @@ export class AuthService {
         country: '',
         phoneNumber: '',
         workplace: '',
-        company: '',
+        companyName: '',
         active: false,
         lastPasswordResetDate: new Date()});
     });
@@ -116,7 +116,7 @@ export class AuthService {
       country: jwtHelperService.decodeToken(accessToken).country,
       phoneNumber: jwtHelperService.decodeToken(accessToken).phoneNumber,
       workplace: jwtHelperService.decodeToken(accessToken).workplace,
-      company: jwtHelperService.decodeToken(accessToken).company,
+      companyName: jwtHelperService.decodeToken(accessToken).companyName,
       active: jwtHelperService.decodeToken(accessToken).active,
       lastPasswordResetDate: jwtHelperService.decodeToken(accessToken).lastPasswordResetDate,
       

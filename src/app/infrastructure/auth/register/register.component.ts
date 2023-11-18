@@ -27,7 +27,7 @@ export class RegisterComponent {
     city: new FormControl('', [Validators.required]),
     phoneNumber: new FormControl('', [Validators.required, Validators.pattern(/^\+\d{12}$/)]),
     workplace: new FormControl('', [Validators.required]),
-    company: new FormControl('', [Validators.required]),
+    companyName: new FormControl('', [Validators.required]),
   }, { validators: this.passwordMatchValidator });
 
   get confirmPassword(): FormControl {
@@ -54,8 +54,8 @@ export class RegisterComponent {
     return this.registrationForm.get('workplace') as FormControl;
   }
   
-  get company(): FormControl {
-    return this.registrationForm.get('company') as FormControl;
+  get companyName(): FormControl {
+    return this.registrationForm.get('companyName') as FormControl;
   }
   get password(): FormControl {
     return this.registrationForm.get('password') as FormControl;
@@ -90,7 +90,7 @@ export class RegisterComponent {
       country: this.registrationForm.value.country || "",
       phoneNumber: this.registrationForm.value.phoneNumber || "",
       workplace: this.registrationForm.value.workplace || "",
-      company: this.registrationForm.value.company || "",
+      companyName: this.registrationForm.value.companyName || "",
     };
     
     console.log("Registration Data:", registration);

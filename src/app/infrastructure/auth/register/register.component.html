@@ -41,9 +41,9 @@
       <input id="workplace" formControlName="workplace" type="text" class="form-control" />
       <div *ngIf="workplace.invalid && workplace.touched" class="error-message">Workplace is required</div>
 
-      <label for="company">Company</label>
-      <input id="company" formControlName="company" type="text" class="form-control" />
-      <div *ngIf="company.invalid && company.touched" class="error-message">Company is required</div>
+      <label for="companyName">Company Name</label>
+      <input id="companyName" formControlName="companyName" type="text" class="form-control" />
+      <div *ngIf="companyName.invalid && companyName.touched" class="error-message">Company name is required</div>
 
       <button type="submit" [disabled]="!registrationForm.valid" class="submit-button">REGISTER</button>
     </div>

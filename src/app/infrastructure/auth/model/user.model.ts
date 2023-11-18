@@ -10,5 +10,5 @@ export interface User {
   country: string;
   phoneNumber: string;
   workplace: string;
-  company: string;
+  companyName: string;
 }

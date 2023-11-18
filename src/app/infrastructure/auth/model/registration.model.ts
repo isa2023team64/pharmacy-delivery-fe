@@ -7,6 +7,6 @@ export interface Registration {
     country: string;
     phoneNumber: string;
     workplace: string;
-    company: string;
+    companyName: string;
   }
   
