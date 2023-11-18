@@ -134,6 +134,9 @@
                             <fa-icon [icon]="faLocationDot" />
                             Type: {{equipment.type}}
                         </div>
+                        <div class="company-search-button" [routerLink]="['/equipment-companies-overview', equipment.id]">
+                           <div class="company-search-button-text">See Equipment</div>
+                        </div>
                     </div>
                 </div>
             </div>

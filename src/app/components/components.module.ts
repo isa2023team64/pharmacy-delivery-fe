@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { CompanySearchComponent } from './company-search/company-search.component';
 import { MaterialModule } from '../infrastructure/material/material.module';
 import { EquipmentSearchComponent } from './equipment-search/equipment-search.component';
+import { EquipmentCompaniesOverviewComponent } from './equipment-overview-companies/equipment-companies-overview.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { EquipmentSearchComponent } from './equipment-search/equipment-search.co
     LoginComponent,
     NavbarComponent,
     CompanySearchComponent,
-    EquipmentSearchComponent
+    EquipmentSearchComponent,
+    EquipmentCompaniesOverviewComponent,
   ],
   imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule],
   exports: [HomeComponent, LoginComponent,  NavbarComponent],
