@@ -4,6 +4,7 @@ import {
  } from "@fortawesome/free-solid-svg-icons";
 import { RegisteredUserService } from '../../infrastructure/rest/registered-user.service';
 import { RegisteredUser } from '../../infrastructure/rest/model/registered-user.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'pd-registered-user-profile',
@@ -12,12 +13,13 @@ import { RegisteredUser } from '../../infrastructure/rest/model/registered-user.
 })
 export class RegisteredUserProfileComponent {
   faUser = faUser;
+  userId: number = -1;
   user: RegisteredUser = new RegisteredUser();
   userCopy: any;
   errors: any;
   canEdit: boolean = false;
 
-  constructor(private userService: RegisteredUserService){
+  constructor(private userService: RegisteredUserService, private route: ActivatedRoute){
     this.userCopy = {
       password: "",
       passwordConfirmation: "",
@@ -45,11 +47,14 @@ export class RegisteredUserProfileComponent {
 
   ngOnInit(): void {
     this.setInputReadOnly(true);
-    this.fetchUser();
+    this.route.params.subscribe((params) => {
+      this.userId = params['id'];
+      this.fetchUser();
+    })
   }
 
   fetchUser(): void {
-    this.userService.getById(1).subscribe({
+    this.userService.getById(this.userId).subscribe({
       next: (result: RegisteredUser) => {
         this.user = result;
         this.makeUserCopy();
@@ -62,7 +67,7 @@ export class RegisteredUserProfileComponent {
 
   saveChanges(): void {
     if(this.validate()) {
-      this.userService.update(1, this.userCopy).subscribe({
+      this.userService.update(this.userId, this.userCopy).subscribe({
         next: (result: RegisteredUser) => {
           this.user = result;
           this.makeUserCopy();

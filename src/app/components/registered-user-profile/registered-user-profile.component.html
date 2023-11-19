@@ -23,9 +23,9 @@
         <input class="profile-input" [class.cursor-initial]="canEdit" type="password" placeholder="Password" [(ngModel)]="userCopy.password" (input)="validate()"/>
         <div class="profile-input-error">{{errors.password}}</div>
 
-        <div class="profile-label">Confirm password:</div>
-        <input class="profile-input" [class.cursor-initial]="canEdit" type="password" placeholder="Confirm password" [(ngModel)]="userCopy.passwordConfirmation" (input)="validate()"/>
-        <div class="profile-input-error">{{errors.passwordConfirmation}}</div>
+        <div class="profile-label" *ngIf="canEdit">Confirm password:</div>
+        <input class="profile-input" [class.cursor-initial]="canEdit" type="password" placeholder="Confirm password" *ngIf="canEdit" [(ngModel)]="userCopy.passwordConfirmation" (input)="validate()"/>
+        <div class="profile-input-error" *ngIf="canEdit">{{errors.passwordConfirmation}}</div>
 
         <div class="profile-label">Country:</div>
         <input class="profile-input" [class.cursor-initial]="canEdit" type="text" placeholder="Country" [(ngModel)]="userCopy.country" (input)="validate()"/>
