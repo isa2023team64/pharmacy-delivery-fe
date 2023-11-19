@@ -6,9 +6,10 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RouterModule } from '@angular/router';
-import { CompanySearchComponent } from './company-search/company-search.component';
+import { CompanySearchComponent } from '../company/company-search/company-search.component';
 import { MaterialModule } from '../infrastructure/material/material.module';
 import { EquipmentSearchComponent } from './equipment-search/equipment-search.component';
+import { RegisteredUserProfileComponent } from './registered-user-profile/registered-user-profile.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { EquipmentSearchComponent } from './equipment-search/equipment-search.co
     LoginComponent,
     NavbarComponent,
     CompanySearchComponent,
-    EquipmentSearchComponent
+    EquipmentSearchComponent,
+    RegisteredUserProfileComponent
   ],
   imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule,
     ReactiveFormsModule],

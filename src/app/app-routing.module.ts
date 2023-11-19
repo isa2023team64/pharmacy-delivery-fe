@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
-import { CompanySearchComponent } from './components/company-search/company-search.component';
+import { CompanySearchComponent } from './company/company-search/company-search.component';
 import { RegisterComponent } from './infrastructure/auth/register/register.component';
 import { RegistrationRequestComfirmationComponent } from './infrastructure/auth/registration-request-comfirmation/registration-request-comfirmation.component';
 import { RegistrationRequestCompleteComponent } from './infrastructure/auth/registration-request-complete/registration-request-complete.component';
@@ -12,6 +12,7 @@ import { UregisteredUserEquipmentComponent } from './unregistered-user/uregister
 import { UregisteredUserCompaniesComponent } from './unregistered-user/uregistered-user/uregistered-user-companies/uregistered-user-companies.component';
 import { EquipmentSearchComponent } from './components/equipment-search/equipment-search.component';
 
+import { RegisteredUserProfileComponent } from './components/registered-user-profile/registered-user-profile.component';
 
 const routes: Routes = [
   {
@@ -57,6 +58,10 @@ const routes: Routes = [
   {
     path: 'unregisteredUserEquipment',
     component: UregisteredUserEquipmentComponent,
+  },
+  {
+    path: 'profile',
+    component: RegisteredUserProfileComponent,
   },
 ];
 
