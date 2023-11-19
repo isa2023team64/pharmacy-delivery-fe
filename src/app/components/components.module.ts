@@ -14,6 +14,8 @@ import { CompanyDetailsComponent } from './company-details/company-details.compo
 import { EquipmentCardComponent } from './equipment-card/equipment-card.component';
 import { EquipmentCompaniesOverviewComponent } from './equipment-overview-companies/equipment-companies-overview.component';
 import { RegisterCompanyAdministratorComponent } from './company-administrator-registration/company-administrator-registration.component';
+import { CompanyAdminProfileComponent } from './company-admin-profile/company-admin-profile.component';
+import { CompanyProfileComponent } from './company-profile/company-profile.component';
 
 
 
@@ -28,9 +30,20 @@ import { RegisterCompanyAdministratorComponent } from './company-administrator-r
     CompanyDetailsComponent,
     EquipmentCardComponent,
     EquipmentCompaniesOverviewComponent,
-    RegisterCompanyAdministratorComponent
+    RegisterCompanyAdministratorComponent,
+    CompanyAdminProfileComponent,
+    CompanyProfileComponent
   ],
   imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule, ReactiveFormsModule],
-  exports: [HomeComponent, LoginComponent,  NavbarComponent, CompanyCardComponent, CompanyDetailsComponent, EquipmentCardComponent, EquipmentCompaniesOverviewComponent, RegisterCompanyAdministratorComponent],
+  exports: [HomeComponent,
+            LoginComponent,
+            NavbarComponent,
+            CompanyCardComponent,
+            CompanyDetailsComponent,
+            EquipmentCardComponent,
+            EquipmentCompaniesOverviewComponent,
+            RegisterCompanyAdministratorComponent,
+            CompanyAdminProfileComponent,
+            CompanyProfileComponent],
 })
 export class ComponentsModule {}

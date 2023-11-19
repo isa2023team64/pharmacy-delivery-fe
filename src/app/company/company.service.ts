@@ -42,7 +42,6 @@ export class CompanyService {
   
   getEquipmentByCompanyId(id: number): Observable<Equipment[]> {
     const route = environment.apiHost + 'companies/' + id + '/equipment';
-    console.log(route);
     return this.http.get<Equipment[]>(route); 
   }
 
@@ -62,6 +61,3 @@ export class CompanyService {
   }
 
 }
-
-
-
