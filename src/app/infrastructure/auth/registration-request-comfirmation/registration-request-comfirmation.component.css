@@ -9,6 +9,7 @@
   
   .center-container {
     text-align: center;
+    margin-top: 120px;
   }
   
   .homebutton {
@@ -48,4 +49,5 @@
   h1{
     font-size: 40px;
     margin: 40px;
+    color:  rgb(107, 22, 22);;
   }

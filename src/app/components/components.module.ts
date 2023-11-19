@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HomeComponent } from './home/home.component';
@@ -24,7 +24,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     EquipmentCompaniesOverviewComponent,
     RegisterCompanyAdministratorComponent,
   ],
-  imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule,
+    ReactiveFormsModule],
   exports: [HomeComponent, LoginComponent,  NavbarComponent],
 })
 export class ComponentsModule {}
