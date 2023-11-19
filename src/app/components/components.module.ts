@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HomeComponent } from './home/home.component';
@@ -18,7 +18,8 @@ import { EquipmentSearchComponent } from './equipment-search/equipment-search.co
     CompanySearchComponent,
     EquipmentSearchComponent
   ],
-  imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule],
+  imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule,
+    ReactiveFormsModule],
   exports: [HomeComponent, LoginComponent,  NavbarComponent],
 })
 export class ComponentsModule {}
