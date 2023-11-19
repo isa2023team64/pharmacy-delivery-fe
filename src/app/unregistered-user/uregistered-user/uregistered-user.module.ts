@@ -5,6 +5,7 @@ import { UregisteredUserEquipmentComponent } from './uregistered-user-equipment/
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
+import { ComponentsModule } from '../../components/components.module';
 
 
 
@@ -17,7 +18,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule, 
     RouterModule,
     FontAwesomeModule,
-    FormsModule
+    FormsModule,
+    ComponentsModule
   ],
   exports: [
     UregisteredUserCompaniesComponent,

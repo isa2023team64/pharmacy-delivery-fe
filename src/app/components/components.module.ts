@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { CompanySearchComponent } from './company-search/company-search.component';
 import { MaterialModule } from '../infrastructure/material/material.module';
 import { EquipmentSearchComponent } from './equipment-search/equipment-search.component';
+import { CompanyCardComponent } from './company-card/company-card.component';
 
 @NgModule({
   declarations: [
@@ -16,9 +17,10 @@ import { EquipmentSearchComponent } from './equipment-search/equipment-search.co
     LoginComponent,
     NavbarComponent,
     CompanySearchComponent,
-    EquipmentSearchComponent
+    EquipmentSearchComponent,
+    CompanyCardComponent
   ],
   imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule],
-  exports: [HomeComponent, LoginComponent,  NavbarComponent],
+  exports: [HomeComponent, LoginComponent,  NavbarComponent, CompanyCardComponent],
 })
 export class ComponentsModule {}
