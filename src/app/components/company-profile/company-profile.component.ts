@@ -3,7 +3,9 @@ import { Company } from '../../company/model/company.model';
 import { CompanyService } from '../../company/company.service';
 import { ActivatedRoute } from '@angular/router';
 import { Equipment } from '../../infrastructure/rest/model/equipment.model';
-import { faHouse } from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faPlus, faMinus, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { CompanyAdministrator } from '../../infrastructure/auth/model/company-administrator.model';
+import { CompanyEquipment } from '../../infrastructure/rest/model/company-equipment.model';
 
 @Component({
   selector: 'pd-company-profile',
@@ -14,12 +16,17 @@ export class CompanyProfileComponent implements OnInit {
   
   companyId: number = -1;
   company: Company = new Company();
-  equipment?: Equipment[];
+  equipment?: CompanyEquipment[];
+  notOwnedEquipment?: CompanyEquipment[];
   canEdit: boolean = false;
   companyCopy?: any;
   errors: any;
+  companyAdministrators?: CompanyAdministrator[];
 
   faHouse = faHouse;
+  faPlus = faPlus;
+  faMinus = faMinus;
+  faEdit = faEdit;
 
   constructor(private service: CompanyService, private route: ActivatedRoute) { 
     this.companyCopy = {
@@ -48,21 +55,45 @@ export class CompanyProfileComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.companyId = params['id'];
       this.getCompanyById(this.companyId);
-      this.getEquipmentByCompanyId(this.companyId);
+      this.getCompanyEquipmentByCompanyId(this.companyId);
+      this.getEquipmentNotOwnedByCompany(this.companyId);
     })
   }
 
   getCompanyById(id: number): void {
     this.service.getById(id).subscribe((result) => {
       this.company = result;
+      this.companyAdministrators = this.company.companyAdministrators;
+      console.log(this.companyAdministrators);
       this.makeCompanyCopy();
     })
   }
 
-  getEquipmentByCompanyId(id: number) {
-    this.service.getEquipmentByCompanyId(id).subscribe((results) => {
+  getCompanyEquipmentByCompanyId(id: number) {
+    this.service.getCompanyEquipmentByCompanyId(id).subscribe((results) => {
       this.equipment = results;
+      if (this.equipment !== undefined) {
+        this.equipment.forEach(eq => {
+          eq.isAdded = true;
+        });
+      }
     })
+  }
+
+  getEquipmentNotOwnedByCompany(id: number) {
+    this.service.getNotAddedCompanyEquipmentByCompanyId(id).subscribe((results) => {
+      this.notOwnedEquipment = results;
+
+      if (this.equipment !== undefined) {
+        this.equipment.forEach(eq => {
+          eq.isAdded = false;
+        });
+      }
+    })
+  }
+
+  getCompanyAdministratorsByCompanyId(id: number) {
+
   }
 
   saveChanges(): void {
@@ -159,5 +190,19 @@ export class CompanyProfileComponent implements OnInit {
     this.errors.closingTime = "";
     this.errors.description = "";
   };
+
+  addEquipment(eq: CompanyEquipment) {
+    this.service.addEquimpentToCompany(this.companyId, eq.id!).subscribe((result) => {
+      this.getCompanyEquipmentByCompanyId(this.companyId);
+      this.getEquipmentNotOwnedByCompany(this.companyId);
+    })
+  }
+
+  removeEquipment(eq: CompanyEquipment) {
+    this.service.removeEquimpentFromCompany(this.companyId, eq.id!).subscribe((result) => {
+      this.getCompanyEquipmentByCompanyId(this.companyId);
+      this.getEquipmentNotOwnedByCompany(this.companyId);
+    })
+  }
 
 }

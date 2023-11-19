@@ -45,4 +45,43 @@
             </div>
         </div>
     </div>
+
+    <div class="profile-section">
+        <div class="profile-section-title">Administrators</div>
+        <div *ngFor="let ca of companyAdministrators">
+            <div class="profile-label">{{ca.firstName}} {{ca.lastName}}</div>
+        </div>
+    </div>
+
+    <!-- <div>
+        <div class="company-title">Equipment</div>
+        <pd-equipment-card *ngFor="let e of equipment" [equipment]="e"></pd-equipment-card>
+    </div> -->
+
+    <div class="profile-section">
+        <div class="profile-section-title">Equipment</div>    
+
+        <div class="card" *ngFor="let eq of equipment">
+            <div class="header">
+                <input class="profile-input" type="text" placeholder="Name" [(ngModel)]="eq.name"/>
+                <input class="profile-input" type="text" placeholder="Description" [(ngModel)]="eq.description"/>
+        
+                <div class="options">
+                    <div class="option"><fa-icon class="icon-blue" [icon]="faEdit"></fa-icon></div>
+                    <div class="option"><fa-icon class="icon-red" (click)="removeEquipment(eq)" [icon]="faMinus"></fa-icon></div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="card" *ngFor="let eq of notOwnedEquipment">
+            <div class="header">
+                <input class="profile-input" type="text" placeholder="Name" [(ngModel)]="eq.name"/>
+                <input class="profile-input" type="text" placeholder="Description" [(ngModel)]="eq.description"/>
+        
+                <div class="options">
+                    <div class="option" (click)="addEquipment(eq)"><fa-icon class="icon-green" [icon]="faPlus"></fa-icon></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
