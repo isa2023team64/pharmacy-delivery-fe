@@ -62,7 +62,7 @@ export class CompanyService {
     query = query != "" ? `${query}&` : query
     query = `${query}${pageQuery}&${pageSizeQuery}`
     const path = this.basePath + "companies/by-equipment/" + equipmentId + "?" + query;
-    return this.http.get<PagedResult<Company>>(path);
+    return this.http.get<PagedResult<CompanyNoAdmin>>(path);
   }
 
 

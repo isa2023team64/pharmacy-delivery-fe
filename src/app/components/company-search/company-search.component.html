@@ -11,7 +11,7 @@
     </div>
     <div class="company-search-body">
         <div class="company-search-filters">
-            <div class="company-search-button" (click)="search()">
+            <div class="company-search-button" (click)="search(1)">
                 <div class="company-search-button-text">Search</div>
             </div>
             <div class="company-search-filters-head">
@@ -111,7 +111,7 @@
                 </div>
             </div>
             <div class="company-search-result-companies">
-                <pd-company-card *ngFor="let company of companies" [company]="company"></pd-company-card>
+                <pd-company-card *ngFor="let company of companies" [company]="company" [imageURL]="company.imageURL"></pd-company-card>
             </div>
             <div class="company-search-pages">
                 <div class="company-search-page" [class.company-search-page-highlighted]="page === currentPage || page === '&lt;' || page === '>'" [class.no-border]="page === '...'" *ngFor="let page of pages" (click)="switchPage(page)">

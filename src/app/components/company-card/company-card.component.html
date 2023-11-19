@@ -1,5 +1,5 @@
 <div class="company-card no-border" [routerLink]="['/company-details/', company.id]">
-    <img class="company-image" src="https://pactandpartners.com/wp-content/uploads/2020/02/Medical-Devices-scaled.jpeg"/>
+    <img class="company-image" [src]="imageURL"/>
     <div class="company-content">
         <div class="company-title">{{company.name}}</div>
         <div class="company-label">

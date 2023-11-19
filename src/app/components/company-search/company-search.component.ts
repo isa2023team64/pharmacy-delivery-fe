@@ -51,7 +51,7 @@ export class CompanySearchComponent {
     this.dropped = {nameDropped: true, locationDropped: true, ratingDropped: true}
     this.SortIcons = {ascending: faArrowUpWideShort, descending: faArrowDownWideShort, none: ""};
     this.displayedSortIcon = "";
-    this.search();
+    this.search(1);
   }
 
   toggle(name: string) {
@@ -63,7 +63,7 @@ export class CompanySearchComponent {
     this.displayedSortCriteria = displayedCriteria;
     this.displayedSortIcon = this.SortIcons[displyaedIcon];
     this.currentPage = 1;
-    this.search();
+    this.search(1);
   }
 
   validateMinRating() {
@@ -88,8 +88,9 @@ export class CompanySearchComponent {
     return number
   }
 
-  search(): void {
-    this.searchFilter.page = this.currentPage;
+  search(page: number): void {
+    this.searchFilter.page = page;
+    this.currentPage = page;
     this.companyService.search(this.searchFilter).subscribe({
       next: (result: PagedResult<CompanyNoAdmin>) => {
         this.companies = result.results;
@@ -123,6 +124,6 @@ export class CompanySearchComponent {
     if(command === "<") this.currentPage--;
     if(command === ">") this.currentPage++;
     if(typeof command === 'number') this.currentPage = command;
-    this.search();
+    this.search(this.currentPage);
   } 
 }

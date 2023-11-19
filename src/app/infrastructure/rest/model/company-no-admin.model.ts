@@ -7,5 +7,6 @@ export interface CompanyNoAdmin {
   averageRating: number;
   openingTime: string;
   closingTime: string;
+  imageURL: string;
 }
   
