@@ -4,7 +4,6 @@ import { Company } from '../model/company.model';
 import { AuthService } from '../../infrastructure/auth/auth.service';
 import { Router } from '@angular/router';
 import { CompanyService } from '../company.service';
-import { MockCompanyAdministrator } from '../../infrastructure/auth/model/mock-company-administrator.model';
 
 @Component({
   selector: 'pd-register',

@@ -13,6 +13,7 @@ import {
   faClock
  } from "@fortawesome/free-solid-svg-icons";
 import { CompanyNoAdmin } from '../../infrastructure/rest/model/company-no-admin.model';
+import { Company } from '../../company/model/company.model';
 import { PagedResult } from '../../infrastructure/rest/model/paged-result.model';
 import { ActivatedRoute } from '@angular/router';
 
@@ -37,7 +38,7 @@ export class EquipmentCompaniesOverviewComponent {
   displayedSortCriteria: string;
   SortIcons: { [key: string]: any } = {};
   displayedSortIcon: any;
-  companies: CompanyNoAdmin[] = [];
+  companies: Company[] = [];
   totalCount: number = 0;
   currentPage: number = 1;
   pageSize: number = 5;

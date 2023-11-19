@@ -10,6 +10,9 @@ import { CompanySearchComponent } from './company-search/company-search.componen
 import { MaterialModule } from '../infrastructure/material/material.module';
 import { EquipmentSearchComponent } from './equipment-search/equipment-search.component';
 import { EquipmentCompaniesOverviewComponent } from './equipment-overview-companies/equipment-companies-overview.component';
+import { RegisterCompanyAdministratorComponent } from './company-administrator-registration/company-administrator-registration.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -19,8 +22,9 @@ import { EquipmentCompaniesOverviewComponent } from './equipment-overview-compan
     CompanySearchComponent,
     EquipmentSearchComponent,
     EquipmentCompaniesOverviewComponent,
+    RegisterCompanyAdministratorComponent,
   ],
-  imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule],
+  imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule, ReactiveFormsModule],
   exports: [HomeComponent, LoginComponent,  NavbarComponent],
 })
 export class ComponentsModule {}

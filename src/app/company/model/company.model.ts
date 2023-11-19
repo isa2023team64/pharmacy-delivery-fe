@@ -1,5 +1,5 @@
 import { DatePipe } from "@angular/common";
-import { MockCompanyAdministrator } from "../../infrastructure/auth/model/mock-company-administrator.model";
+import { CompanyAdministrator } from "../../infrastructure/auth/model/company-administrator.model";
 
 
 export interface Company{
@@ -12,5 +12,5 @@ export interface Company{
     closingTime: string;
     description: string;
     averageRating: number;
-    companyAdministrators?: MockCompanyAdministrator[]
+    companyAdministrators?: CompanyAdministrator[]
 }

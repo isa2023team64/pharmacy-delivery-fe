@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { environment } from '../../../env/environment';
 import { CompanyNoAdmin } from './model/company-no-admin.model';
 import { PagedResult } from './model/paged-result.model';
+import { Company } from '../../company/model/company.model';
 
 @Injectable({
   providedIn: 'root'
@@ -61,7 +62,7 @@ export class CompanyService {
     query = query != "" ? `${query}&` : query
     query = `${query}${pageQuery}&${pageSizeQuery}`
     const path = this.basePath + "companies/by-equipment/" + equipmentId + "?" + query;
-    return this.http.get<PagedResult<CompanyNoAdmin>>(path);
+    return this.http.get<PagedResult<Company>>(path);
   }
 
 

@@ -36,6 +36,9 @@
                             <fa-icon [icon]="faClock" />
                             Working time: {{company.openingTime}} - {{company.closingTime}}
                         </div>
+                        <div class="company-search-button" [routerLink]="['/register-company-administrator', company.id]">
+                            <div class="company-search-button-text">See Companies with Equipment {{company.id}} AA</div>
+                        </div>
                     </div>
                 </div>
             </div>
