@@ -1,1 +1,48 @@
-<p>company-profile works!</p>
+<div class="profile">
+    <fa-icon class="profile-picture" [icon]="faHouse"/>
+    
+    <div class="profile-section">
+        <div class="profile-section-title">Company</div>
+
+        <div class="profile-label">Name:</div>
+        <input class="profile-input" [class.cursor-initial]="canEdit" type="text" placeholder="Name" [(ngModel)]="companyCopy.name" (input)="validate()"/>
+        <div class="profile-input-error">{{errors.name}}</div>
+
+        <div class="profile-label">Address:</div>
+        <input class="profile-input" [class.cursor-initial]="canEdit" type="text" placeholder="Address" [(ngModel)]="companyCopy.address" (input)="validate()"/>
+        <div class="profile-input-error">{{errors.address}}</div>
+
+        <div class="profile-label">City:</div>
+        <input class="profile-input" [class.cursor-initial]="canEdit" type="text" placeholder="City" [(ngModel)]="companyCopy.city" (input)="validate()"/>
+        <div class="profile-input-error">{{errors.city}}</div>
+
+        <div class="profile-label">Country:</div>
+        <input class="profile-input" [class.cursor-initial]="canEdit" type="text" placeholder="Country" [(ngModel)]="companyCopy.country" (input)="validate()"/>
+        <div class="profile-input-error">{{errors.country}}</div>
+
+        <div class="profile-label">Opening time:</div>
+        <input class="profile-input" [class.cursor-initial]="canEdit" type="time" placeholder="Opening time" [(ngModel)]="companyCopy.openingTime" (input)="validate()"/>
+        <div class="profile-input-error">{{errors.openingTime}}</div>
+
+        <div class="profile-label">Closing time:</div>
+        <input class="profile-input" [class.cursor-initial]="canEdit" type="time" placeholder="Closing time" [(ngModel)]="companyCopy.closingTime" (input)="validate()"/>
+        <div class="profile-input-error">{{errors.closingTime}}</div>
+        
+        <div class="profile-label">Description:</div>
+        <input class="profile-input" [class.cursor-initial]="canEdit" type="text" placeholder="Description" [(ngModel)]="companyCopy.description" (input)="validate()"/>
+        <div class="profile-input-error">{{errors.description}}</div>
+
+        <div class="profile-edit-button" *ngIf="!canEdit" (click)="startEditing()">
+            <div class="profile-button-text">Edit</div>
+        </div>
+
+        <div class="profile-save-cancel" *ngIf="canEdit">
+            <div class="profile-save-button" (click)="saveChanges()">
+                <div class="profile-button-text">Save</div>
+            </div>
+            <div class="profile-cancel-button" (click)="endEditing()">
+                <div class="profile-cancel-button-text">Cancel</div>
+            </div>
+        </div>
+    </div>
+</div>

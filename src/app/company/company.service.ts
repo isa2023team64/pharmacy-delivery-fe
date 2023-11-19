@@ -44,20 +44,26 @@ export class CompanyService {
     const route = environment.apiHost + 'companies/' + id + '/equipment';
     return this.http.get<Equipment[]>(route); 
   }
-
+  
   registerCompanyAdministrator(companyId: number|null, companyAdministrator : CompanyAdministrator): Observable<AuthenticationResponse>{
     if(companyId == null){
       companyId = 0;
     }
     
     return this.http
-      .post<AuthenticationResponse>(environment.apiHost + "companies/" + companyId, companyAdministrator)
-      .pipe(
-        tap((authenticationResponse) => {
-          console.log("AUTHENTICATED COMPANY ADMINISTRATOR")
-        })
+    .post<AuthenticationResponse>(environment.apiHost + "companies/" + companyId, companyAdministrator)
+    .pipe(
+      tap((authenticationResponse) => {
+        console.log("AUTHENTICATED COMPANY ADMINISTRATOR")
+      })
       )
       
+    }
+    
+  update(companyId: number, updatedCompany: Company): Observable<Company> {
+    const route = environment.apiHost + 'companies' + '/' + companyId;
+    console.log(route);
+    return this.http.put<Company>(route, updatedCompany);
   }
 
 }

@@ -2,7 +2,7 @@ import { DatePipe } from "@angular/common";
 import { CompanyAdministrator } from "../../infrastructure/auth/model/company-administrator.model";
 
 
-export interface Company{
+export class Company{
     id?: number;
     name: string;
     address: string;
@@ -13,4 +13,16 @@ export interface Company{
     description: string;
     averageRating: number;
     companyAdministrators?: CompanyAdministrator[]
+
+    constructor() {
+        this.id = -1;
+        this.name = "";
+        this.address = "";
+        this.city = "";
+        this.country = "";
+        this.openingTime = "";
+        this.closingTime = "";
+        this.description = "";
+        this.averageRating = 0;
+    }
 }
