@@ -12,6 +12,7 @@ import { UregisteredUserEquipmentComponent } from './unregistered-user/uregister
 import { UregisteredUserCompaniesComponent } from './unregistered-user/uregistered-user/uregistered-user-companies/uregistered-user-companies.component';
 import { EquipmentSearchComponent } from './components/equipment-search/equipment-search.component';
 import { CompanyDetailsComponent } from './components/company-details/company-details.component';
+import { RegisteredUserProfileComponent } from './components/registered-user-profile/registered-user-profile.component';
 import { EquipmentCompaniesOverviewComponent } from './components/equipment-overview-companies/equipment-companies-overview.component';
 import { RegisterCompanyAdministratorComponent } from './components/company-administrator-registration/company-administrator-registration.component';
 import { CompanyAdminProfileComponent } from './components/company-admin-profile/company-admin-profile.component';
@@ -67,6 +68,10 @@ const routes: Routes = [
     component: CompanyDetailsComponent
   },
   {
+    path: 'profile/:id',
+    component: RegisteredUserProfileComponent,
+  },
+  {
     path: 'equipment-companies-overview/:id',
     component: EquipmentCompaniesOverviewComponent,
   },
@@ -75,7 +80,7 @@ const routes: Routes = [
     component: RegisterCompanyAdministratorComponent,
   },
   {
-    path: 'company-admin-profile',
+    path: 'company-admin-profile/:id',
     component: CompanyAdminProfileComponent
   },
   {
