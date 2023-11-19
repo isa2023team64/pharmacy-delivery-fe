@@ -10,6 +10,8 @@ import { Company } from './model/company.model';
 import { PagedResult } from '../infrastructure/rest/model/paged-result.model';
 import { Equipment } from '../infrastructure/rest/model/equipment.model';
 import { CompanyAdministrator } from '../infrastructure/auth/model/company-administrator.model';
+import { CompanyEquipment } from '../infrastructure/rest/model/company-equipment.model';
+import { AddEquipment } from '../infrastructure/rest/model/add-equipment.model';
 
 @Injectable({
   providedIn: 'root'
@@ -65,5 +67,34 @@ export class CompanyService {
     console.log(route);
     return this.http.put<Company>(route, updatedCompany);
   }
+  
+  getCompanyEquipmentByCompanyId(id: number): Observable<CompanyEquipment[]> {
+    const route = environment.apiHost + 'companies/' + id + '/equipment';
+    return this.http.get<CompanyEquipment[]>(route);
+  }
+  
+  getNotAddedCompanyEquipmentByCompanyId(id: number): Observable<CompanyEquipment[]> {
+    const route = environment.apiHost + 'equipment/' + 'not-owned-by-company/' + id;
+    return this.http.get<CompanyEquipment[]>(route);
+  }
+  
+  addEquimpentToCompany(cId: number, eId: number): Observable<AddEquipment> {
+    const route = environment.apiHost + 'companies/add-equipment';
+    console.log(cId, eId);
+    let dto: AddEquipment = {
+      companyId: cId,
+      equipmentId: eId
+    }
+    return this.http.put<AddEquipment>(route, dto);
+  }
 
+  removeEquimpentFromCompany(cId: number, eId: number): Observable<AddEquipment> {
+    const route = environment.apiHost + 'companies/remove-equipment';
+    console.log(cId, eId);
+    let dto: AddEquipment = {
+      companyId: cId,
+      equipmentId: eId
+    }
+    return this.http.put<AddEquipment>(route, dto);
+  }
 }
