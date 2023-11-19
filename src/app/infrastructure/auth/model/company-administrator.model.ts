@@ -1,4 +1,4 @@
-export interface MockCompanyAdministrator{
+export interface CompanyAdministrator{
     id?: number;
     firstName: string;
     lastName: string;
