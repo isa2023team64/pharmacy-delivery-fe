@@ -11,7 +11,8 @@ import { RegisterCompanyComponent } from './company/register-company/register-co
 import { UregisteredUserEquipmentComponent } from './unregistered-user/uregistered-user/uregistered-user-equipment/uregistered-user-equipment.component';
 import { UregisteredUserCompaniesComponent } from './unregistered-user/uregistered-user/uregistered-user-companies/uregistered-user-companies.component';
 import { EquipmentSearchComponent } from './components/equipment-search/equipment-search.component';
-
+import { EquipmentCompaniesOverviewComponent } from './components/equipment-overview-companies/equipment-companies-overview.component';
+import { RegisterCompanyAdministratorComponent } from './components/company-administrator-registration/company-administrator-registration.component';
 
 const routes: Routes = [
   {
@@ -58,6 +59,14 @@ const routes: Routes = [
     path: 'unregisteredUserEquipment',
     component: UregisteredUserEquipmentComponent,
   },
+  {
+    path: 'equipment-companies-overview/:id',
+    component: EquipmentCompaniesOverviewComponent,
+  },
+  {
+    path: 'register-company-administrator/:id',
+    component: RegisterCompanyAdministratorComponent,
+  }
 ];
 
 @NgModule({

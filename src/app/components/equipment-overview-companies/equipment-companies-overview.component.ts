@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CompanyService } from '../../infrastructure/rest/company.service';
-import { Route } from '@angular/router';
 import { 
   faFilter,
   faXmark, 
@@ -14,17 +13,16 @@ import {
   faClock
  } from "@fortawesome/free-solid-svg-icons";
 import { CompanyNoAdmin } from '../../infrastructure/rest/model/company-no-admin.model';
+import { Company } from '../../company/model/company.model';
 import { PagedResult } from '../../infrastructure/rest/model/paged-result.model';
-import { Equipment } from '../../infrastructure/rest/model/equipment.model';
-import { EquipmentSearchService } from '../../infrastructure/rest/equipment-search.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'pd-equipment-search',
-  templateUrl: './equipment-search.component.html',
-  styleUrl: './equipment-search.component.css'
+  selector: 'pd-equipment-companies-overview',
+  templateUrl: './equipment-companies-overview.component.html',
+  styleUrl: './equipment-companies-overview.component.css'
 })
-export class EquipmentSearchComponent {
+export class EquipmentCompaniesOverviewComponent {
   faFilter = faFilter;
   faXmark = faXmark;
   faChevronDown = faChevronDown;
@@ -36,67 +34,45 @@ export class EquipmentSearchComponent {
   faStar = faStar;
   faClock = faClock; 
   dropped: { [key: string]: boolean } = {};
-  searchFilter: {name: string, description: string, type: string, minRating: number, maxRating: number, sortCriteria: string, page: number, pageSize: number}
+  searchFilter: {name: string, country: string, city: string, minRating: number, maxRating: number, sortCriteria: string, page: number, pageSize: number}
   displayedSortCriteria: string;
   SortIcons: { [key: string]: any } = {};
   displayedSortIcon: any;
-  equipment: Equipment[] = [];
+  companies: Company[] = [];
   totalCount: number = 0;
   currentPage: number = 1;
   pageSize: number = 5;
   pages: any[] = [];
+  equipmentId: number | null = null;
 
-  constructor(private equipmentSearchService: EquipmentSearchService) {
-    this.searchFilter = {name: "", description: "", type: "", minRating: 0, maxRating: 5, sortCriteria: "", page: this.currentPage, pageSize: this.pageSize}
+  constructor(private companyService: CompanyService, private route: ActivatedRoute) {
+    this.searchFilter = {name: "", country: "", city: "", minRating: 0, maxRating: 5, sortCriteria: "", page: this.currentPage, pageSize: this.pageSize}
     this.displayedSortCriteria = '-';
   }
 
   ngOnInit(): void {
-    this.dropped = {nameDropped: true, descriptionDropped: true, typeDropped: true, ratingDropped: true}
+    this.dropped = {nameDropped: true, locationDropped: true, ratingDropped: true}
     this.SortIcons = {ascending: faArrowUpWideShort, descending: faArrowDownWideShort, none: ""};
     this.displayedSortIcon = "";
-    this.search();
+
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      this.equipmentId = id ? parseInt(id, 10) : null;
+      if (this.equipmentId !== null) {
+        this.search(); 
+      }
+    });
   }
 
   toggle(name: string) {
     this.dropped[name] = !this.dropped[name]
   }
 
-  changeSortCriteria(criteria: string, displayedCriteria: string, displyaedIcon: string) {
-    this.searchFilter.sortCriteria = criteria;
-    this.displayedSortCriteria = displayedCriteria;
-    this.displayedSortIcon = this.SortIcons[displyaedIcon];
-    this.currentPage = 1;
-    this.search();
-  }
-
-  validateMinRating() {
-    if(this.searchFilter.minRating >= this.searchFilter.maxRating) {
-      this.searchFilter.maxRating = Number((this.searchFilter.minRating + 0.1).toFixed(1));
-    }
-  }
-
-  validateMaxRating() {
-    if(this.searchFilter.maxRating <= this.searchFilter.minRating) {
-      this.searchFilter.minRating = Number((this.searchFilter.maxRating - 0.1).toFixed(1));
-    }
-  }
-
-  countFilters(): number {
-    let number = 0;
-    if(this.searchFilter.name !== '') number++
-    if(this.searchFilter.description !== '') number++
-    if(this.searchFilter.type !== '') number++
-    if(this.searchFilter.minRating > 0) number++
-    if(this.searchFilter.maxRating < 5) number++
-    return number
-  }
-
   search(): void {
     this.searchFilter.page = this.currentPage;
-    this.equipmentSearchService.search(this.searchFilter).subscribe({
-      next: (result: PagedResult<Equipment>) => {
-        this.equipment = result.results;
+    this.companyService.findAllByEquipmentId(this.searchFilter, this.equipmentId).subscribe({
+      next: (result: PagedResult<CompanyNoAdmin>) => {
+        this.companies = result.results;
         this.totalCount = result.totalCount;
         this.setPages();
       },
@@ -121,7 +97,7 @@ export class EquipmentSearchComponent {
     if(pageNumber - this.currentPage > 2) this.pages.push(pageNumber);
     if(pageNumber - this.currentPage > 0) this.pages.push(">");
   }
-  
+
   switchPage(command: any): void {
     if(command === "..." || command === this.currentPage) return;
     if(command === "<") this.currentPage--;
@@ -129,8 +105,4 @@ export class EquipmentSearchComponent {
     if(typeof command === 'number') this.currentPage = command;
     this.search();
   } 
-
-  // navigateToCompaniesOverview(id: number) {
-  //   this.router.navigate(['/equipment-companies-overview', id]);
-  // }
 }
