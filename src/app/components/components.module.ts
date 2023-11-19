@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HomeComponent } from './home/home.component';
@@ -12,6 +12,10 @@ import { EquipmentSearchComponent } from './equipment-search/equipment-search.co
 import { CompanyCardComponent } from './company-card/company-card.component';
 import { CompanyDetailsComponent } from './company-details/company-details.component';
 import { EquipmentCardComponent } from './equipment-card/equipment-card.component';
+import { EquipmentCompaniesOverviewComponent } from './equipment-overview-companies/equipment-companies-overview.component';
+import { RegisterCompanyAdministratorComponent } from './company-administrator-registration/company-administrator-registration.component';
+
+
 
 @NgModule({
   declarations: [
@@ -22,9 +26,11 @@ import { EquipmentCardComponent } from './equipment-card/equipment-card.componen
     EquipmentSearchComponent,
     CompanyCardComponent,
     CompanyDetailsComponent,
-    EquipmentCardComponent
+    EquipmentCardComponent,
+    EquipmentCompaniesOverviewComponent,
+    RegisterCompanyAdministratorComponent
   ],
-  imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule],
-  exports: [HomeComponent, LoginComponent,  NavbarComponent, CompanyCardComponent, CompanyDetailsComponent, EquipmentCardComponent],
+  imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule, ReactiveFormsModule],
+  exports: [HomeComponent, LoginComponent,  NavbarComponent, CompanyCardComponent, CompanyDetailsComponent, EquipmentCardComponent, EquipmentCompaniesOverviewComponent, RegisterCompanyAdministratorComponent],
 })
 export class ComponentsModule {}

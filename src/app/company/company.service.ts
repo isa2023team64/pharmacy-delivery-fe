@@ -9,6 +9,7 @@ import { TokenStorage } from '../infrastructure/auth/jwt/token.service';
 import { Company } from './model/company.model';
 import { PagedResult } from '../infrastructure/rest/model/paged-result.model';
 import { Equipment } from '../infrastructure/rest/model/equipment.model';
+import { CompanyAdministrator } from '../infrastructure/auth/model/company-administrator.model';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,21 @@ export class CompanyService {
     const route = environment.apiHost + 'companies/' + id + '/equipment';
     console.log(route);
     return this.http.get<Equipment[]>(route); 
+  }
+
+  registerCompanyAdministrator(companyId: number|null, companyAdministrator : CompanyAdministrator): Observable<AuthenticationResponse>{
+    if(companyId == null){
+      companyId = 0;
+    }
+    
+    return this.http
+      .post<AuthenticationResponse>(environment.apiHost + "companies/" + companyId, companyAdministrator)
+      .pipe(
+        tap((authenticationResponse) => {
+          console.log("AUTHENTICATED COMPANY ADMINISTRATOR")
+        })
+      )
+      
   }
 
 }
