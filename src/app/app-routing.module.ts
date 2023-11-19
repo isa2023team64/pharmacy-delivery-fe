@@ -13,6 +13,7 @@ import { UregisteredUserCompaniesComponent } from './unregistered-user/uregister
 import { EquipmentSearchComponent } from './components/equipment-search/equipment-search.component';
 import { EquipmentCompaniesOverviewComponent } from './components/equipment-overview-companies/equipment-companies-overview.component';
 import { RegisterCompanyAdministratorComponent } from './components/company-administrator-registration/company-administrator-registration.component';
+import { EquipmentSearchCompanyAdministratorComponent } from './components/equipment-search-company-administrator/equipment-search-company-administrator.component';
 
 const routes: Routes = [
   {
@@ -66,6 +67,10 @@ const routes: Routes = [
   {
     path: 'register-company-administrator/:id',
     component: RegisterCompanyAdministratorComponent,
+  },
+  {
+    path: 'equipment-search-company-administrator',
+    component: EquipmentSearchCompanyAdministratorComponent,
   }
 ];
 

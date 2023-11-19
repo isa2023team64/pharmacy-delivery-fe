@@ -11,7 +11,7 @@ import { MaterialModule } from '../infrastructure/material/material.module';
 import { EquipmentSearchComponent } from './equipment-search/equipment-search.component';
 import { EquipmentCompaniesOverviewComponent } from './equipment-overview-companies/equipment-companies-overview.component';
 import { RegisterCompanyAdministratorComponent } from './company-administrator-registration/company-administrator-registration.component';
-
+import { EquipmentSearchCompanyAdministratorComponent } from './equipment-search-company-administrator/equipment-search-company-administrator.component';
 
 
 @NgModule({
@@ -23,6 +23,7 @@ import { RegisterCompanyAdministratorComponent } from './company-administrator-r
     EquipmentSearchComponent,
     EquipmentCompaniesOverviewComponent,
     RegisterCompanyAdministratorComponent,
+    EquipmentSearchCompanyAdministratorComponent,
   ],
   imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule,
     ReactiveFormsModule],
