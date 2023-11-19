@@ -13,6 +13,7 @@ export class Company{
     description: string;
     averageRating: number;
     companyAdministrators?: CompanyAdministrator[]
+    imageUrl?: string;
 
     constructor() {
         this.id = -1;
@@ -24,5 +25,6 @@ export class Company{
         this.closingTime = "";
         this.description = "";
         this.averageRating = 0;
+        this.imageUrl = "";
     }
 }

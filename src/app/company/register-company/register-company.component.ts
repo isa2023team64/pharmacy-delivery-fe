@@ -54,6 +54,7 @@ export class RegisterCompanyComponent {
       closingTime: this.registrationCompanyForm.value.closingTime || "",
       description: this.registrationCompanyForm.value.description || "",
       averageRating: 2.5,
+      imageUrl: "https://pactandpartners.com/wp-content/uploads/2020/02/Medical-Devices-scaled.jpeg",
 
       companyAdministrators:[
         {
