@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Company } from '../../company/model/company.model';
 import { CompanyService } from '../../company/company.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Equipment } from '../../infrastructure/rest/model/equipment.model';
 import { faHouse, faPlus, faMinus, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { CompanyAdministrator } from '../../infrastructure/auth/model/company-administrator.model';
 import { CompanyEquipment } from '../../infrastructure/rest/model/company-equipment.model';
+import { EquipmentService } from '../../company/equipment.service';
 
 @Component({
   selector: 'pd-company-profile',
@@ -28,7 +29,7 @@ export class CompanyProfileComponent implements OnInit {
   faMinus = faMinus;
   faEdit = faEdit;
 
-  constructor(private service: CompanyService, private route: ActivatedRoute) { 
+  constructor(private companyService: CompanyService, private equipmentService: EquipmentService, private route: ActivatedRoute, private router: Router) { 
     this.companyCopy = {
       name: "",
       address: "",
@@ -61,7 +62,7 @@ export class CompanyProfileComponent implements OnInit {
   }
 
   getCompanyById(id: number): void {
-    this.service.getById(id).subscribe((result) => {
+    this.companyService.getById(id).subscribe((result) => {
       this.company = result;
       this.companyAdministrators = this.company.companyAdministrators;
       console.log(this.companyAdministrators);
@@ -70,7 +71,7 @@ export class CompanyProfileComponent implements OnInit {
   }
 
   getCompanyEquipmentByCompanyId(id: number) {
-    this.service.getCompanyEquipmentByCompanyId(id).subscribe((results) => {
+    this.companyService.getCompanyEquipmentByCompanyId(id).subscribe((results) => {
       this.equipment = results;
       if (this.equipment !== undefined) {
         this.equipment.forEach(eq => {
@@ -81,7 +82,7 @@ export class CompanyProfileComponent implements OnInit {
   }
 
   getEquipmentNotOwnedByCompany(id: number) {
-    this.service.getNotAddedCompanyEquipmentByCompanyId(id).subscribe((results) => {
+    this.companyService.getNotAddedCompanyEquipmentByCompanyId(id).subscribe((results) => {
       this.notOwnedEquipment = results;
 
       if (this.equipment !== undefined) {
@@ -100,7 +101,7 @@ export class CompanyProfileComponent implements OnInit {
     if(this.validate()) {
       this.companyCopy.openingTime += ":00";
       this.companyCopy.closingTime += ":00";
-      this.service.update(this.companyId, this.companyCopy).subscribe({
+      this.companyService.update(this.companyId, this.companyCopy).subscribe({
         next: (result: Company) => {
           this.company = result;
           this.makeCompanyCopy();
@@ -192,17 +193,23 @@ export class CompanyProfileComponent implements OnInit {
   };
 
   addEquipment(eq: CompanyEquipment) {
-    this.service.addEquimpentToCompany(this.companyId, eq.id!).subscribe((result) => {
+    this.companyService.addEquimpentToCompany(this.companyId, eq.id!).subscribe((result) => {
       this.getCompanyEquipmentByCompanyId(this.companyId);
       this.getEquipmentNotOwnedByCompany(this.companyId);
     })
   }
 
   removeEquipment(eq: CompanyEquipment) {
-    this.service.removeEquimpentFromCompany(this.companyId, eq.id!).subscribe((result) => {
+    this.companyService.removeEquimpentFromCompany(this.companyId, eq.id!).subscribe((result) => {
       this.getCompanyEquipmentByCompanyId(this.companyId);
       this.getEquipmentNotOwnedByCompany(this.companyId);
     })
+  }
+  
+
+  editEquipment(eq: CompanyEquipment) {
+    this.router.navigate(['edit-equipment/' + eq.id]);
+    // this.router.navigate(['login']);
   }
 
 }

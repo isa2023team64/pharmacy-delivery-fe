@@ -21,9 +21,5 @@ export class EditableEquipmentCardComponent {
     
   }
 
-  addEquipment() {
-    this.service.addEquimpentToCompany(this.companyId, this.equipment.id!).subscribe((result) => {
-      
-    })
-  }
+  
 }

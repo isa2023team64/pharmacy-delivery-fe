@@ -67,7 +67,7 @@
                 <input class="profile-input" type="text" placeholder="Description" [(ngModel)]="eq.description"/>
         
                 <div class="options">
-                    <div class="option"><fa-icon class="icon-blue" [icon]="faEdit"></fa-icon></div>
+                    <div class="option"><fa-icon class="icon-blue" (click)="editEquipment(eq)" [icon]="faEdit"></fa-icon></div>
                     <div class="option"><fa-icon class="icon-red" (click)="removeEquipment(eq)" [icon]="faMinus"></fa-icon></div>
                 </div>
             </div>

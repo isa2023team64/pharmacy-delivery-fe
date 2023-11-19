@@ -20,6 +20,7 @@ import { CompanyProfileComponent } from './company-profile/company-profile.compo
 import { EquipmentSearchCompanyAdministratorComponent } from './equipment-search-company-administrator/equipment-search-company-administrator.component';
 import { EditableEquipmentCardComponent } from './editable-equipment-card/editable-equipment-card.component';
 import { AddEquipmentComponent } from './add-equipment/add-equipment.component';
+import { EditEquipmentComponent } from './edit-equipment/edit-equipment.component';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { AddEquipmentComponent } from './add-equipment/add-equipment.component';
     EquipmentSearchCompanyAdministratorComponent,
     EditableEquipmentCardComponent,
     AddEquipmentComponent,
+    EditEquipmentComponent,
   ],
   imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule, ReactiveFormsModule],
   exports: [HomeComponent,
@@ -51,6 +53,8 @@ import { AddEquipmentComponent } from './add-equipment/add-equipment.component';
             EquipmentCompaniesOverviewComponent,
             RegisterCompanyAdministratorComponent,
             CompanyAdminProfileComponent,
-            CompanyProfileComponent],
+            CompanyProfileComponent,
+            AddEquipmentComponent,
+            EditEquipmentComponent],
 })
 export class ComponentsModule {}

@@ -18,6 +18,8 @@ import { RegisterCompanyAdministratorComponent } from './components/company-admi
 import { CompanyAdminProfileComponent } from './components/company-admin-profile/company-admin-profile.component';
 import { CompanyProfileComponent } from './components/company-profile/company-profile.component';
 import { EquipmentSearchCompanyAdministratorComponent } from './components/equipment-search-company-administrator/equipment-search-company-administrator.component';
+import { AddEquipmentComponent } from './components/add-equipment/add-equipment.component';
+import { EditEquipmentComponent } from './components/edit-equipment/edit-equipment.component';
 
 const routes: Routes = [
   {
@@ -91,6 +93,14 @@ const routes: Routes = [
   {
     path: 'equipment-search-company-administrator',
     component: EquipmentSearchCompanyAdministratorComponent,
+  },
+  {
+    path: 'add-equipment',
+    component: AddEquipmentComponent,
+  },
+  {
+    path: 'edit-equipment/:id',
+    component: EditEquipmentComponent,
   }
 ];
 

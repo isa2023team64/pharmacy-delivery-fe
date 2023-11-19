@@ -1,7 +1,7 @@
 <div class="profile">
 
     <div class="profile-section">
-        <div class="profile-section-title">New equipment</div>
+        <div class="profile-section-title">Edit equipment</div>
 
         <div class="profile-label">Name:</div>
         <input class="profile-input" type="text" placeholder="Name" [(ngModel)]="newEquipment.name" (input)="validate()"/>
@@ -16,7 +16,7 @@
         <div class="profile-input-error">{{errors.type}}</div>
 
         <div class="profile-save-button" (click)="saveChanges()">
-            <div class="profile-button-text">Save</div>
+            <div class="profile-button-text">Save changes</div>
         </div>
     </div>
 </div>

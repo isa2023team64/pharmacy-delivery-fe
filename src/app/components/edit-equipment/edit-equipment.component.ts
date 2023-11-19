@@ -1,19 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Equipment } from '../../infrastructure/rest/model/equipment.model';
 import { EquipmentService } from '../../company/equipment.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
-  selector: 'pd-add-equipment',
-  templateUrl: './add-equipment.component.html',
-  styleUrl: './add-equipment.component.css'
+  selector: 'pd-edit-equipment',
+  templateUrl: './edit-equipment.component.html',
+  styleUrl: './edit-equipment.component.css'
 })
-export class AddEquipmentComponent {
+export class EditEquipmentComponent implements OnInit {
+  equipmentId!: number;
+  equipment?: Equipment;
   newEquipment: Equipment = new Equipment("", "", "");
   errors: any;
 
-  constructor(private service: EquipmentService, private router: Router) {
-
+  constructor(private service: EquipmentService, private router: Router, private route: ActivatedRoute, private location: Location) {
     this.errors = {
       name: "",
       description: "",
@@ -21,11 +23,27 @@ export class AddEquipmentComponent {
     };
   }
 
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.equipmentId = params['id'];
+      this.getEquipment();
+    })
+  }
+
+  getEquipment() {
+    this.service.getById(this.equipmentId).subscribe((result) => {
+      this.equipment = result;
+      const { ...newEq } = this.equipment;
+      this.newEquipment = newEq;
+      console.log(this.equipment.id);
+    }) 
+  }
+
   saveChanges(): void {
     if(this.validate()) {
-      this.service.addNewEquipment(this.newEquipment).subscribe({
+      this.service.updateEquipment(this.equipmentId, this.newEquipment).subscribe({
         next: (result: Equipment) => {
-          this.router.navigate(['home']);
+          this.location.back();
         },
         error: (errData) => {
           console.log(errData);
