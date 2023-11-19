@@ -1,26 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { 
-  faUser
- } from "@fortawesome/free-solid-svg-icons";
-import { RegisteredUserService } from '../../infrastructure/rest/registered-user.service';
-import { RegisteredUser } from '../../infrastructure/rest/model/registered-user.model';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { CompanyAdmin } from '../../infrastructure/rest/model/company-admin.model';
+import { CompanyAdminService } from '../../infrastructure/rest/company-admin.service';
 
 @Component({
-  selector: 'pd-registered-user-profile',
-  templateUrl: './registered-user-profile.component.html',
-  styleUrl: './registered-user-profile.component.css'
+  selector: 'pd-company-admin-profile',
+  templateUrl: './company-admin-profile.component.html',
+  styleUrl: './company-admin-profile.component.css'
 })
-export class RegisteredUserProfileComponent {
+export class CompanyAdminProfileComponent {
   faUser = faUser;
-  userId: number = -1;
-  user: RegisteredUser = new RegisteredUser();
-  userCopy: any;
+  companyAdminId: number = -1;
+  companyAdmin: CompanyAdmin = new CompanyAdmin();
+  companyAdminCopy: any;
   errors: any;
   canEdit: boolean = false;
 
-  constructor(private userService: RegisteredUserService, private route: ActivatedRoute){
-    this.userCopy = {
+  constructor(private userService: CompanyAdminService, private route: ActivatedRoute){
+    this.companyAdminCopy = {
       password: "",
       passwordConfirmation: "",
       firstName: "",
@@ -29,9 +27,10 @@ export class RegisteredUserProfileComponent {
       country: "",
       phoneNumber: "",
       workplace: "",
-      companyName: ""
+      companyName: "",
+      email: ""
     };
-
+    
     this.errors = {
       password: "",
       passwordConfirmation: "",
@@ -48,15 +47,15 @@ export class RegisteredUserProfileComponent {
   ngOnInit(): void {
     this.setInputReadOnly(true);
     this.route.params.subscribe((params) => {
-      this.userId = params['id'];
-      this.fetchUser();
+      this.companyAdminId = params['id'];
+      this.getCompanyAdminById();
     })
   }
 
-  fetchUser(): void {
-    this.userService.getById(this.userId).subscribe({
-      next: (result: RegisteredUser) => {
-        this.user = result;
+  getCompanyAdminById(): void {
+    this.userService.getById(this.companyAdminId).subscribe({
+      next: (result: CompanyAdmin) => {
+        this.companyAdmin = result;
         this.makeUserCopy();
       },
       error: (errData) => {
@@ -67,9 +66,9 @@ export class RegisteredUserProfileComponent {
 
   saveChanges(): void {
     if(this.validate()) {
-      this.userService.update(this.userId, this.userCopy).subscribe({
-        next: (result: RegisteredUser) => {
-          this.user = result;
+      this.userService.update(this.companyAdminId, this.companyAdminCopy).subscribe({
+        next: (result: CompanyAdmin) => {
+          this.companyAdmin = result;
           this.makeUserCopy();
         },
         error: (errData) => {
@@ -82,9 +81,9 @@ export class RegisteredUserProfileComponent {
   }
 
   makeUserCopy(): void {
-    const { email, ...userCopy } = this.user;
-    this.userCopy = userCopy;
-    this.userCopy.passwordConfirmation =this.userCopy.password;
+    const { ...userCopy } = this.companyAdmin;
+    this.companyAdminCopy = userCopy;
+    this.companyAdminCopy.passwordConfirmation = this.companyAdminCopy.password;
   }
 
   startEditing(): void {
@@ -111,57 +110,57 @@ export class RegisteredUserProfileComponent {
     let isValid = true;
     this.resetErrors()
 
-    if (this.userCopy.password === "") {
+    if (this.companyAdminCopy.password === "") {
       this.errors.password = "Password is required.";
       isValid = false;
     }
-    if (this.userCopy.passwordConfirmation === "") {
+    if (this.companyAdminCopy.passwordConfirmation === "") {
       this.errors.passwordConfirmation = "Password confirmation is required.";
       isValid = false;
     }
-    if(this.userCopy.password !== "" && this.userCopy.passwordConfirmation !== "" && this.userCopy.password !== this.userCopy.passwordConfirmation) {
+    if(this.companyAdminCopy.password !== "" && this.companyAdminCopy.passwordConfirmation !== "" && this.companyAdminCopy.password !== this.companyAdminCopy.passwordConfirmation) {
       this.errors.password = "Password cand password confirmation must be the same.";
       this.errors.passwordConfirmation = "Password cand password confirmation must be the same.";
       isValid = false;
     }
     
-    if (this.userCopy.firstName === "") {
+    if (this.companyAdminCopy.firstName === "") {
       this.errors.firstName = "Name is required.";
       isValid = false;
     }
     
-    if (this.userCopy.lastName === "") {
+    if (this.companyAdminCopy.lastName === "") {
       this.errors.lastName = "Surname is required.";
       isValid = false;
     }
     
-    if (this.userCopy.country === "") {
+    if (this.companyAdminCopy.country === "") {
       this.errors.country = "Country is required.";
       isValid = false;
     }
     
-    if (this.userCopy.city === "") {
+    if (this.companyAdminCopy.city === "") {
       this.errors.city = "City is required.";
       isValid = false;
     }
     
-    if (this.userCopy.phoneNumber === "") {
+    if (this.companyAdminCopy.phoneNumber === "") {
       this.errors.phoneNumber = "Phone number is required.";
       isValid = false;
     }
 
     const phoneNumberRegEx = /^\+\d{12}$/;
-    if (this.userCopy.phoneNumber !== "" && !phoneNumberRegEx.test(this.userCopy.phoneNumber)) {
+    if (this.companyAdminCopy.phoneNumber !== "" && !phoneNumberRegEx.test(this.companyAdminCopy.phoneNumber)) {
       this.errors.phoneNumber = "Phone number must be in format: format +XXXXXXXXXXXX.";
       isValid = false;
     }
     
-    if (this.userCopy.workplace === "") {
+    if (this.companyAdminCopy.workplace === "") {
       this.errors.workplace = "Workplace is required.";
       isValid = false;
     }
     
-    if (this.userCopy.companyName === "") {
+    if (this.companyAdminCopy.companyName === "") {
       this.errors.companyName = "Company name is required.";
       isValid = false;
     }

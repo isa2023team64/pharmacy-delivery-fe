@@ -11,9 +11,12 @@ import { RegisterCompanyComponent } from './company/register-company/register-co
 import { UregisteredUserEquipmentComponent } from './unregistered-user/uregistered-user/uregistered-user-equipment/uregistered-user-equipment.component';
 import { UregisteredUserCompaniesComponent } from './unregistered-user/uregistered-user/uregistered-user-companies/uregistered-user-companies.component';
 import { EquipmentSearchComponent } from './components/equipment-search/equipment-search.component';
+import { CompanyDetailsComponent } from './components/company-details/company-details.component';
 import { RegisteredUserProfileComponent } from './components/registered-user-profile/registered-user-profile.component';
 import { EquipmentCompaniesOverviewComponent } from './components/equipment-overview-companies/equipment-companies-overview.component';
 import { RegisterCompanyAdministratorComponent } from './components/company-administrator-registration/company-administrator-registration.component';
+import { CompanyAdminProfileComponent } from './components/company-admin-profile/company-admin-profile.component';
+import { CompanyProfileComponent } from './components/company-profile/company-profile.component';
 import { EquipmentSearchCompanyAdministratorComponent } from './components/equipment-search-company-administrator/equipment-search-company-administrator.component';
 
 const routes: Routes = [
@@ -62,7 +65,11 @@ const routes: Routes = [
     component: UregisteredUserEquipmentComponent,
   },
   {
-    path: 'profile',
+    path: 'company-details/:id',
+    component: CompanyDetailsComponent
+  },
+  {
+    path: 'profile/:id',
     component: RegisteredUserProfileComponent,
   },
   {
@@ -72,6 +79,14 @@ const routes: Routes = [
   {
     path: 'register-company-administrator/:id',
     component: RegisterCompanyAdministratorComponent,
+  },
+  {
+    path: 'company-admin-profile/:id',
+    component: CompanyAdminProfileComponent
+  },
+  {
+    path: 'company-profile/:id',
+    component: CompanyProfileComponent
   },
   {
     path: 'equipment-search-company-administrator',

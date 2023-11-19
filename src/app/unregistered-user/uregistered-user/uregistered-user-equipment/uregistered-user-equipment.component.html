@@ -124,24 +124,7 @@
                 </div>
             </div>
             <div class="company-search-result-companies">
-                <div class="company-card" *ngFor="let equipment of equipment">
-                    <img class="company-image" src="https://pactandpartners.com/wp-content/uploads/2020/02/Medical-Devices-scaled.jpeg"/>
-                    <div class="company-content">
-                        <div class="company-title">{{equipment.name}}</div>
-                        <div class="company-label">
-                            <fa-icon class="star" [icon]="faStar" />
-                            {{equipment.averageRating}}
-                        </div>
-                        <div class="company-label">
-                            <fa-icon [icon]="faLocationDot" />
-                            Description: {{equipment.description}}
-                        </div>
-                        <div class="company-label">
-                            <fa-icon [icon]="faLocationDot" />
-                            Type: {{equipment.type}}
-                        </div>
-                    </div>
-                </div>
+                <pd-equipment-card *ngFor="let e of equipment" [equipment]="e"></pd-equipment-card>
             </div>
             <div class="company-search-pages">
                 <div class="company-search-page" [class.company-search-page-highlighted]="page === currentPage || page === '&lt;' || page === '>'" [class.no-border]="page === '...'" *ngFor="let page of pages" (click)="switchPage(page)">
