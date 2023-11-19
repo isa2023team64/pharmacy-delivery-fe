@@ -14,6 +14,7 @@ import { EquipmentSearchComponent } from './components/equipment-search/equipmen
 import { RegisteredUserProfileComponent } from './components/registered-user-profile/registered-user-profile.component';
 import { EquipmentCompaniesOverviewComponent } from './components/equipment-overview-companies/equipment-companies-overview.component';
 import { RegisterCompanyAdministratorComponent } from './components/company-administrator-registration/company-administrator-registration.component';
+import { EquipmentSearchCompanyAdministratorComponent } from './components/equipment-search-company-administrator/equipment-search-company-administrator.component';
 
 const routes: Routes = [
   {
@@ -71,6 +72,10 @@ const routes: Routes = [
   {
     path: 'register-company-administrator/:id',
     component: RegisterCompanyAdministratorComponent,
+  },
+  {
+    path: 'equipment-search-company-administrator',
+    component: EquipmentSearchCompanyAdministratorComponent,
   }
 ];
 
