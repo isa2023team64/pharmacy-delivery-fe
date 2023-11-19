@@ -3,6 +3,7 @@
     <button class="menuButton mat-button" [matMenuTriggerFor]="menu">Menu</button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item [routerLink]="['home']">Home</button>
+      <button mat-menu-item [routerLink]="['registerCompany']">Register Company</button>
       <button mat-menu-item [routerLink]="['unregisteredUserEquipment']">Equipment (uregistered user)</button>
       <button mat-menu-item [routerLink]="['unregisteredUserCompanies']">Companies (uregistered user)</button>
       <button mat-menu-item [routerLink]="['company-search']">Company search (registered user)</button>
@@ -16,6 +17,5 @@
   <div class="navbar-right">
     <div class="nav-button" [routerLink]="['login']">Login</div>
     <div class="nav-button" [routerLink]="['register']">Register</div>
-    <div class="nav-button" [routerLink]="['registerCompany']">Register Company</div>
   </div>
 </div>
