@@ -11,7 +11,7 @@ import { MaterialModule } from '../infrastructure/material/material.module';
 import { EquipmentSearchComponent } from './equipment-search/equipment-search.component';
 import { EquipmentCompaniesOverviewComponent } from './equipment-overview-companies/equipment-companies-overview.component';
 import { RegisterCompanyAdministratorComponent } from './company-administrator-registration/company-administrator-registration.component';
-import { ReactiveFormsModule } from '@angular/forms';
+
 
 
 @NgModule({
