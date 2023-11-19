@@ -17,6 +17,7 @@ import { EquipmentCompaniesOverviewComponent } from './equipment-overview-compan
 import { RegisterCompanyAdministratorComponent } from './company-administrator-registration/company-administrator-registration.component';
 import { CompanyAdminProfileComponent } from './company-admin-profile/company-admin-profile.component';
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
+import { EquipmentSearchCompanyAdministratorComponent } from './equipment-search-company-administrator/equipment-search-company-administrator.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { CompanyProfileComponent } from './company-profile/company-profile.compo
     EquipmentCompaniesOverviewComponent,
     RegisterCompanyAdministratorComponent,
     CompanyAdminProfileComponent,
-    CompanyProfileComponent
+    CompanyProfileComponent,
+    EquipmentSearchCompanyAdministratorComponent,
   ],
   imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule, ReactiveFormsModule],
   exports: [HomeComponent,
