@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Equipment } from '../../infrastructure/rest/model/equipment.model';
 import { 
   faFilter,
   faXmark, 
@@ -11,14 +12,14 @@ import {
   faStar,
   faClock
  } from "@fortawesome/free-solid-svg-icons";
-import { Company } from '../../company/model/company.model';
 
 @Component({
-  selector: 'pd-company-card',
-  templateUrl: './company-card.component.html',
-  styleUrl: './company-card.component.css'
+  selector: 'pd-equipment-card',
+  templateUrl: './equipment-card.component.html',
+  styleUrl: './equipment-card.component.css'
 })
-export class CompanyCardComponent implements OnInit {
+export class EquipmentCardComponent {
+  
   faFilter = faFilter;
   faXmark = faXmark;
   faChevronDown = faChevronDown;
@@ -28,11 +29,7 @@ export class CompanyCardComponent implements OnInit {
   faChevronRight = faChevronRight;
   faLocationDot = faLocationDot;
   faStar = faStar;
-  faClock = faClock;
+  faClock = faClock; 
 
-  constructor() { }
-
-  ngOnInit(): void { }
-
-  @Input() company!: Company;
+  @Input() equipment!: Equipment;
 }

@@ -7,6 +7,8 @@ import { environment } from '../../env/environment';
 import { AuthenticationResponse } from '../infrastructure/auth/model/authentication-response.model';
 import { TokenStorage } from '../infrastructure/auth/jwt/token.service';
 import { Company } from './model/company.model';
+import { PagedResult } from '../infrastructure/rest/model/paged-result.model';
+import { Equipment } from '../infrastructure/rest/model/equipment.model';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +34,16 @@ export class CompanyService {
       );
   }
 
+  getById(id: number): Observable<Company> {
+    const route = environment.apiHost + 'companies' + '/' + id;
+    return this.http.get<Company>(route);
+  }
+  
+  getEquipmentByCompanyId(id: number): Observable<Equipment[]> {
+    const route = environment.apiHost + 'companies/' + id + '/equipment';
+    console.log(route);
+    return this.http.get<Equipment[]>(route); 
+  }
 
 }
 

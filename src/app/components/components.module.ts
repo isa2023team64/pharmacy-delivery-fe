@@ -10,6 +10,8 @@ import { CompanySearchComponent } from './company-search/company-search.componen
 import { MaterialModule } from '../infrastructure/material/material.module';
 import { EquipmentSearchComponent } from './equipment-search/equipment-search.component';
 import { CompanyCardComponent } from './company-card/company-card.component';
+import { CompanyDetailsComponent } from './company-details/company-details.component';
+import { EquipmentCardComponent } from './equipment-card/equipment-card.component';
 
 @NgModule({
   declarations: [
@@ -18,9 +20,11 @@ import { CompanyCardComponent } from './company-card/company-card.component';
     NavbarComponent,
     CompanySearchComponent,
     EquipmentSearchComponent,
-    CompanyCardComponent
+    CompanyCardComponent,
+    CompanyDetailsComponent,
+    EquipmentCardComponent
   ],
   imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule],
-  exports: [HomeComponent, LoginComponent,  NavbarComponent, CompanyCardComponent],
+  exports: [HomeComponent, LoginComponent,  NavbarComponent, CompanyCardComponent, CompanyDetailsComponent, EquipmentCardComponent],
 })
 export class ComponentsModule {}
