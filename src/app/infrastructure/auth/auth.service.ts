@@ -39,7 +39,7 @@ export class AuthService {
   login(login: Login): Observable<AuthenticationResponse> {
       console.log('Sending login request:', login);
       return this.http
-          .post<AuthenticationResponse>(environment.apiHost + 'auth/login', login)
+          .post<AuthenticationResponse>('http://localhost:8080/auth/login', login)
           .pipe(
               tap((authenticationResponse) => {
                   console.log('Received authentication response:', authenticationResponse);

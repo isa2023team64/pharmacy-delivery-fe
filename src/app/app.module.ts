@@ -10,6 +10,7 @@ import { JwtModule, JwtInterceptor } from '@auth0/angular-jwt';
 import { AuthService } from './infrastructure/auth/auth.service';
 import { CompanyModule } from './company/company.module';
 import { UregisteredUserModule } from './unregistered-user/uregistered-user/uregistered-user.module';
+import { ApiService, ConfigService } from './infrastructure/auth';
 
 @NgModule({
   declarations: [AppComponent],
@@ -39,6 +40,8 @@ import { UregisteredUserModule } from './unregistered-user/uregistered-user/ureg
       multi: true,
     },
     AuthService,
+    ApiService,
+    ConfigService,
   ],
   bootstrap: [AppComponent],
 })
