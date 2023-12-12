@@ -73,4 +73,11 @@
     margin-bottom: 20px; 
   }
   
+  .profile-input-error {
+    height: 2rem;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.75rem;
+    color: rgba(255, 0, 0, 1);
+}
   

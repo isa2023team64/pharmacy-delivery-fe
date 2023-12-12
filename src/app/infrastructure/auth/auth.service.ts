@@ -34,16 +34,19 @@ export class AuthService {
     private tokenStorage: TokenStorage,
     private router: Router,
   ) {}
+  private access_token = null;
 
   login(login: Login): Observable<AuthenticationResponse> {
-    return this.http
-      .post<AuthenticationResponse>(environment.apiHost + 'users/login', login)
-      .pipe(
-        tap((authenticationResponse) => {
-          this.tokenStorage.saveAccessToken(authenticationResponse.accessToken);
-          this.setUser();
-        })
-      );
+      console.log('Sending login request:', login);
+      return this.http
+          .post<AuthenticationResponse>(environment.apiHost + 'auth/login', login)
+          .pipe(
+              tap((authenticationResponse) => {
+                  console.log('Received authentication response:', authenticationResponse);
+                  this.tokenStorage.saveAccessToken(authenticationResponse.accessToken);
+                  this.setUser();
+              })
+          );
   }
 
   register(registration: Registration): Observable<AuthenticationResponse> {
@@ -74,10 +77,16 @@ export class AuthService {
         }
       });
   }
-  
+
+  tokenIsPresent() {
+    return this.access_token != undefined && this.access_token != null;
+  }
+
+  getToken() {
+    return this.access_token;
+  }
 
   logout(): void {
-    this.router.navigate(['/home']).then((_) => {
       this.tokenStorage.clear();
       this.user$.next({
         id: 0,
@@ -92,7 +101,10 @@ export class AuthService {
         companyName: '',
         active: false,
         lastPasswordResetDate: new Date()});
-    });
+
+    localStorage.removeItem("jwt");
+    this.access_token = null;
+    this.router.navigate(['/login']);
   }
 
   checkIfUserExists(): void {

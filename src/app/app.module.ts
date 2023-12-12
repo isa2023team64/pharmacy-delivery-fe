@@ -4,25 +4,33 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ComponentsModule } from './components/components.module';
-import { JwtInterceptor } from './infrastructure/auth/jwt/jwt.interceptor';
-import { AuthService } from './infrastructure/auth/auth.service';
 import { AuthModule } from './infrastructure/auth/auth.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { JwtModule, JwtInterceptor } from '@auth0/angular-jwt';
+import { AuthService } from './infrastructure/auth/auth.service';
 import { CompanyModule } from './company/company.module';
 import { UregisteredUserModule } from './unregistered-user/uregistered-user/uregistered-user.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    BrowserModule, 
-    AppRoutingModule, 
+    BrowserModule,
+    AppRoutingModule,
     ComponentsModule,
     AuthModule,
     CompanyModule,
     HttpClientModule,
-    HttpClientModule,
     BrowserAnimationsModule,
-    UregisteredUserModule
+    UregisteredUserModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          // Implement your token retrieval logic here
+          return localStorage.getItem('access_token');
+        },
+        // Other JWT configuration options if needed
+      },
+    }),
   ],
   providers: [
     {
@@ -34,5 +42,4 @@ import { UregisteredUserModule } from './unregistered-user/uregistered-user/ureg
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}
