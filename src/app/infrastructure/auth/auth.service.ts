@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, map, tap } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { TokenStorage } from './jwt/token.service';
 import { environment } from '../../../env/environment';
@@ -14,7 +14,10 @@ import { Registration } from './model/registration.model';
   providedIn: 'root',
 })
 export class AuthService {
-  user$ = new BehaviorSubject<User>({
+  
+  currentUser!:any;
+
+  user$ = new BehaviorSubject<any>({
     id: 0,
     name: '',
     surname: '',
@@ -26,7 +29,9 @@ export class AuthService {
     workplace: '',
     companyName: '',
     active: false,
-    lastPasswordResetDate: new Date()});
+    lastPasswordResetDate: new Date(),
+    roles: []
+  });
     
 
   constructor(
@@ -36,7 +41,7 @@ export class AuthService {
   ) {}
   private access_token = null;
 
-  login(login: Login): Observable<AuthenticationResponse> {
+  /*login(login: Login): Observable<AuthenticationResponse> {
       console.log('Sending login request:', login);
       return this.http
           .post<AuthenticationResponse>('http://localhost:8080/auth/login', login)
@@ -47,6 +52,24 @@ export class AuthService {
                   this.setUser();
               })
           );
+  }*/
+  login(login: Login) {
+    const headers = new HttpHeaders({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    });
+    return this.http.post<any>('http://localhost:8080/auth/login', login, { headers })
+      .pipe(map((res) => {
+        console.log(res);
+        this.access_token = res.accessToken;
+        localStorage.setItem("jwt", res.accessToken);
+        console.log(`Logged in as ${JSON.parse(atob(res.accessToken.split('.')[1])).sub}`);
+            this.http.get<any>(`localhost:8080/api/registered-users/by-email/${JSON.parse(atob(res.accessToken.split('.')[1])).sub}`)
+            .pipe(map(user => {
+              this.currentUser = user;
+              console.log(this.currentUser)
+            }));
+      }));
   }
 
   register(registration: Registration): Observable<AuthenticationResponse> {
@@ -56,7 +79,6 @@ export class AuthService {
         tap((authenticationResponse) => {
           this.tokenStorage.saveAccessToken(authenticationResponse.accessToken);
           console.log(authenticationResponse.accessToken)
-          //this.setUser();
         })
       );
   }
@@ -134,5 +156,16 @@ export class AuthService {
       
     };
     this.user$.next(user);
+    
+  }
+
+
+  setUserInfo(email: string) {
+    console.log("Setting current user info:"+ email);
+    return this.http.get<any>(`${environment.apiHost}registered-users/by-email/${email}`)
+    .pipe(map(user => {
+      this.currentUser = user;
+      return user;
+    }));
   }
 }

@@ -18,7 +18,8 @@
     <div class="app-name">Medspress</div>
   </div>
   <div class="navbar-right">
-    <div class="nav-button" [routerLink]="['login']">Login</div>
+    <div class="nav-button" *ngIf="!hasSignedIn()" [routerLink]="['login']">Log In</div>
+    <div class="nav-button" *ngIf="hasSignedIn()" (click)="onLogout()">Logout</div>
     <div class="nav-button" [routerLink]="['register']">Register</div>
   </div>
 </div>

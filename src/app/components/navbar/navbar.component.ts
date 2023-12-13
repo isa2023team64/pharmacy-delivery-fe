@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../infrastructure/auth';
+import { Router } from '@angular/router';
+import { User } from '../../infrastructure/auth/model/user.model';
 
 @Component({
   selector: 'pd-navbar',
@@ -6,7 +9,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent implements OnInit {
-  constructor() {}
+ 
+  user: User | undefined;
 
-  ngOnInit(): void {}
+  constructor(private authService: AuthService, private router: Router) {}
+
+  isProfilePage(): boolean {
+    return this.router.url === '/profile';
+  }
+
+  ngOnInit(): void {
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+    });
+  }
+
+  onLogout(): void {
+    this.authService.logout();
+  } 
+  
+  hasSignedIn(): any {
+    return !!this.authService.currentUser;
+  }
 }
