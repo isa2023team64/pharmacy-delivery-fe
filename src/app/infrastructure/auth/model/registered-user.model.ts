@@ -1,4 +1,4 @@
-export interface RegistrationResponse {
+export interface RegisteredUser {
     id: number;
     active: boolean;
     lastPasswordResetDate: Date;

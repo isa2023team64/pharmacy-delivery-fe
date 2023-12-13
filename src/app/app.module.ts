@@ -10,7 +10,7 @@ import { JwtModule, JwtInterceptor } from '@auth0/angular-jwt';
 import { AuthService } from './infrastructure/auth/auth.service';
 import { CompanyModule } from './company/company.module';
 import { UregisteredUserModule } from './unregistered-user/uregistered-user/uregistered-user.module';
-import { ApiService, ConfigService } from './infrastructure/auth';
+import { ApiService } from './infrastructure/auth';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,10 +26,8 @@ import { ApiService, ConfigService } from './infrastructure/auth';
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
-          // Implement your token retrieval logic here
           return localStorage.getItem('access_token');
         },
-        // Other JWT configuration options if needed
       },
     }),
   ],
@@ -38,10 +36,7 @@ import { ApiService, ConfigService } from './infrastructure/auth';
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
       multi: true,
-    },
-    AuthService,
-    ApiService,
-    ConfigService,
+    }
   ],
   bootstrap: [AppComponent],
 })

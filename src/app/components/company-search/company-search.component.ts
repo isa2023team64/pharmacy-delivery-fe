@@ -46,7 +46,7 @@ export class CompanySearchComponent {
     this.searchFilter = {name: "", country: "", city: "", minRating: 0, maxRating: 5, sortCriteria: "", page: this.currentPage, pageSize: this.pageSize}
     this.displayedSortCriteria = '-';
   }
-
+  
   ngOnInit(): void {
     this.dropped = {nameDropped: true, locationDropped: true, ratingDropped: true}
     this.SortIcons = {ascending: faArrowUpWideShort, descending: faArrowDownWideShort, none: ""};

@@ -20,6 +20,7 @@ import { CompanyProfileComponent } from './components/company-profile/company-pr
 import { EquipmentSearchCompanyAdministratorComponent } from './components/equipment-search-company-administrator/equipment-search-company-administrator.component';
 import { AddEquipmentComponent } from './components/add-equipment/add-equipment.component';
 import { EditEquipmentComponent } from './components/edit-equipment/edit-equipment.component';
+import { RoleGuard } from './infrastructure/auth/auth-guard/auth-guard.guard';
 
 const routes: Routes = [
   {
@@ -68,7 +69,10 @@ const routes: Routes = [
   },
   {
     path: 'company-details/:id',
-    component: CompanyDetailsComponent
+    component: CompanyDetailsComponent,canActivate: [RoleGuard],
+    data: {
+      expectedRole: 'ROLE_USER'
+    }
   },
   {
     path: 'profile/:id',

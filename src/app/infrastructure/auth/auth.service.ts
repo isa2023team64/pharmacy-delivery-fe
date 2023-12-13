@@ -9,50 +9,47 @@ import { Login } from './model/login.model';
 import { AuthenticationResponse } from './model/authentication-response.model';
 import { User } from './model/user.model';
 import { Registration } from './model/registration.model';
+import { RegisteredUserService } from '../rest/registered-user.service';
+import { RegisteredUser } from './model/registered-user.model';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   
-  currentUser!:any;
+  private access_token: string | null = null; 
+
+  userEmail: String = "";
+  
+  use: RegisteredUser | undefined;
 
   user$ = new BehaviorSubject<any>({
     id: 0,
-    name: '',
-    surname: '',
     email: '',
-    password: '',
-    city: '',
-    country: '',
-    phoneNumber: '',
-    workplace: '',
-    companyName: '',
-    active: false,
-    lastPasswordResetDate: new Date(),
     roles: []
   });
     
-
   constructor(
     private http: HttpClient,
     private tokenStorage: TokenStorage,
     private router: Router,
-  ) {}
-  private access_token = null;
+    private regUsService: RegisteredUserService,
+    private cookieService: CookieService
+  ) {
+    const storedToken = localStorage.getItem('jwt');
+    if (storedToken) {
+      this.access_token = storedToken;
+      this.setUser();
+    }
+  }
+  
+  isAuthenticatedSrc: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.cookieService.get('LoggedIn') === 'true');
 
-  /*login(login: Login): Observable<AuthenticationResponse> {
-      console.log('Sending login request:', login);
-      return this.http
-          .post<AuthenticationResponse>('http://localhost:8080/auth/login', login)
-          .pipe(
-              tap((authenticationResponse) => {
-                  console.log('Received authentication response:', authenticationResponse);
-                  this.tokenStorage.saveAccessToken(authenticationResponse.accessToken);
-                  this.setUser();
-              })
-          );
-  }*/
+  get isAuthenticated(): Observable<boolean> {
+  return this.isAuthenticatedSrc.asObservable();
+  }
+
   login(login: Login) {
     const headers = new HttpHeaders({
       'Accept': 'application/json',
@@ -62,13 +59,25 @@ export class AuthService {
       .pipe(map((res) => {
         console.log(res);
         this.access_token = res.accessToken;
+        //AKO VAM TREBA ID ILI EMAIL ULOGOVANOG USERA
+        // const tokenPayload = JSON.parse(atob(res.accessToken.split('.')[1]));
+        // const email = tokenPayload.sub;
+        // const id = tokenPayload.id;
+        // console.log('Email:', email);
+        // console.log('ID:', id);
         localStorage.setItem("jwt", res.accessToken);
-        console.log(`Logged in as ${JSON.parse(atob(res.accessToken.split('.')[1])).sub}`);
-            this.http.get<any>(`localhost:8080/api/registered-users/by-email/${JSON.parse(atob(res.accessToken.split('.')[1])).sub}`)
-            .pipe(map(user => {
-              this.currentUser = user;
-              console.log(this.currentUser)
-            }));
+        this.setUser();
+        this.findRegisteredUserById().subscribe({
+          next: (result) => {
+            this.use=result;
+            console.log('User that has been registered:', this.use);
+            window.location.reload();
+          },
+          error: (err: any) => {
+            console.log(err);
+          }
+        });
+        return res;
       }));
   }
 
@@ -100,33 +109,14 @@ export class AuthService {
       });
   }
 
-  tokenIsPresent() {
-    return this.access_token != undefined && this.access_token != null;
-  }
-
-  getToken() {
-    return this.access_token;
-  }
-
   logout(): void {
-      this.tokenStorage.clear();
-      this.user$.next({
-        id: 0,
-        name: '',
-        surname: '',
-        email: '',
-        password: '',
-        city: '',
-        country: '',
-        phoneNumber: '',
-        workplace: '',
-        companyName: '',
-        active: false,
-        lastPasswordResetDate: new Date()});
-
-    localStorage.removeItem("jwt");
-    this.access_token = null;
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']).then(_ => {
+      localStorage.removeItem("jwt");
+      this.access_token = null;
+      this.user$.next({email: "", id: 0,roles: []});
+      window.location.reload();
+      }
+    );
   }
 
   checkIfUserExists(): void {
@@ -137,35 +127,32 @@ export class AuthService {
     this.setUser();
   }
 
-  private setUser(): void {
+  setUser(): void {
     const jwtHelperService = new JwtHelperService();
-    const accessToken = this.tokenStorage.getAccessToken() || '';
-    const user: User = {
+    const accessToken = this.access_token || "";
+    const user: any = {
       id: +jwtHelperService.decodeToken(accessToken).id,
-      email: jwtHelperService.decodeToken(accessToken).email,
-      name: jwtHelperService.decodeToken(accessToken).name,
-      surname: jwtHelperService.decodeToken(accessToken).surname,
-      password: jwtHelperService.decodeToken(accessToken).password,
-      city: jwtHelperService.decodeToken(accessToken).city,
-      country: jwtHelperService.decodeToken(accessToken).country,
-      phoneNumber: jwtHelperService.decodeToken(accessToken).phoneNumber,
-      workplace: jwtHelperService.decodeToken(accessToken).workplace,
-      companyName: jwtHelperService.decodeToken(accessToken).companyName,
-      active: jwtHelperService.decodeToken(accessToken).active,
-      lastPasswordResetDate: jwtHelperService.decodeToken(accessToken).lastPasswordResetDate,
-      
+      email: jwtHelperService.decodeToken(accessToken).sub,
+      roles: jwtHelperService.decodeToken(accessToken).roles,
     };
+    console.log(user)
     this.user$.next(user);
-    
   }
 
+  getUserById(): Observable<User> {
+    const userId= this.user$.value.id;
+    return this.http.get<User>(`${environment.apiHost}users/${userId}`);
+  }
 
-  setUserInfo(email: string) {
-    console.log("Setting current user info:"+ email);
-    return this.http.get<any>(`${environment.apiHost}registered-users/by-email/${email}`)
-    .pipe(map(user => {
-      this.currentUser = user;
-      return user;
-    }));
+  findRegisteredUserById():Observable<RegisteredUser>{
+    return this.http.get<RegisteredUser>(`${environment.apiHost}registered-users/by-id/${this.user$.value.id}`);
+  }
+  tokenIsPresent() {
+    console.log("Token is present" + this.access_token != undefined && this.access_token != null)
+    return this.access_token != undefined && this.access_token != null;
+  }
+
+  getToken() {
+    return this.access_token;
   }
 }

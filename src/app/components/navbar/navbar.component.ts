@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../infrastructure/auth';
 import { Router } from '@angular/router';
 import { User } from '../../infrastructure/auth/model/user.model';
-
+import { RegisteredUserService } from '../../infrastructure/rest/registered-user.service';
 @Component({
   selector: 'pd-navbar',
   templateUrl: './navbar.component.html',
@@ -10,7 +10,7 @@ import { User } from '../../infrastructure/auth/model/user.model';
 })
 export class NavbarComponent implements OnInit {
  
-  user: User | undefined;
+  user: any;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -20,15 +20,12 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.user$.subscribe(user => {
-      this.user = user;
+       this.user = user;
+       console.log(this.user)
     });
   }
 
   onLogout(): void {
     this.authService.logout();
   } 
-  
-  hasSignedIn(): any {
-    return !!this.authService.currentUser;
-  }
 }

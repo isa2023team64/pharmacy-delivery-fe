@@ -13,11 +13,11 @@ import { AuthService } from '../auth.service';
 export class TokenInterceptor implements HttpInterceptor {
   constructor(public auth: AuthService) { }
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
+    console.log("INTERCEPT CALLED")
     if (this.auth.tokenIsPresent()) {
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${this.auth.getToken()}` 
+          Authorization: `Bearer ${localStorage.getItem("jwt")}` 
         }
       });
     }

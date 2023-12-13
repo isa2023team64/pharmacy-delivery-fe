@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { environment } from '../../../env/environment';
 import { CompanyNoAdmin } from './model/company-no-admin.model';
@@ -11,7 +11,7 @@ import { Company } from '../../company/model/company.model';
 })
 export class CompanyService {
   basePath: string;
-
+  headers: HttpHeaders = new HttpHeaders({'COntent-Type': 'application/json','Authorization': `Bearer ${localStorage.getItem("jwt")}`})
   constructor(private http: HttpClient) {
     this.basePath = environment.apiHost;
   }
@@ -34,7 +34,7 @@ export class CompanyService {
     query = query != "" ? `${query}&` : query
     query = `${query}${pageQuery}&${pageSizeQuery}`
     const path = this.basePath + "companies/search?" + query;
-    return this.http.get<PagedResult<CompanyNoAdmin>>(path);
+    return this.http.get<PagedResult<CompanyNoAdmin>>(path,{headers: this.headers});
   }
 
 
@@ -62,7 +62,7 @@ export class CompanyService {
     query = query != "" ? `${query}&` : query
     query = `${query}${pageQuery}&${pageSizeQuery}`
     const path = this.basePath + "companies/by-equipment/" + equipmentId + "?" + query;
-    return this.http.get<PagedResult<CompanyNoAdmin>>(path);
+    return this.http.get<PagedResult<CompanyNoAdmin>>(path,{headers: this.headers});
   }
 
 
