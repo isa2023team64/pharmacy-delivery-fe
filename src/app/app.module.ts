@@ -10,6 +10,7 @@ import { AuthModule } from './infrastructure/auth/auth.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CompanyModule } from './company/company.module';
 import { UregisteredUserModule } from './unregistered-user/uregistered-user/uregistered-user.module';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,7 +23,8 @@ import { UregisteredUserModule } from './unregistered-user/uregistered-user/ureg
     HttpClientModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    UregisteredUserModule
+    UregisteredUserModule,
+    FullCalendarModule
   ],
   providers: [
     {

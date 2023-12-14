@@ -18,7 +18,8 @@ import { RegisterCompanyAdministratorComponent } from './company-administrator-r
 import { CompanyAdminProfileComponent } from './company-admin-profile/company-admin-profile.component';
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
 import { EquipmentSearchCompanyAdministratorComponent } from './equipment-search-company-administrator/equipment-search-company-administrator.component';
-
+import { CompanyCalendarComponent } from './company-calendar/company-calendar.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [
@@ -36,8 +37,9 @@ import { EquipmentSearchCompanyAdministratorComponent } from './equipment-search
     CompanyAdminProfileComponent,
     CompanyProfileComponent,
     EquipmentSearchCompanyAdministratorComponent,
+    CompanyCalendarComponent
   ],
-  imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule, ReactiveFormsModule, FullCalendarModule],
   exports: [HomeComponent,
             LoginComponent,
             NavbarComponent,
@@ -47,6 +49,7 @@ import { EquipmentSearchCompanyAdministratorComponent } from './equipment-search
             EquipmentCompaniesOverviewComponent,
             RegisterCompanyAdministratorComponent,
             CompanyAdminProfileComponent,
-            CompanyProfileComponent],
+            CompanyProfileComponent,
+            CompanyCalendarComponent],
 })
 export class ComponentsModule {}
