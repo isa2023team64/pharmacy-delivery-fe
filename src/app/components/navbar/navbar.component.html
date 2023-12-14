@@ -4,8 +4,8 @@
     <mat-menu #menu="matMenu">
       <button mat-menu-item [routerLink]="['home']">Home</button>
       <button mat-menu-item [routerLink]="['registerCompany']">Register Company</button>
-      <button mat-menu-item *ngIf="!(user && (user.roles.includes('ROLE_USER')||user.roles.includes('ROLE_COMPANY_ADMIN')||user.roles.includes('SYSTEM_ADMIN')))" [routerLink]="['unregisteredUserEquipment']">Equipment (uregistered user)</button>
-      <button mat-menu-item *ngIf="!(user && (user.roles.includes('ROLE_USER')||user.roles.includes('ROLE_COMPANY_ADMIN')||user.roles.includes('SYSTEM_ADMIN')))" [routerLink]="['unregisteredUserCompanies']">Companies (uregistered user)</button>
+      <button mat-menu-item *ngIf="user && user.email === ''" [routerLink]="['unregisteredUserEquipment']">Equipment (uregistered user)</button>
+      <button mat-menu-item *ngIf="user && user.email === ''" [routerLink]="['unregisteredUserCompanies']">Companies (uregistered user)</button>
       <button mat-menu-item *ngIf="user  && user.roles.includes('ROLE_USER')" [routerLink]="['company-search']">Company search (registered user)</button>
       <button mat-menu-item *ngIf="user  && user.roles.includes('ROLE_USER')" [routerLink]="['equipment-search']">Equipment search (registered user)</button>
       <button mat-menu-item *ngIf="user  && user.roles.includes('ROLE_COMPANY_ADMIN')"[routerLink]="['company-admin-profile/3']">Profile (company admin)</button>
@@ -20,6 +20,6 @@
   <div class="navbar-right">
     <div class="nav-button" *ngIf="user && user.email === ''" [routerLink]="['login']">Log In</div>
     <div class="nav-button" *ngIf="user && user.email !== ''" (click)="onLogout()">Log Out</div>
-    <div class="nav-button" [routerLink]="['register']">Register</div>
+    <div class="nav-button" *ngIf="user && user.email === ''" [routerLink]="['register']">Register</div>
   </div>
 </div>
