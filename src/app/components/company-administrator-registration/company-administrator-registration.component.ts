@@ -59,8 +59,6 @@ export class RegisterCompanyAdministratorComponent {
         city: this.registrationCompanyAdministratorForm.value.cityAdministrator || "", 
         country: this.registrationCompanyAdministratorForm.value.countryAdministrator || "",
         phoneNumber: this.registrationCompanyAdministratorForm.value.phoneNumber || "",
-        workplace: this.registrationCompanyAdministratorForm.value.workplace || "",
-        companyName: this.registrationCompanyAdministratorForm.value.companyName || "",
         lastPasswordResetDate: new Date(),
         active: true,
     }

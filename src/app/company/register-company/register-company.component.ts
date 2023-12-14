@@ -65,8 +65,6 @@ export class RegisterCompanyComponent {
           city: this.registrationCompanyForm.value.cityAdministrator || "", 
           country: this.registrationCompanyForm.value.countryAdministrator || "",
           phoneNumber: this.registrationCompanyForm.value.phoneNumber || "",
-          workplace: this.registrationCompanyForm.value.workplace || "",
-          companyName: this.registrationCompanyForm.value.companyName || "",
           lastPasswordResetDate: new Date(),
           active: true,
         }, 
