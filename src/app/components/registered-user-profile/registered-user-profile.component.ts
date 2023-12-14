@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+  import { Component, OnInit } from '@angular/core';
 import { 
   faUser
  } from "@fortawesome/free-solid-svg-icons";
 import { RegisteredUserService } from '../../infrastructure/rest/registered-user.service';
 import { RegisteredUser } from '../../infrastructure/rest/model/registered-user.model';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../infrastructure/auth';
 
 @Component({
   selector: 'pd-registered-user-profile',
@@ -19,7 +20,9 @@ export class RegisteredUserProfileComponent {
   errors: any;
   canEdit: boolean = false;
 
-  constructor(private userService: RegisteredUserService, private route: ActivatedRoute){
+  constructor(private authService: AuthService,
+              private userService: RegisteredUserService,
+              private route: ActivatedRoute){
     this.userCopy = {
       password: "",
       passwordConfirmation: "",
@@ -48,21 +51,29 @@ export class RegisteredUserProfileComponent {
   ngOnInit(): void {
     this.setInputReadOnly(true);
     this.route.params.subscribe((params) => {
-      this.userId = params['id'];
       this.fetchUser();
     })
   }
 
   fetchUser(): void {
-    this.userService.getById(this.userId).subscribe({
-      next: (result: RegisteredUser) => {
-        this.user = result;
+    // this.userService.getById(this.userId).subscribe({
+    //   next: (result: RegisteredUser) => {
+    //     this.user = result;
+    //     this.makeUserCopy();
+    //   },
+    //   error: (errData) => {
+    //     console.log(errData);
+    //   }
+    // })
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+      if (!user.id) return;
+      this.userId = user.id;
+      this.userService.getById(this.userId).subscribe(registeredUser => {
+        this.user = registeredUser;
         this.makeUserCopy();
-      },
-      error: (errData) => {
-        console.log(errData);
-      }
-    })
+      })
+    });
   }
 
   saveChanges(): void {

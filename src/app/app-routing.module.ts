@@ -75,8 +75,12 @@ const routes: Routes = [
     }
   },
   {
-    path: 'profile/:id',
+    path: 'profile',
     component: RegisteredUserProfileComponent,
+    canActivate: [RoleGuard],
+    data: {
+      expectedRole: 'ROLE_USER'
+    }
   },
   {
     path: 'equipment-companies-overview/:id',
