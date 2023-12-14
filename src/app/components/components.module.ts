@@ -18,6 +18,10 @@ import { RegisterCompanyAdministratorComponent } from './company-administrator-r
 import { CompanyAdminProfileComponent } from './company-admin-profile/company-admin-profile.component';
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
 import { EquipmentSearchCompanyAdministratorComponent } from './equipment-search-company-administrator/equipment-search-company-administrator.component';
+import { EditableEquipmentCardComponent } from './editable-equipment-card/editable-equipment-card.component';
+import { AddEquipmentComponent } from './add-equipment/add-equipment.component';
+import { EditEquipmentComponent } from './edit-equipment/edit-equipment.component';
+
 import { CompanyCalendarComponent } from './company-calendar/company-calendar.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 
@@ -37,6 +41,9 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     CompanyAdminProfileComponent,
     CompanyProfileComponent,
     EquipmentSearchCompanyAdministratorComponent,
+    EditableEquipmentCardComponent,
+    AddEquipmentComponent,
+    EditEquipmentComponent,
     CompanyCalendarComponent
   ],
   imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule, ReactiveFormsModule, FullCalendarModule],
@@ -50,6 +57,8 @@ import { FullCalendarModule } from '@fullcalendar/angular';
             RegisterCompanyAdministratorComponent,
             CompanyAdminProfileComponent,
             CompanyProfileComponent,
+            AddEquipmentComponent,
+            EditEquipmentComponent,
             CompanyCalendarComponent],
 })
 export class ComponentsModule {}

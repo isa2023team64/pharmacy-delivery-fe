@@ -4,26 +4,33 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ComponentsModule } from './components/components.module';
-import { JwtInterceptor } from './infrastructure/auth/jwt/jwt.interceptor';
-import { AuthService } from './infrastructure/auth/auth.service';
 import { AuthModule } from './infrastructure/auth/auth.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { JwtModule, JwtInterceptor } from '@auth0/angular-jwt';
+import { AuthService } from './infrastructure/auth/auth.service';
 import { CompanyModule } from './company/company.module';
 import { UregisteredUserModule } from './unregistered-user/uregistered-user/uregistered-user.module';
+import { ApiService } from './infrastructure/auth';
 import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    BrowserModule, 
-    AppRoutingModule, 
+    BrowserModule,
+    AppRoutingModule,
     ComponentsModule,
     AuthModule,
     CompanyModule,
     HttpClientModule,
-    HttpClientModule,
     BrowserAnimationsModule,
     UregisteredUserModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('access_token');
+        },
+      },
+    }),
     FullCalendarModule
   ],
   providers: [
@@ -31,10 +38,8 @@ import { FullCalendarModule } from '@fullcalendar/angular';
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
       multi: true,
-    },
-    AuthService,
+    }
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../infrastructure/auth/auth.service';
+import { Login } from '../../infrastructure/auth/model/login.model';
 
 @Component({
   selector: 'pd-login',
@@ -10,12 +11,13 @@ import { AuthService } from '../../infrastructure/auth/auth.service';
 })
 export class LoginComponent {
   emailExists: boolean=false;
-
+  errors: any;
+  isValid=true;
   constructor(
     private authService: AuthService,
     private router: Router
   ) {}
-
+  notification="";
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
@@ -30,11 +32,27 @@ export class LoginComponent {
   get password(): FormControl {
     return this.loginForm.get('password') as FormControl;
   }
- 
 
-  
   login(): void {
+    this.setErrors();
+    const login: Login = {
+      username: this.loginForm.value.email || "",
+      password: this.loginForm.value.password || "",
+    };
 
-    
+    if (this.loginForm.valid) {
+      this.authService.login(login).subscribe({
+          next: () => {
+              this.router.navigate(['/']);          
+        }
+      });
+    }
+  }
+  setErrors():void
+  {
+    if (this.loginForm.value.password === "" || this.loginForm.value.email === "") {
+      this.notification= "Password or email are incorrect";
+      this.isValid = false;
+    }
   }
 }

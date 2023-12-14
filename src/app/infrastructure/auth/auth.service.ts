@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, map, tap } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { TokenStorage } from './jwt/token.service';
 import { environment } from '../../../env/environment';
@@ -9,41 +9,76 @@ import { Login } from './model/login.model';
 import { AuthenticationResponse } from './model/authentication-response.model';
 import { User } from './model/user.model';
 import { Registration } from './model/registration.model';
+import { RegisteredUserService } from '../rest/registered-user.service';
+import { RegisteredUser } from './model/registered-user.model';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  user$ = new BehaviorSubject<User>({
-    id: 0,
-    name: '',
-    surname: '',
-    email: '',
-    password: '',
-    city: '',
-    country: '',
-    phoneNumber: '',
-    workplace: '',
-    companyName: '',
-    active: false,
-    lastPasswordResetDate: new Date()});
-    
+  
+  private access_token: string | null = null; 
 
+  userEmail: String = "";
+  
+  use: RegisteredUser | undefined;
+
+  user$ = new BehaviorSubject<any>({
+    id: 0,
+    email: '',
+    roles: []
+  });
+    
   constructor(
     private http: HttpClient,
     private tokenStorage: TokenStorage,
     private router: Router,
-  ) {}
+    private regUsService: RegisteredUserService,
+    private cookieService: CookieService
+  ) {
+    const storedToken = localStorage.getItem('jwt');
+    if (storedToken) {
+      this.access_token = storedToken;
+      this.setUser();
+    }
+  }
+  
+  isAuthenticatedSrc: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.cookieService.get('LoggedIn') === 'true');
 
-  login(login: Login): Observable<AuthenticationResponse> {
-    return this.http
-      .post<AuthenticationResponse>(environment.apiHost + 'users/login', login)
-      .pipe(
-        tap((authenticationResponse) => {
-          this.tokenStorage.saveAccessToken(authenticationResponse.accessToken);
-          this.setUser();
-        })
-      );
+  get isAuthenticated(): Observable<boolean> {
+  return this.isAuthenticatedSrc.asObservable();
+  }
+
+  login(login: Login) {
+    const headers = new HttpHeaders({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    });
+    return this.http.post<any>('http://localhost:8080/auth/login', login, { headers })
+      .pipe(map((res) => {
+        console.log(res);
+        this.access_token = res.accessToken;
+        //AKO VAM TREBA ID ILI EMAIL ULOGOVANOG USERA
+        // const tokenPayload = JSON.parse(atob(res.accessToken.split('.')[1]));
+        // const email = tokenPayload.sub;
+        // const id = tokenPayload.id;
+        // console.log('Email:', email);
+        // console.log('ID:', id);
+        localStorage.setItem("jwt", res.accessToken);
+        this.setUser();
+        this.findRegisteredUserById().subscribe({
+          next: (result) => {
+            this.use=result;
+            console.log('User that has been registered:', this.use);
+            window.location.reload();
+          },
+          error: (err: any) => {
+            console.log(err);
+          }
+        });
+        return res;
+      }));
   }
 
   register(registration: Registration): Observable<AuthenticationResponse> {
@@ -53,7 +88,6 @@ export class AuthService {
         tap((authenticationResponse) => {
           this.tokenStorage.saveAccessToken(authenticationResponse.accessToken);
           console.log(authenticationResponse.accessToken)
-          //this.setUser();
         })
       );
   }
@@ -74,25 +108,15 @@ export class AuthService {
         }
       });
   }
-  
 
   logout(): void {
-    this.router.navigate(['/home']).then((_) => {
-      this.tokenStorage.clear();
-      this.user$.next({
-        id: 0,
-        name: '',
-        surname: '',
-        email: '',
-        password: '',
-        city: '',
-        country: '',
-        phoneNumber: '',
-        workplace: '',
-        companyName: '',
-        active: false,
-        lastPasswordResetDate: new Date()});
-    });
+    this.router.navigate(['/']).then(_ => {
+      localStorage.removeItem("jwt");
+      this.access_token = null;
+      this.user$.next({email: "", id: 0,roles: []});
+      window.location.reload();
+      }
+    );
   }
 
   checkIfUserExists(): void {
@@ -103,24 +127,32 @@ export class AuthService {
     this.setUser();
   }
 
-  private setUser(): void {
+  setUser(): void {
     const jwtHelperService = new JwtHelperService();
-    const accessToken = this.tokenStorage.getAccessToken() || '';
-    const user: User = {
+    const accessToken = this.access_token || "";
+    const user: any = {
       id: +jwtHelperService.decodeToken(accessToken).id,
-      email: jwtHelperService.decodeToken(accessToken).email,
-      name: jwtHelperService.decodeToken(accessToken).name,
-      surname: jwtHelperService.decodeToken(accessToken).surname,
-      password: jwtHelperService.decodeToken(accessToken).password,
-      city: jwtHelperService.decodeToken(accessToken).city,
-      country: jwtHelperService.decodeToken(accessToken).country,
-      phoneNumber: jwtHelperService.decodeToken(accessToken).phoneNumber,
-      workplace: jwtHelperService.decodeToken(accessToken).workplace,
-      companyName: jwtHelperService.decodeToken(accessToken).companyName,
-      active: jwtHelperService.decodeToken(accessToken).active,
-      lastPasswordResetDate: jwtHelperService.decodeToken(accessToken).lastPasswordResetDate,
-      
+      email: jwtHelperService.decodeToken(accessToken).sub,
+      roles: jwtHelperService.decodeToken(accessToken).roles,
     };
+    console.log(user)
     this.user$.next(user);
+  }
+
+  getUserById(): Observable<User> {
+    const userId= this.user$.value.id;
+    return this.http.get<User>(`${environment.apiHost}users/${userId}`);
+  }
+
+  findRegisteredUserById():Observable<RegisteredUser>{
+    return this.http.get<RegisteredUser>(`${environment.apiHost}registered-users/by-id/${this.user$.value.id}`);
+  }
+  tokenIsPresent() {
+    console.log("Token is present" + this.access_token != undefined && this.access_token != null)
+    return this.access_token != undefined && this.access_token != null;
+  }
+
+  getToken() {
+    return this.access_token;
   }
 }
