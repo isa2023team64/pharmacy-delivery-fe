@@ -22,6 +22,7 @@ import { CompanyCalendarComponent } from './components/company-calendar/company-
 import { AddEquipmentComponent } from './components/add-equipment/add-equipment.component';
 import { EditEquipmentComponent } from './components/edit-equipment/edit-equipment.component';
 import { RoleGuard } from './infrastructure/auth/auth-guard/auth-guard.guard';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 const routes: Routes = [
   {
@@ -110,7 +111,11 @@ const routes: Routes = [
   {
     path: 'edit-equipment/:id',
     component: EditEquipmentComponent,
-  }
+  },
+  {
+    path: 'change-password',
+    component: ChangePasswordComponent,
+  },
 ];
 
 @NgModule({

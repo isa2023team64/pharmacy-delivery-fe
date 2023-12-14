@@ -24,6 +24,7 @@ import { EditEquipmentComponent } from './edit-equipment/edit-equipment.componen
 
 import { CompanyCalendarComponent } from './company-calendar/company-calendar.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     EditableEquipmentCardComponent,
     AddEquipmentComponent,
     EditEquipmentComponent,
-    CompanyCalendarComponent
+    CompanyCalendarComponent,
+    ChangePasswordComponent
   ],
   imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule, ReactiveFormsModule, FullCalendarModule],
   exports: [HomeComponent,
@@ -59,6 +61,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
             CompanyProfileComponent,
             AddEquipmentComponent,
             EditEquipmentComponent,
-            CompanyCalendarComponent],
+            CompanyCalendarComponent,
+            ChangePasswordComponent],
 })
 export class ComponentsModule {}

@@ -12,6 +12,7 @@ import { Registration } from './model/registration.model';
 import { RegisteredUserService } from '../rest/registered-user.service';
 import { RegisteredUser } from './model/registered-user.model';
 import { CookieService } from 'ngx-cookie-service';
+import { ChangePassword } from './model/change-password.model';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class AuthService {
   
   private access_token: string | null = null; 
+  private password_changed: string | null = null;
 
   userEmail: String = "";
   
@@ -78,6 +80,24 @@ export class AuthService {
           }
         });
         return res;
+      }));
+  }
+
+  changePassword(changePassword: ChangePassword) {
+    const headers = new HttpHeaders({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    });
+    return this.http.post<any>('http://localhost:8080/auth/changePassword', changePassword, { headers })
+      .pipe(map((res) => {
+        console.log(res);
+        this.password_changed = res.changePassword;
+
+        if (this.password_changed) {
+          this.logout();
+        }
+
+        return res
       }));
   }
 
