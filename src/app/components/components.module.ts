@@ -21,6 +21,7 @@ import { EquipmentSearchCompanyAdministratorComponent } from './equipment-search
 import { EditableEquipmentCardComponent } from './editable-equipment-card/editable-equipment-card.component';
 import { AddEquipmentComponent } from './add-equipment/add-equipment.component';
 import { EditEquipmentComponent } from './edit-equipment/edit-equipment.component';
+import { RegisteredUserAppointmentsComponent } from './registered-user-appointments/registered-user-appointments.component';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { EditEquipmentComponent } from './edit-equipment/edit-equipment.componen
     EditableEquipmentCardComponent,
     AddEquipmentComponent,
     EditEquipmentComponent,
+    RegisteredUserAppointmentsComponent,
   ],
   imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule, ReactiveFormsModule],
   exports: [HomeComponent,

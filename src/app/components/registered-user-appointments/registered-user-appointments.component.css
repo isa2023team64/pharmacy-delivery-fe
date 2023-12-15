@@ -1,0 +1,16 @@
+.appointments-container {
+    background-color: white;
+    color: black;
+    padding: 20px;
+  }
+  
+  .appointment-card {
+    border: 1px solid rgba(107, 22, 22, 1);
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    color: rgba(107, 22, 22, 1);
+  }
+  
