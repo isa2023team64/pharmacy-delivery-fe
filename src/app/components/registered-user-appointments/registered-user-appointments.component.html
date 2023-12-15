@@ -1,14 +1,14 @@
 
 <div class="appointments-container">
-    <h2>Your Appointments</h2>
+    <h2><strong>Your Appointments</strong></h2>
   
     <div *ngFor="let appointment of appointments">
       <div class="appointment-card">
-        <p><strong>Date and Time:</strong> {{ appointment.startDateTime | date:'medium' }}</p>
-        <p><strong>Duration:</strong> {{ appointment.duration }} minutes</p>
-        <p><strong>Status:</strong> {{ appointment.status }}</p>
-        <p><strong>Administrator:</strong> {{ appointment.companyAdministratorFullName }}</p>
-        <p><strong>Company:</strong> {{ appointment.company.name }}</p>
+        <p>Date and Time: {{ appointment.startDateTime | date:'medium' }}</p>
+        <p>Duration: {{ appointment.duration }} minutes</p>
+        <p>Status:<strong> {{ appointment.status }}</strong></p>
+        <p>Administrator: {{ appointment.companyAdministratorFullName }}</p>
+        <p>Company: {{ appointment.company.name }}</p>
       </div>
     </div>
   </div>
