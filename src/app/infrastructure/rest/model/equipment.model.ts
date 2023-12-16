@@ -5,7 +5,6 @@ export class Equipment{
     type: string;
     stockCount: number;
     averageRating?:string;
-    stockCount?: number;
 
 
     constructor(name: string, description: string, type: string, stockCount: number) {
