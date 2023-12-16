@@ -23,8 +23,12 @@ import { AddEquipmentComponent } from './add-equipment/add-equipment.component';
 import { EditEquipmentComponent } from './edit-equipment/edit-equipment.component';
 import { RegisteredUserAppointmentsComponent } from './registered-user-appointments/registered-user-appointments.component';
 import { AppointmentFormComponent } from './appointment-form/appointment-form.component';
+import { ChangeCopmanyAdminPasswordComponent } from './change-company-admin-password/change-company-admin-password.component';
 import { ReservationComponent } from './reservation/reservation.component';
 
+import { CompanyCalendarComponent } from './company-calendar/company-calendar.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -47,9 +51,12 @@ import { ReservationComponent } from './reservation/reservation.component';
     EditEquipmentComponent,
     RegisteredUserAppointmentsComponent,
     AppointmentFormComponent,
+    ChangeCopmanyAdminPasswordComponent,
+    CompanyCalendarComponent,
+    ChangePasswordComponent,
     ReservationComponent,
   ],
-  imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule, ReactiveFormsModule, FullCalendarModule],
   exports: [HomeComponent,
             LoginComponent,
             NavbarComponent,
@@ -61,6 +68,8 @@ import { ReservationComponent } from './reservation/reservation.component';
             CompanyAdminProfileComponent,
             CompanyProfileComponent,
             AddEquipmentComponent,
-            EditEquipmentComponent],
+            EditEquipmentComponent,
+            CompanyCalendarComponent,
+            ChangePasswordComponent],
 })
 export class ComponentsModule {}

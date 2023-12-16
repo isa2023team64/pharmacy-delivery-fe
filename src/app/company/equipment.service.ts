@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Equipment } from '../infrastructure/rest/model/equipment.model';
 import { Observable } from 'rxjs';
 import { environment } from '../../env/environment';
+import { EquipmentRequest } from '../infrastructure/rest/model/equipment-request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class EquipmentService {
     private router: Router,
   ) {}
 
-  addNewEquipment(equipment: Equipment): Observable<Equipment> {
+  addNewEquipment(equipment: EquipmentRequest): Observable<Equipment> {
     const route = environment.apiHost + 'equipment';
     return this.http.post<Equipment>(route, equipment);
   }

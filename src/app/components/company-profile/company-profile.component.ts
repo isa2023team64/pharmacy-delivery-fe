@@ -13,6 +13,7 @@ import { Appointment } from '../../infrastructure/rest/model/appointmen.model';
 import { AppointmentService } from '../../infrastructure/rest/appointment.service';
 import { AuthService } from '../../infrastructure/auth';
 import { CompanyAdminService } from '../../infrastructure/rest/company-admin.service';
+import { eq } from '@fullcalendar/core/internal-common';
 
 @Component({
   selector: 'pd-company-profile',
@@ -24,13 +25,14 @@ export class CompanyProfileComponent implements OnInit {
   companyId: number = -1;
   company: Company = new Company();
   equipment?: CompanyEquipment[];
-  notOwnedEquipment?: CompanyEquipment[];
   canEdit: boolean = false;
   companyCopy?: any;
   errors: any;
   companyAdministrators?: CompanyAdministrator[];
   appointments: Appointment[] = [];
   user: any;
+  searchText: string = '';
+  equipmentSearched: CompanyEquipment[] = [];
 
   faHouse = faHouse;
   faPlus = faPlus;
@@ -93,7 +95,6 @@ export class CompanyProfileComponent implements OnInit {
       this.company = result;
       this.companyAdministrators = this.company.companyAdministrators;
       this.getCompanyEquipmentByCompanyId(this.companyId);
-      this.getEquipmentNotOwnedByCompany(this.companyId);
       this.getAppointments(this.companyId);
       this.makeCompanyCopy();
     })
@@ -102,21 +103,10 @@ export class CompanyProfileComponent implements OnInit {
   getCompanyEquipmentByCompanyId(id: number) {
     this.companyService.getCompanyEquipmentByCompanyId(id).subscribe((results) => {
       this.equipment = results;
+      this.equipmentSearched = results;
       if (this.equipment !== undefined) {
         this.equipment.forEach(eq => {
           eq.isAdded = true;
-        });
-      }
-    })
-  }
-
-  getEquipmentNotOwnedByCompany(id: number) {
-    this.companyService.getNotAddedCompanyEquipmentByCompanyId(id).subscribe((results) => {
-      this.notOwnedEquipment = results;
-
-      if (this.equipment !== undefined) {
-        this.equipment.forEach(eq => {
-          eq.isAdded = false;
         });
       }
     })
@@ -223,17 +213,13 @@ export class CompanyProfileComponent implements OnInit {
     this.errors.description = "";
   };
 
-  addEquipment(eq: CompanyEquipment) {
-    this.companyService.addEquimpentToCompany(this.companyId, eq.id!).subscribe((result) => {
-      this.getCompanyEquipmentByCompanyId(this.companyId);
-      this.getEquipmentNotOwnedByCompany(this.companyId);
-    })
+  addEquipment() {
+    this.router.navigate(['add-equipment/']);
   }
 
   removeEquipment(eq: CompanyEquipment) {
     this.companyService.removeEquimpentFromCompany(this.companyId, eq.id!).subscribe((result) => {
       this.getCompanyEquipmentByCompanyId(this.companyId);
-      this.getEquipmentNotOwnedByCompany(this.companyId);
     })
   }
   
@@ -245,6 +231,15 @@ export class CompanyProfileComponent implements OnInit {
 
   addAppointment() {
     this.dialogRef.open(AppointmentFormComponent);
+  }
+
+  searchEquipment() {
+    this.equipmentSearched = [];
+    this.equipment?.forEach(eq => {
+      if (eq.name.toLowerCase().includes(this.searchText.toLowerCase())) {
+        this.equipmentSearched.push(eq);
+      }
+    });
   }
 
 }
