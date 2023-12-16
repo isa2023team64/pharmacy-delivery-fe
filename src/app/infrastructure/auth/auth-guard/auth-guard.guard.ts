@@ -6,72 +6,48 @@ import { TokenStorage } from '../jwt/token.service';
 
 import { SystemAdminService } from '../../rest/system-admin.service';
 import { SystemAdmin } from '../../rest/model/system-admin.model';
-import { first } from 'rxjs';
-import { ex } from '@fullcalendar/core/internal-common';
+import { of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoleGuard implements CanActivate {
 
-  constructor(private authService: AuthGuardService,private aService: AuthService, private router: Router,private tokenStorage: TokenStorage, private systemAdminService: SystemAdminService) { } 
+  constructor(private authService: AuthGuardService, private aService: AuthService, private router: Router, private tokenStorage: TokenStorage, private systemAdminService: SystemAdminService) { }
 
-  canActivate(route: ActivatedRouteSnapshot): boolean {
-    // this will be passed from the route config
-    // on the data property
+  async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
     const expectedRole = route.data['expectedRole'];
     const role = this.aService.user$.value.roles;
-    // decode the token to get its payload
-    console.log("EXPECTED ROLE:")
-    console.log(expectedRole)
-    console.log("ROLE:")
-    console.log(this.aService.user$.value.roles)
-    console.log(this.aService.user$.value.email)    
-    if (
-      !this.aService.user$ || 
-      !role.includes(expectedRole)
-    ) {
+
+    if (!this.aService.user$ || !role.includes(expectedRole)) {
       this.router.navigate(['']);
       return false;
     }
 
-    if(expectedRole == 'ROLE_SYSTEM_ADMIN'){
-      console.log("UNUTRA")
-      if(this.isSystemAdminFirstLogged(this.aService.user$.value.email)){
-        console.log("UNUTRA 2")
+    if (expectedRole === 'ROLE_SYSTEM_ADMIN') {
+      const firstLogged = await this.isSystemAdminFirstLogged(this.aService.user$.value.email).toPromise();
+      if (firstLogged) {
         this.router.navigate(['/change-password']);
         return false;
       }
     }
 
-
     return true;
   }
 
-  
-
-  isSystemAdminFirstLogged(name: String): boolean{
-
-    let firstLogged = false; 
-    console.log("U METODI")
-    this.systemAdminService.getByName(name).subscribe({
-      next: (systemAdmin: SystemAdmin) => {
+  isSystemAdminFirstLogged(name: String) {
+    return this.systemAdminService.getByName(name).pipe(
+      map((systemAdmin: SystemAdmin) => {
         if (systemAdmin && systemAdmin.firstLogged !== undefined) {
-          console.log("U METODI 2")
-          firstLogged = systemAdmin.firstLogged;
-          console.log(firstLogged)
-          return firstLogged;
+          return systemAdmin.firstLogged;
         }
-        return firstLogged;
-      },
-      error: (error) => {
+        return false;
+      }),
+      catchError((error) => {
         console.error("Error occurred:", error);
-        return true;
-      }
-    });
-  
-    console.log("U METODI 3")
-    return firstLogged;
+        return of(true); // or any default value in case of an error
+      })
+    );
   }
-  
 }
