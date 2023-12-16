@@ -1,0 +1,15 @@
+
+<div class="appointments-container">
+    <h2><strong>Your Appointments</strong></h2>
+  
+    <div *ngFor="let appointment of appointments">
+      <div class="appointment-card">
+        <p>Date and Time: {{ appointment.startDateTime | date:'medium' }}</p>
+        <p>Duration: {{ appointment.duration }} minutes</p>
+        <p>Status:<strong> {{ appointment.status }}</strong></p>
+        <p>Administrator: {{ appointment.companyAdministratorFullName }}</p>
+        <p>Company: {{ appointment.company.name }}</p>
+      </div>
+    </div>
+  </div>
+  

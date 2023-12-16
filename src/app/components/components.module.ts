@@ -21,8 +21,10 @@ import { EquipmentSearchCompanyAdministratorComponent } from './equipment-search
 import { EditableEquipmentCardComponent } from './editable-equipment-card/editable-equipment-card.component';
 import { AddEquipmentComponent } from './add-equipment/add-equipment.component';
 import { EditEquipmentComponent } from './edit-equipment/edit-equipment.component';
+import { RegisteredUserAppointmentsComponent } from './registered-user-appointments/registered-user-appointments.component';
 import { AppointmentFormComponent } from './appointment-form/appointment-form.component';
 import { ChangeCopmanyAdminPasswordComponent } from './change-company-admin-password/change-company-admin-password.component';
+import { ReservationComponent } from './reservation/reservation.component';
 
 import { CompanyCalendarComponent } from './company-calendar/company-calendar.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
@@ -47,10 +49,12 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     EditableEquipmentCardComponent,
     AddEquipmentComponent,
     EditEquipmentComponent,
+    RegisteredUserAppointmentsComponent,
     AppointmentFormComponent,
     ChangeCopmanyAdminPasswordComponent,
     CompanyCalendarComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    ReservationComponent,
   ],
   imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule, ReactiveFormsModule, FullCalendarModule],
   exports: [HomeComponent,

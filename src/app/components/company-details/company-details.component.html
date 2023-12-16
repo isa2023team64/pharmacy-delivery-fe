@@ -14,8 +14,13 @@
             Working time: {{company?.openingTime}} - {{company?.closingTime}}
         </div>
     </div>
-    <div>
+    <div class="margin-bottom">
         <div class="company-title">Equipment</div>
-        <pd-equipment-card *ngFor="let e of equipment" [equipment]="e"></pd-equipment-card>
+        <div *ngFor="let e of equipment" (click)="toggleOrderItem(e.id)">
+            <pd-equipment-card [equipment]="e" [selected]="isItemSelected(e.id)"></pd-equipment-card>
+        </div> 
+    </div>
+    <div class="button" (click)="onMakeAReservation()" *ngIf="equipmentIds.length > 0">
+        <div class="button-text">Make a reservation</div>
     </div>
 </div>

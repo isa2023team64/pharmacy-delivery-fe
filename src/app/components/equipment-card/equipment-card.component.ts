@@ -10,7 +10,9 @@ import {
   faChevronRight,
   faLocationDot,
   faStar,
-  faClock
+  faClock,
+  faBoxOpen,
+  faFlask
  } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
@@ -29,7 +31,10 @@ export class EquipmentCardComponent {
   faChevronRight = faChevronRight;
   faLocationDot = faLocationDot;
   faStar = faStar;
-  faClock = faClock; 
+  faClock = faClock;
+  faBoxOpen = faBoxOpen;
+  faFlask = faFlask;
 
   @Input() equipment!: Equipment;
+  @Input() selected: boolean = false;
 }
