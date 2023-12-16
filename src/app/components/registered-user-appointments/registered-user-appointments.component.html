@@ -7,8 +7,7 @@
         <p>Date and Time: {{ appointment.startDateTime | date:'medium' }}</p>
         <p>Duration: {{ appointment.duration }} minutes</p>
         <p>Status:<strong> {{ appointment.status }}</strong></p>
-        <p>Administrator: {{ appointment.companyAdministratorFullName }}</p>
-        <p>Company: {{ appointment.company.name }}</p>
+        <p>Company Employee: {{ appointment.companyAdministratorFullName }}</p>
       </div>
     </div>
   </div>

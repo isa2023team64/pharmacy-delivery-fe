@@ -26,4 +26,9 @@ export class ReservationService {
     const path = this.basePath + "reservations/regular";
     return this.http.post<any>(path, reservation, {headers: this.headers});
   }
+
+  getUserAppointmentsByUseId(userId: number): Observable<any> {
+    const path = this.basePath + "reservations/user-appointments/"+ userId;
+    return this.http.get<Appointment[]>(path, {headers: this.headers});
+  }
 }
