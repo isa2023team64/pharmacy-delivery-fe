@@ -35,23 +35,14 @@ export class RoleGuard implements CanActivate {
       return false;
     }
 
-    if(expectedRole === 'ROLE_SYSTEM_ADMIN'){
+    if(expectedRole == 'ROLE_SYSTEM_ADMIN'){
+      console.log("UNUTRA")
       if(this.isSystemAdminFirstLogged(this.aService.user$.value.email)){
+        console.log("UNUTRA 2")
         this.router.navigate(['/change-password']);
         return false;
       }
     }
-
-    // for (const r of role) {
-    //   if (r.name === 'ROLE_SYSTEM_ADMIN') {
-    //     console.log("ACCESS SYSTEM ADMIN")
-    //     if(!this.isSystemAdminFirstLogged(this.aService.user$.value.id)){
-    //       this.router.navigate(['/change-password']);
-    //       return false;
-    //     }
-    //     break;  
-    //   }
-    // }
 
 
     return true;
@@ -62,19 +53,24 @@ export class RoleGuard implements CanActivate {
   isSystemAdminFirstLogged(name: String): boolean{
 
     let firstLogged = false; 
-    console.log("UNUTRA")
+    console.log("U METODI")
     this.systemAdminService.getByName(name).subscribe({
       next: (systemAdmin: SystemAdmin) => {
         if (systemAdmin && systemAdmin.firstLogged !== undefined) {
+          console.log("U METODI 2")
           firstLogged = systemAdmin.firstLogged;
+          console.log(firstLogged)
+          return firstLogged;
         }
-        else if(!systemAdmin){
-          firstLogged = false;
-        }
+        return firstLogged;
       },
-      error: (error) => {}
+      error: (error) => {
+        console.error("Error occurred:", error);
+        return true;
+      }
     });
   
+    console.log("U METODI 3")
     return firstLogged;
   }
   
