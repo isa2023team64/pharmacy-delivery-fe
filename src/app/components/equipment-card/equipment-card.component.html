@@ -14,7 +14,8 @@
             <fa-icon [icon]="faLocationDot" />
             Type: {{equipment.type}}
         </div>
-        <div class="company-label red" *ngIf="equipment.stockCount == 0">
+        <div class="company-label red" >
+            <fa-icon [icon]="faBoxOpen" />
             Out of stock
         </div>
     </div>

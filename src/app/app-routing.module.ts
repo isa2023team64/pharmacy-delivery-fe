@@ -95,7 +95,7 @@ const routes: Routes = [
     component: CompanyAdminProfileComponent
   },
   {
-    path: 'company-profile/:id',
+    path: 'company-profile',
     component: CompanyProfileComponent,
     canActivate: [RoleGuard],
     data: {
