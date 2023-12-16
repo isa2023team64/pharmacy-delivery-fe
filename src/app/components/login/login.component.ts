@@ -44,6 +44,11 @@ export class LoginComponent {
       this.authService.login(login).subscribe({
           next: () => {
               this.router.navigate(['/']);          
+        },
+        error: (error) => {
+          console.error('Error occurred during login:', error);
+          this.notification= "Password or email are incorrect";
+          this.isValid = false;
         }
       });
     }

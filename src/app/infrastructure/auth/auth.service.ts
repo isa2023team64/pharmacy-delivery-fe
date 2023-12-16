@@ -83,7 +83,7 @@ export class AuthService {
       }));
   }
 
-  changePassword(changePassword: ChangePassword) {
+  changePassword(changePassword: ChangePassword, logout: boolean = true) {
     const headers = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json'
@@ -92,7 +92,7 @@ export class AuthService {
       .pipe(map((res) => {
         console.log(res);
 
-        if (res && res.success) {
+        if (res && res.success && logout) {
           // Assuming you have a method named logout to handle the logout functionality
           this.logout();
         }

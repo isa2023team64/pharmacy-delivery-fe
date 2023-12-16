@@ -53,18 +53,18 @@
         </div>
     </div>
 
-    <!-- <div>
-        <div class="company-title">Equipment</div>
-        <pd-equipment-card *ngFor="let e of equipment" [equipment]="e"></pd-equipment-card>
-    </div> -->
-
     <div class="profile-section">
-        <div class="profile-section-title">Equipment</div>    
+        <div class="profile-section-title">Equipment</div>
 
-        <div class="card" *ngFor="let eq of equipment">
+        <div>
+            <input type="text" placeholder="Search..." [(ngModel)]="searchText">
+            <button (click)="searchEquipment()">Search</button>
+        </div>                
+
+        <div class="card" *ngFor="let eq of equipmentSearched">
             <div class="header">
-                <input class="profile-input" type="text" placeholder="Name" [(ngModel)]="eq.name"/>
-                <input class="profile-input" type="text" placeholder="Description" [(ngModel)]="eq.description"/>
+                <input class="profile-input" type="text" [readonly]="true"  placeholder="Name" [(ngModel)]="eq.name"/>
+                <input class="profile-input" type="text" [readonly]="true"  placeholder="Description" [(ngModel)]="eq.description"/>
         
                 <div class="options">
                     <div class="option"><fa-icon class="icon-blue" (click)="editEquipment(eq)" [icon]="faEdit"></fa-icon></div>
@@ -72,16 +72,9 @@
                 </div>
             </div>
         </div>
-    
-        <div class="card" *ngFor="let eq of notOwnedEquipment">
-            <div class="header">
-                <input class="profile-input" type="text" placeholder="Name" [(ngModel)]="eq.name"/>
-                <input class="profile-input" type="text" placeholder="Description" [(ngModel)]="eq.description"/>
-        
-                <div class="options">
-                    <div class="option" (click)="addEquipment(eq)"><fa-icon class="icon-green" [icon]="faPlus"></fa-icon></div>
-                </div>
-            </div>
+
+        <div class="profile-edit-button" [routerLink]="['add-equipment']">
+            <div class="profile-button-text">Add equipment</div>
         </div>
     </div>
 
