@@ -90,13 +90,8 @@ export class CompanyService {
     return this.http.put<AddEquipment>(route, dto,{headers: this.headers});
   }
 
-  removeEquimpentFromCompany(cId: number, eId: number): Observable<AddEquipment> {
-    const route = environment.apiHost + 'companies/remove-equipment';
-    console.log(cId, eId);
-    let dto: AddEquipment = {
-      companyId: cId,
-      equipmentId: eId
-    }
-    return this.http.put<AddEquipment>(route, dto,{headers: this.headers});
+  removeEquimpentFromCompany(cId: number, eId: number): Observable<any> {
+    const route = environment.apiHost + 'equipment/delete/' + eId;
+    return this.http.delete<any>(route, {headers: this.headers});
   }
 }

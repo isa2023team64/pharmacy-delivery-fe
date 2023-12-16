@@ -12,14 +12,15 @@ import { Location } from '@angular/common';
 export class EditEquipmentComponent implements OnInit {
   equipmentId!: number;
   equipment?: Equipment;
-  newEquipment: Equipment = new Equipment("", "", "");
+  newEquipment: Equipment = new Equipment("", "", "", 0);
   errors: any;
 
   constructor(private service: EquipmentService, private router: Router, private route: ActivatedRoute, private location: Location) {
     this.errors = {
       name: "",
       description: "",
-      type: ""
+      type: "",
+      count: ""
     };
   }
 
@@ -58,15 +59,19 @@ export class EditEquipmentComponent implements OnInit {
     this.resetErrors()
 
     if (this.newEquipment.name === "") {
-      this.errors.password = "Name is required.";
+      this.errors.name = "Name is required.";
       isValid = false;
     }
     if (this.newEquipment.description === "") {
-      this.errors.password = "Description is required.";
+      this.errors.description = "Description is required.";
       isValid = false;
     }
     if (this.newEquipment.type === "") {
-      this.errors.password = "Type is required.";
+      this.errors.type = "Type is required.";
+      isValid = false;
+    }
+    if (this.newEquipment.stockCount < 0) {
+      this.errors.count = "Stock count must be greater than 0.";
       isValid = false;
     }
 
@@ -77,5 +82,6 @@ export class EditEquipmentComponent implements OnInit {
     this.errors.name = "";
     this.errors.description = "";
     this.errors.type = "";
+    this.errors.count = "";
   };
 }

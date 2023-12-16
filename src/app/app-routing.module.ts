@@ -119,10 +119,10 @@ const routes: Routes = [
     component: CompanyCalendarComponent
   },
   {
-    path: 'add-equipment',
-    component: AddEquipmentComponent,canActivate: [RoleGuard],
+    path: 'company-profile/add-equipment',
+    component: AddEquipmentComponent, canActivate: [RoleGuard],
     data: {
-      expectedRole: 'ROLE_USER'
+      expectedRole: 'ROLE_COMPANY_ADMIN'
     }
   },
   {
