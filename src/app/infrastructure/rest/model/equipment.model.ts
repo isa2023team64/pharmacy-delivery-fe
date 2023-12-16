@@ -4,6 +4,7 @@ export class Equipment{
     description: string;
     type: string;
     averageRating?:string;
+    stockCount?: number;
 
 
     constructor(name: string, description: string, type: string) {
