@@ -14,7 +14,7 @@
             Working time: {{company?.openingTime}} - {{company?.closingTime}}
         </div>
     </div>
-    <div>
+    <div class="margin-bottom">
         <div class="company-title">Equipment</div>
         <div *ngFor="let e of equipment" (click)="toggleOrderItem(e.id)">
             <pd-equipment-card [equipment]="e" [selected]="isItemSelected(e.id)"></pd-equipment-card>
