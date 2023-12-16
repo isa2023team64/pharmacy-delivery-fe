@@ -23,6 +23,7 @@ import { AddEquipmentComponent } from './add-equipment/add-equipment.component';
 import { EditEquipmentComponent } from './edit-equipment/edit-equipment.component';
 import { RegisteredUserAppointmentsComponent } from './registered-user-appointments/registered-user-appointments.component';
 import { AppointmentFormComponent } from './appointment-form/appointment-form.component';
+import { ReservationComponent } from './reservation/reservation.component';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { AppointmentFormComponent } from './appointment-form/appointment-form.co
     EditEquipmentComponent,
     RegisteredUserAppointmentsComponent,
     AppointmentFormComponent,
+    ReservationComponent,
   ],
   imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule, ReactiveFormsModule],
   exports: [HomeComponent,

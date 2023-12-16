@@ -1,0 +1,16 @@
+<div class="login-modal" (click)="onClose()">
+    <div class="login" (click)="$event.stopPropagation()">
+        <div class="login-head">
+            <fa-icon class="login-x" [icon]="faXmark" (click)="onClose()"/>
+            <div class="login-title">Appointments</div>
+        </div>
+        <div class="appointments-list">
+            <div class="appointment" [class.selected]="isSelected(a.id)" *ngFor="let a of appointments" (click)="selectAppointment(a.id)">
+                <div class="appointment-text">{{a.startDateTime}} ({{a.duration}} min.)</div>
+            </div>
+        </div>
+        <div class="button" (click)="onMakeAReservation()" *ngIf="selectedAppointmentId != -1">
+            <div class="button-text">Make a reservation</div>
+        </div>
+    </div>
+</div>
