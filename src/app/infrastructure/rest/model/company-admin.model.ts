@@ -9,6 +9,7 @@ export class CompanyAdmin {
     phoneNumber: string;
     workplace: string;
     companyName: string;
+    companyId: number;
   
     constructor() {
       this.id = -1;
@@ -21,5 +22,6 @@ export class CompanyAdmin {
       this.phoneNumber = "";
       this.workplace = "";
       this.companyName = "";
+      this.companyId = -1;
     }
   }

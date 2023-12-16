@@ -7,6 +7,10 @@ import { faHouse, faPlus, faMinus, faEdit } from '@fortawesome/free-solid-svg-ic
 import { CompanyAdministrator } from '../../infrastructure/auth/model/company-administrator.model';
 import { CompanyEquipment } from '../../infrastructure/rest/model/company-equipment.model';
 import { EquipmentService } from '../../company/equipment.service';
+import { MatDialog } from "@angular/material/dialog";
+import { AppointmentFormComponent } from '../appointment-form/appointment-form.component';
+import { Appointment } from '../../infrastructure/rest/model/appointmen.model';
+import { AppointmentService } from '../../infrastructure/rest/appointment.service';
 
 @Component({
   selector: 'pd-company-profile',
@@ -23,13 +27,14 @@ export class CompanyProfileComponent implements OnInit {
   companyCopy?: any;
   errors: any;
   companyAdministrators?: CompanyAdministrator[];
+  appointments: Appointment[] = [];
 
   faHouse = faHouse;
   faPlus = faPlus;
   faMinus = faMinus;
   faEdit = faEdit;
 
-  constructor(private companyService: CompanyService, private equipmentService: EquipmentService, private route: ActivatedRoute, private router: Router) { 
+  constructor(private companyService: CompanyService, private equipmentService: EquipmentService, private appointmentService: AppointmentService, private route: ActivatedRoute, private router: Router, private dialogRef: MatDialog) { 
     this.companyCopy = {
       name: "",
       address: "",
@@ -58,6 +63,7 @@ export class CompanyProfileComponent implements OnInit {
       this.getCompanyById(this.companyId);
       this.getCompanyEquipmentByCompanyId(this.companyId);
       this.getEquipmentNotOwnedByCompany(this.companyId);
+      this.getAppointments(this.companyId);
     })
   }
 
@@ -93,8 +99,10 @@ export class CompanyProfileComponent implements OnInit {
     })
   }
 
-  getCompanyAdministratorsByCompanyId(id: number) {
-
+  getAppointments(companyId: number): void {
+    this.appointmentService.getAppointmentsByCompanyId(companyId).subscribe(result => {
+      this.appointments = result;
+    })
   }
 
   saveChanges(): void {
@@ -210,6 +218,10 @@ export class CompanyProfileComponent implements OnInit {
   editEquipment(eq: CompanyEquipment) {
     this.router.navigate(['edit-equipment/' + eq.id]);
     // this.router.navigate(['login']);
+  }
+
+  addAppointment() {
+    this.dialogRef.open(AppointmentFormComponent);
   }
 
 }
