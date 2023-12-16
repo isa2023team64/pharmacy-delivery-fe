@@ -85,7 +85,7 @@
     scrollbar-width: thin;
     scrollbar-color: rgba(107, 22, 22, 1)
                      rgba(107, 22, 22, 0.5);
-    max-height: 300px;
+    max-height: 15rem;
     width: 100%;
     margin-top: 1rem;
     display: flex;
@@ -104,7 +104,7 @@
 
 .appointment {
     width: 100%;
-    height: 3rem;
+    min-height: 3rem;
     background-color: rgba(240, 240, 240, 0.5);
     display: flex;
     align-items: center;
@@ -148,4 +148,27 @@
     font-size: 1.5rem;
     font-weight: 500;
     color: rgba(255, 255, 255, 1);
+}
+
+.margin-top {
+    margin-top: 1rem;
+}
+
+.label {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    color: rgba(0, 0, 0, 1);
+    width: 100%;
+}
+
+.input {
+    height: 1.5rem;
+    width: calc(100% - 1rem);
+    margin-top: 0.5rem;
+    padding-inline: 0.5rem;
+    font-size: 1rem;
+    color: rgba(0, 0, 0, 1);
+    border: rgba(0, 0, 0, 1) 1px solid;
+    border-radius: 0.3125rem;
+    cursor: default;
 }
