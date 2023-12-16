@@ -52,7 +52,7 @@ export class RegisteredUserAppointmentsComponent {
     })
   }
   getAppointments(userId: number) {
-    this.reservationService.getUserAppointmentsByUseId(userId).subscribe({
+    this.reservationService.getUserAppointmentsByUserId(userId).subscribe({
       next: (result: any) => {
         this.appointments = result;
         console.log("Appointments retrived succsessfuly");
