@@ -26,4 +26,9 @@ export class ReservationService {
     const path = this.basePath + "reservations/regular";
     return this.http.post<any>(path, reservation, {headers: this.headers});
   }
+
+  createExtraordinaryReservation(reservation: any): Observable<any> {
+    const path = this.basePath + "reservations/extraordinary";
+    return this.http.post<any>(path, reservation, {headers: this.headers});
+  }
 }

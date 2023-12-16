@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { faXmark, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { faXmark, faEye, faEyeSlash, faLessThan } from "@fortawesome/free-solid-svg-icons";
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -8,6 +8,10 @@ import { AppointmentService } from '../../infrastructure/rest/appointment.servic
 import { AuthService } from '../../infrastructure/auth';
 import { RegisteredUserService } from '../../infrastructure/rest/registered-user.service';
 import { ReservationService } from '../../infrastructure/rest/reservation.service';
+import { Company } from '../../company/model/company.model';
+import { CompanyService } from '../../company/company.service';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'pd-reservation',
@@ -16,9 +20,17 @@ import { ReservationService } from '../../infrastructure/rest/reservation.servic
 })
 export class ReservationComponent {
   appointments: Appointment[] = []
+  freeAppointments: Appointment[] = []
   selectedAppointmentId: number = -1
+  company: any
   user: any
   userId: number = -1
+  extraordinary: boolean = false
+  times: string[] = []
+  duration: number = 15
+  minDate: string
+  date: string = ""
+  time: string = ""
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -26,14 +38,23 @@ export class ReservationComponent {
     public appointmentService: AppointmentService,
     private authService: AuthService,
     private userService: RegisteredUserService,
-    private reservationService: ReservationService
+    private reservationService: ReservationService,
+    private companyService: CompanyService,
+    private router: Router,
+    private location: Location
   ) {
     console.log(this.data)
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    const day = today.getDate().toString().padStart(2, '0');
+    this.minDate = `${year}-${month}-${day}`;
   }
 
   ngOnInit(): void {
     this.getAppointments();
     this.fetchUser();
+    this.getCompany();
   }
 
   onClose(): void {
@@ -45,8 +66,21 @@ export class ReservationComponent {
       next: (result: Appointment[]) => {
         console.log(this.appointments)
         const currentDate = new Date();
-        this.appointments = result.filter(appointment =>
+        this.appointments = result
+        this.freeAppointments = result.filter(appointment =>
           new Date(appointment.startDateTime) > currentDate && appointment.status === 'FREE');
+      },
+      error: () => {
+        console.log("Error.")
+      }
+    });
+  }
+
+  getCompany(): void {
+    this.companyService.getById(this.data.companyId).subscribe({
+      next: (result: Company) => {
+        console.log(result);
+        this.company = result;
       },
       error: () => {
         console.log("Error.")
@@ -63,21 +97,47 @@ export class ReservationComponent {
   }
 
   onMakeAReservation(): void {
-    const reservation = {
-      userId: this.userId,
-      equipmentIds: this.data.equipmentIds,
-      appointmentId: this.selectedAppointmentId
-    }
-    console.log(reservation);
-    this.reservationService.createReservation(reservation).subscribe({
-      next: (result: any) => {
-        console.log("Successfully made a reservation.");
-        this.onClose();
-      },
-      error: () => {
-        console.log("Error.")
+    if(!this.extraordinary){
+      const reservation = {
+        userId: this.userId,
+        equipmentIds: this.data.equipmentIds,
+        appointmentId: this.selectedAppointmentId
       }
-    });
+      console.log(reservation);
+      this.reservationService.createReservation(reservation).subscribe({
+        next: (result: any) => {
+          console.log("Successfully made a reservation.");
+          this.onClose();
+          window.location.reload();
+        },
+        error: () => {
+          console.log("Error.")
+        }
+      });
+    }
+    else {
+      const reservation = {
+        userId: this.userId,
+        equipmentIds: this.data.equipmentIds,
+        appointment: {
+          startDateTime: this.time,
+          duration: this.duration,
+          companyAdministratorFullName: "",
+          companyId: this.company.id
+        }
+      }
+      console.log(reservation);
+      this.reservationService.createExtraordinaryReservation(reservation).subscribe({
+        next: (result: any) => {
+          console.log("Successfully made a reservation.");
+          this.onClose();
+          window.location.reload();
+        },
+        error: () => {
+          console.log("Error.")
+        }
+      });
+    }
   }
 
   fetchUser(): void {
@@ -90,6 +150,72 @@ export class ReservationComponent {
       })
     });
   }
+
+findEmptySlots(): void {
+  this.time = "";
+  const startTime = new Date(`${this.date}T${this.company.openingTime}`);
+  const endTime = new Date(`${this.date}T${this.company.closingTime}`);
+
+  const existingSlots = this.appointments.map(appointment => {
+    const appointmentStart = new Date(appointment.startDateTime);
+    const appointmentEnd = new Date(appointmentStart.getTime() + appointment.duration * 60000);
+    return { start: appointmentStart, end: appointmentEnd };
+  });
+
+  const emptySlots = [];
+
+  let currentTime = startTime;
+
+  while (currentTime < endTime) {
+    const slotEnd = new Date(currentTime.getTime() + this.duration * 60000);
+    const isOverlap = existingSlots.some(appointment => {
+      return (currentTime >= appointment.start && currentTime < appointment.end) ||
+             (slotEnd > appointment.start && slotEnd <= appointment.end) ||
+             (currentTime <= appointment.start && slotEnd >= appointment.start);
+    });
+
+    if (!isOverlap && currentTime >= new Date()) {
+      emptySlots.push(currentTime.toISOString());
+    }
+
+    currentTime = new Date(currentTime.getTime() + this.duration * 60000);
+  }
+
+  const stringSlots = emptySlots.map(date => this.convertToISOString(new Date(date).toString())) as string[];
+  this.times = stringSlots;
+}
+
+convertToISOString(inputDateString: string): string {
+  const months = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+  ];
+
+  const dateParts = inputDateString.split(' ');
+  const month = (months.indexOf(dateParts[1]) + 1).toString().padStart(2, '0');
+  const day = dateParts[2].padStart(2, '0');
+  const year = dateParts[3];
+  const time = dateParts[4];
+
+  const iso8601String = `${year}-${month}-${day}T${time}`;
+
+  return iso8601String;
+}
+
+selectTime(time: string) {
+  this.time = this.time == time ? "" : time;
+}
+
+isReservationValid(): boolean {
+  if((this.extraordinary && this.duration > 0 && this.time != "") ||
+    (!this.extraordinary && this.selectedAppointmentId != -1))
+    return true;
+  return false;
+}
+
+toggleExtraordinary(): void {
+  this.extraordinary = !this.extraordinary;
+}
 
   faXmark = faXmark;
 }
