@@ -40,3 +40,29 @@
 .star {
     color: rgba(255,255,0, 1);
 }
+
+.red {
+    color: red;
+}
+
+.button {
+    margin-block: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(107, 22, 22, 1);
+    border: rgba(107, 22, 22, 1) 1px solid;
+    height: 2.5rem;
+    transition: background-color 0.15s;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: rgba(107, 22, 22, 0.9);
+}
+
+.button-text {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 1);
+}

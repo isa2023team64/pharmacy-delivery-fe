@@ -4,6 +4,8 @@ import { Company } from '../../company/model/company.model';
 import { ActivatedRoute } from '@angular/router';
 import { faLocationDot, faStar, faClock } from '@fortawesome/free-solid-svg-icons';
 import { Equipment } from '../../infrastructure/rest/model/equipment.model';
+import { MatDialog } from '@angular/material/dialog';
+import { ReservationComponent } from '../reservation/reservation.component';
 
 @Component({
   selector: 'pd-company-details',
@@ -15,12 +17,14 @@ export class CompanyDetailsComponent implements OnInit {
   companyId: number = -1;
   company?: Company;
   equipment?: Equipment[];
+  equipmentIds: number[] = [];
 
   faLocationDot = faLocationDot;
   faStar = faStar;
   faClock = faClock;
 
-  constructor(private route: ActivatedRoute, private service: CompanyService) { }
+  constructor(private route: ActivatedRoute, private service: CompanyService, 
+    public dialogRef: MatDialog) { }
   
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -40,5 +44,29 @@ export class CompanyDetailsComponent implements OnInit {
     this.service.getEquipmentByCompanyId(id).subscribe((results) => {
       this.equipment = results;
     })
+  }
+
+  toggleOrderItem(id: number | undefined): void {
+    const index = this.equipmentIds.indexOf(id!);
+    if (index !== -1) {
+      this.equipmentIds.splice(index, 1);
+    } else {
+        this.equipmentIds.push(id!);
+    }
+  }
+
+  isItemSelected(id: number | undefined) {
+    return this.equipmentIds.includes(id!);
+  }
+
+  onMakeAReservation(): void {
+    const reservationData = {
+      companyId: this.companyId,
+      equipmentIds: this.equipmentIds,
+    };
+
+    this.dialogRef.open(ReservationComponent, {
+      data: reservationData,
+    });
   }
 }
