@@ -10,6 +10,7 @@ export class CompanyAdmin {
     workplace: string;
     companyName: string;
     companyId: number;
+    firstLogin: boolean;
   
     constructor() {
       this.id = -1;
@@ -23,5 +24,6 @@ export class CompanyAdmin {
       this.workplace = "";
       this.companyName = "";
       this.companyId = -1;
+      this.firstLogin = false;
     }
   }

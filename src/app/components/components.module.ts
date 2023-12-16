@@ -22,6 +22,7 @@ import { EditableEquipmentCardComponent } from './editable-equipment-card/editab
 import { AddEquipmentComponent } from './add-equipment/add-equipment.component';
 import { EditEquipmentComponent } from './edit-equipment/edit-equipment.component';
 import { AppointmentFormComponent } from './appointment-form/appointment-form.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { AppointmentFormComponent } from './appointment-form/appointment-form.co
     AddEquipmentComponent,
     EditEquipmentComponent,
     AppointmentFormComponent,
+    ChangePasswordComponent,
   ],
   imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule, ReactiveFormsModule],
   exports: [HomeComponent,
