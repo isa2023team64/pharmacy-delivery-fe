@@ -81,6 +81,7 @@
     transition: background-color 0.15s;
     cursor: pointer;
     width: 100%;
+    margin: 0.5rem;
 }
 
 .profile-edit-button:hover {
@@ -179,6 +180,16 @@
     margin-bottom: 0.5rem;
 }
 
+.calendar-wrapper {
+    width: 90%; 
+    height: 70rem;
+    border: 0px solid #ccc;
+  }
+
+.profile-button-row-container {
+    display: flex;
+    justify-content: space-between; 
+}
 
 .star {
     color: rgba(255,255,0, 1);
