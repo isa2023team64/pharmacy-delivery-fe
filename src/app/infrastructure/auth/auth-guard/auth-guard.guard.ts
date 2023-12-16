@@ -25,11 +25,11 @@ export class RoleGuard implements CanActivate {
     console.log("EXPECTED ROLE:")
     console.log(expectedRole)
     console.log("ROLE:")
-    console.log(this.aService.user$.value.email)
-    
+    console.log(this.aService.user$.value.roles)
+    console.log(this.aService.user$.value.email)    
     if (
       !this.aService.user$ || 
-      !expectedRole.includes(role)
+      !role.includes(expectedRole)
     ) {
       this.router.navigate(['']);
       return false;
@@ -41,6 +41,7 @@ export class RoleGuard implements CanActivate {
         return false;
       }
     }
+
     // for (const r of role) {
     //   if (r.name === 'ROLE_SYSTEM_ADMIN') {
     //     console.log("ACCESS SYSTEM ADMIN")
