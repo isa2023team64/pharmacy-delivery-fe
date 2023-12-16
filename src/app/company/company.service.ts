@@ -39,7 +39,6 @@ export class CompanyService {
   }
 
   getById(id: number): Observable<Company> {
-    console.log('kompanija '+ id);
     const route = environment.apiHost + 'companies/' + id;
     return this.http.get<Company>(route,{headers: this.headers});
   }

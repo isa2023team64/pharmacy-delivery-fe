@@ -49,7 +49,6 @@ export class AppointmentFormComponent implements OnInit {
         companyId: this.companyId
       };
       this.service.createAppointment(a).subscribe(result => {
-        console.log(result);
         this.dialog.close();
         location.reload();
       })
@@ -61,11 +60,9 @@ export class AppointmentFormComponent implements OnInit {
       this.user = user;
       if (!user.id) return;
       let userId = user.id;
-      console.log("broj korisnika je " + userId);
 
       this.companyAdminService.getById(userId).subscribe(registeredUser => {
         this.companyId = registeredUser.companyId;
-        console.log('wtf' + registeredUser.companyId);
         this.user = registeredUser;
         this.companyService.getById(registeredUser.companyId).subscribe(result => {
           this.company = result;
