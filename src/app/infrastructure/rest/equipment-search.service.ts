@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { environment } from '../../../env/environment';
 import { Equipment } from './model/equipment.model';
@@ -10,7 +10,7 @@ import { PagedResult } from './model/paged-result.model';
 })
 export class EquipmentSearchService {
   basePath: string;
-
+  headers: HttpHeaders = new HttpHeaders({'COntent-Type': 'application/json','Authorization': `Bearer ${localStorage.getItem("jwt")}`})
   constructor(private http: HttpClient) {
     this.basePath = environment.apiHost;
   }
@@ -33,7 +33,7 @@ export class EquipmentSearchService {
     query = query != "" ? `${query}&` : query
     query = `${query}${pageQuery}&${pageSizeQuery}`
     const path = this.basePath + "equipment/search?" + query;
-    return this.http.get<PagedResult<Equipment>>(path);
+    return this.http.get<PagedResult<Equipment>>(path,{headers: this.headers});
   }
 
   searchCompanyAdministrator(searchFilter: any): Observable<PagedResult<Equipment>> {
@@ -54,6 +54,6 @@ export class EquipmentSearchService {
     query = query != "" ? `${query}&` : query
     query = `${query}${pageQuery}&${pageSizeQuery}`
     const path = this.basePath + "equipment/search/company-administrator/3?" + query;
-    return this.http.get<PagedResult<Equipment>>(path);
+    return this.http.get<PagedResult<Equipment>>(path,{headers: this.headers});
   }
 }

@@ -18,9 +18,11 @@ import { RegisterCompanyAdministratorComponent } from './components/company-admi
 import { CompanyAdminProfileComponent } from './components/company-admin-profile/company-admin-profile.component';
 import { CompanyProfileComponent } from './components/company-profile/company-profile.component';
 import { EquipmentSearchCompanyAdministratorComponent } from './components/equipment-search-company-administrator/equipment-search-company-administrator.component';
+import { CompanyCalendarComponent } from './components/company-calendar/company-calendar.component';
 import { AddEquipmentComponent } from './components/add-equipment/add-equipment.component';
 import { EditEquipmentComponent } from './components/edit-equipment/edit-equipment.component';
 import { RoleGuard } from './infrastructure/auth/auth-guard/auth-guard.guard';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 const routes: Routes = [
   {
@@ -57,7 +59,10 @@ const routes: Routes = [
   },
   {
     path: 'registerCompany',
-    component: RegisterCompanyComponent,
+    component: RegisterCompanyComponent,canActivate: [RoleGuard],
+    data: {
+      expectedRole: 'ROLE_SYSTEM_ADMIN'
+    }
   },
   {
     path: 'unregisteredUserCompanies',
@@ -88,7 +93,10 @@ const routes: Routes = [
   },
   {
     path: 'register-company-administrator/:id',
-    component: RegisterCompanyAdministratorComponent,
+    component: RegisterCompanyAdministratorComponent,canActivate: [RoleGuard],
+    data: {
+      expectedRole: 'ROLE_SYSTEM_ADMIN'
+    }
   },
   {
     path: 'company-admin-profile/:id',
@@ -107,13 +115,24 @@ const routes: Routes = [
     component: EquipmentSearchCompanyAdministratorComponent,
   },
   {
+    path: 'company-calendar/:id',
+    component: CompanyCalendarComponent
+  },
+  {
     path: 'add-equipment',
-    component: AddEquipmentComponent,
+    component: AddEquipmentComponent,canActivate: [RoleGuard],
+    data: {
+      expectedRole: 'ROLE_USER'
+    }
   },
   {
     path: 'edit-equipment/:id',
     component: EditEquipmentComponent,
-  }
+  },
+  {
+    path: 'change-password',
+    component: ChangePasswordComponent,
+  },
 ];
 
 @NgModule({

@@ -24,6 +24,9 @@ import { EditEquipmentComponent } from './edit-equipment/edit-equipment.componen
 import { AppointmentFormComponent } from './appointment-form/appointment-form.component';
 import { ChangeCopmanyAdminPasswordComponent } from './change-company-admin-password/change-company-admin-password.component';
 
+import { CompanyCalendarComponent } from './company-calendar/company-calendar.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -46,8 +49,10 @@ import { ChangeCopmanyAdminPasswordComponent } from './change-company-admin-pass
     EditEquipmentComponent,
     AppointmentFormComponent,
     ChangeCopmanyAdminPasswordComponent,
+    CompanyCalendarComponent,
+    ChangePasswordComponent
   ],
-  imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule, ReactiveFormsModule, FullCalendarModule],
   exports: [HomeComponent,
             LoginComponent,
             NavbarComponent,
@@ -59,6 +64,8 @@ import { ChangeCopmanyAdminPasswordComponent } from './change-company-admin-pass
             CompanyAdminProfileComponent,
             CompanyProfileComponent,
             AddEquipmentComponent,
-            EditEquipmentComponent],
+            EditEquipmentComponent,
+            CompanyCalendarComponent,
+            ChangePasswordComponent],
 })
 export class ComponentsModule {}

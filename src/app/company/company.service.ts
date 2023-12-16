@@ -55,7 +55,7 @@ export class CompanyService {
     }
     
     return this.http
-    .post<AuthenticationResponse>(environment.apiHost + "companies/" + companyId, companyAdministrator,{headers: this.headers})
+    .post<AuthenticationResponse>(environment.apiHost + "companies/admin/" + companyId, companyAdministrator,{headers: this.headers})
     .pipe(
       tap((authenticationResponse) => {
         console.log("AUTHENTICATED COMPANY ADMINISTRATOR")
