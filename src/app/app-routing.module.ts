@@ -95,8 +95,12 @@ const routes: Routes = [
     component: CompanyAdminProfileComponent
   },
   {
-    path: 'company-profile/:id',
-    component: CompanyProfileComponent
+    path: 'company-profile',
+    component: CompanyProfileComponent,
+    canActivate: [RoleGuard],
+    data: {
+      expectedRole: 'ROLE_COMPANY_ADMIN'
+    }
   },
   {
     path: 'equipment-search-company-administrator',
