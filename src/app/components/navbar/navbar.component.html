@@ -9,6 +9,7 @@
       <button mat-menu-item *ngIf="user  && user.roles.includes('ROLE_USER')" [routerLink]="['company-search']">Company search (registered user)</button>
       <button mat-menu-item *ngIf="user  && user.roles.includes('ROLE_USER')" [routerLink]="['equipment-search']">Equipment search (registered user)</button>
       <button mat-menu-item *ngIf="user  && user.roles.includes('ROLE_COMPANY_ADMIN')"[routerLink]="['company-admin-profile/3']">Profile (company admin)</button>
+      <button mat-menu-item *ngIf="user  && user.roles.includes('ROLE_COMPANY_ADMIN')"[routerLink]="['company-profile']">Company profile</button>
       <button mat-menu-item *ngIf="user  && user.roles.includes('ROLE_COMPANY_ADMIN')" [routerLink]="['equipment-search-company-administrator']">Equipment search (company administrator)</button>
       <button mat-menu-item [routerLink]="['add-equipment']">Add new equipment</button>
     </mat-menu>

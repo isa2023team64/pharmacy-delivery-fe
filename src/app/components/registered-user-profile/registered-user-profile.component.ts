@@ -56,15 +56,6 @@ export class RegisteredUserProfileComponent {
   }
 
   fetchUser(): void {
-    // this.userService.getById(this.userId).subscribe({
-    //   next: (result: RegisteredUser) => {
-    //     this.user = result;
-    //     this.makeUserCopy();
-    //   },
-    //   error: (errData) => {
-    //     console.log(errData);
-    //   }
-    // })
     this.authService.user$.subscribe(user => {
       this.user = user;
       if (!user.id) return;
