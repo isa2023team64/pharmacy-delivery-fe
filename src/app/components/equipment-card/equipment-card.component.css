@@ -9,9 +9,18 @@
     cursor: pointer;
 }
 
+.selected {
+    background-color: rgba(0, 255, 0, 0.3);
+}
+
 .company-card:hover {
     background-color: rgba(240, 240, 240, 1);
 }
+
+.selected:hover {
+    background-color: rgba(0, 255, 0, 0.5);
+}
+
 
 .company-image {
     height: 100%;
@@ -44,3 +53,8 @@
 .star {
     color: rgba(255,255,0, 1);
 }
+
+.red {
+    color: red;
+}
+

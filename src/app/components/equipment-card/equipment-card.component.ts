@@ -32,4 +32,5 @@ export class EquipmentCardComponent {
   faClock = faClock; 
 
   @Input() equipment!: Equipment;
+  @Input() selected: boolean = false;
 }

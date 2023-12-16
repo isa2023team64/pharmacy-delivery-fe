@@ -1,4 +1,4 @@
-<div class="company-card">
+<div class="company-card" [class.selected]="selected">
     <img class="company-image" src="https://pactandpartners.com/wp-content/uploads/2020/02/Medical-Devices-scaled.jpeg"/>
     <div class="company-content">
         <div class="company-title">{{equipment.name}}</div>
@@ -13,6 +13,9 @@
         <div class="company-label">
             <fa-icon [icon]="faLocationDot" />
             Type: {{equipment.type}}
+        </div>
+        <div class="company-label red" *ngIf="equipment.stockCount == 0">
+            Out of stock
         </div>
     </div>
 </div>
