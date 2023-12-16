@@ -68,7 +68,8 @@ export class RegisterCompanyComponent {
           phoneNumber: this.registrationCompanyForm.value.phoneNumber || "",
           lastPasswordResetDate: new Date(),
           active: true,
-          firstLogged: true
+          workplace: this.registrationCompanyForm.value.workplace || "",
+          companyName: this.registrationCompanyForm.value.companyName || ""
         }, 
       ]         
     }

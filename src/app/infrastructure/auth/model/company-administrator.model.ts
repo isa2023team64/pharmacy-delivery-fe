@@ -9,5 +9,6 @@ export interface CompanyAdministrator{
     city: string;
     country: string;
     phoneNumber: string;
-    firstLogged: boolean;
+    workplace: string;
+    companyName: string;
 }
