@@ -12,7 +12,8 @@ import { ChangePassword } from '../../infrastructure/auth/model/change-password.
 export class ChangePasswordComponent {
   emailExists: boolean=false;
   errors: any;
-  userEmail: string="";
+  userEmail: string='';
+  userPassword: string='';
   isValid=true;
   constructor(
     private authService: AuthService,
@@ -22,6 +23,7 @@ export class ChangePasswordComponent {
   ngOnInit(): void {
     this.authService.user$.subscribe((user) => {
       this.userEmail = user.email;
+      this.userPassword = user.password;
     });
   }
 
@@ -54,7 +56,8 @@ export class ChangePasswordComponent {
     if (this.changePasswordForm.valid) {
       this.authService.changePassword(changePassword).subscribe({
           next: () => {
-              this.router.navigate(['/']);          
+              this.isValid = true;
+              // this.router.navigate(['/']);          
         }
       });
     }
@@ -62,12 +65,18 @@ export class ChangePasswordComponent {
   setErrors():void
   {
     if (this.changePasswordForm.value.password === "" || this.changePasswordForm.value.newPassword === "") {
-      this.notification= "Passwords or email are incorrect";
+      this.notification = "Passwords or email are incorrect";
       this.isValid = false;
     }
-    if (this.changePasswordForm.value.password === this.changePasswordForm.value.newPassword) {
-        this.notification= "Passwords are same";
-        this.isValid = false;
-      }
+
+    if (this.changePasswordForm.value.password !== this.userPassword || this.changePasswordForm.value.password === this.changePasswordForm.value.newPassword){
+      this.notification = "Incorrect input of passwords"
+      this.isValid = false;
+    }
+
+    // if (this.changePasswordForm.value.password === this.changePasswordForm.value.newPassword) {
+    //     this.notification= "Passwords are same";
+    //     this.isValid = false;
+    //   }
   }
 }

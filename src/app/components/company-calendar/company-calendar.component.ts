@@ -17,19 +17,35 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 export class CompanyCalendarComponent {
 
     companyId: number | null = null;
-    events: EventSourceInput[] = [];
+    events: EventSourceInput | undefined;
     handoverAppointments: number[] = [];
+    calendarTab: number = 1;
+    
+
+    constructor(
+        private authService: AuthService,
+        private companyService: CompanyService,
+        private router: Router,
+        private route: ActivatedRoute
+    ) {
+        this.events = []
+    }
+
+    ngOnInit(): void {
+        this.route.paramMap.subscribe(params => {
+        const id = params.get('id');
+        this.companyId = id ? parseInt(id, 10) : null;
+        if (this.companyId !== null) {
+            
+        }
+        });
+    }
 
     calendarOptionsMonth: CalendarOptions = {
         initialView: 'dayGridMonth',
         plugins: [dayGridPlugin],
-        events: [
-            {
-              id: 'a',
-              title: 'my event',
-              start: '2023-12-15'
-            }
-        ]
+        events: {}
+        // events: this.events
     }
 
     calendarOptionsDay: CalendarOptions = {
@@ -68,23 +84,6 @@ export class CompanyCalendarComponent {
                 end: '2023-12-14T17:30:00'
             }
         ],
-    }
-
-    constructor(
-        private authService: AuthService,
-        private companyService: CompanyService,
-        private router: Router,
-        private route: ActivatedRoute
-    ) {}
-
-    ngOnInit(): void {
-        this.route.paramMap.subscribe(params => {
-        const id = params.get('id');
-        this.companyId = id ? parseInt(id, 10) : null;
-        if (this.companyId !== null) {
-            
-        }
-        });
     }
 
 

@@ -61,6 +61,7 @@ export class RegisterCompanyAdministratorComponent {
         phoneNumber: this.registrationCompanyAdministratorForm.value.phoneNumber || "",
         lastPasswordResetDate: new Date(),
         active: true,
+        firstLogged: true
     }
 
 

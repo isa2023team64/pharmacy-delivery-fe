@@ -59,7 +59,10 @@ const routes: Routes = [
   },
   {
     path: 'registerCompany',
-    component: RegisterCompanyComponent,
+    component: RegisterCompanyComponent,canActivate: [RoleGuard],
+    data: {
+      expectedRole: 'ROLE_SYSTEM_ADMIN'
+    }
   },
   {
     path: 'unregisteredUserCompanies',
@@ -86,7 +89,10 @@ const routes: Routes = [
   },
   {
     path: 'register-company-administrator/:id',
-    component: RegisterCompanyAdministratorComponent,
+    component: RegisterCompanyAdministratorComponent,canActivate: [RoleGuard],
+    data: {
+      expectedRole: 'ROLE_SYSTEM_ADMIN'
+    }
   },
   {
     path: 'company-admin-profile/:id',
@@ -106,7 +112,10 @@ const routes: Routes = [
   },
   {
     path: 'add-equipment',
-    component: AddEquipmentComponent,
+    component: AddEquipmentComponent,canActivate: [RoleGuard],
+    data: {
+      expectedRole: 'ROLE_USER'
+    }
   },
   {
     path: 'edit-equipment/:id',

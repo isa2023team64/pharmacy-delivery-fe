@@ -88,16 +88,16 @@ export class AuthService {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     });
-    return this.http.post<any>('http://localhost:8080/auth/changePassword', changePassword, { headers })
+    return this.http.post<any>('http://localhost:8080/auth/change-password', changePassword, { headers })
       .pipe(map((res) => {
         console.log(res);
-        this.password_changed = res.changePassword;
 
-        if (this.password_changed) {
+        if (res && res.success) {
+          // Assuming you have a method named logout to handle the logout functionality
           this.logout();
         }
 
-        return res
+        return res;
       }));
   }
 
