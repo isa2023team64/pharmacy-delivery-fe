@@ -6,10 +6,10 @@ import { CompanyAdmin } from '../../infrastructure/rest/model/company-admin.mode
 
 @Component({
   selector: 'pd-change-password',
-  templateUrl: './change-password.component.html',
-  styleUrl: './change-password.component.css'
+  templateUrl: './change-company-admin-password.component.html',
+  styleUrl: './change-company-admin-password.component.css'
 })
-export class ChangePasswordComponent implements OnInit {
+export class ChangeCopmanyAdminPasswordComponent implements OnInit {
 
   password: string = '';
   repeatedPassword: string = '';
@@ -17,7 +17,7 @@ export class ChangePasswordComponent implements OnInit {
   @Input() companyAdmin!: CompanyAdmin;
 
   constructor(
-    public dialog: MatDialogRef<ChangePasswordComponent>,
+    public dialog: MatDialogRef<ChangeCopmanyAdminPasswordComponent>,
     private authService: AuthService,
     private companyAdminService: CompanyAdminService,
     @Inject(MAT_DIALOG_DATA) public data: any)

@@ -4,7 +4,7 @@ import { CompanyAdminService } from '../../infrastructure/rest/company-admin.ser
 import { User } from '../../infrastructure/auth/model/user.model';
 import { CompanyAdmin } from '../../infrastructure/rest/model/company-admin.model';
 import { MatDialog } from '@angular/material/dialog';
-import { ChangePasswordComponent } from '../change-password/change-password.component';
+import { ChangeCopmanyAdminPasswordComponent } from '../change-company-admin-password/change-company-admin-password.component';
 
 @Component({
   selector: 'pd-home',
@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
   }  
 
   changePassword() {
-    this.dialogRef.open(ChangePasswordComponent, {
+    this.dialogRef.open(ChangeCopmanyAdminPasswordComponent, {
       width: '400px', // Set the width as per your requirement
       disableClose: true, // Prevent closing the dialog by clicking outside or pressing Esc
       autoFocus: true, // Autofocus on the first focusable element in the dialog

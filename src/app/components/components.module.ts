@@ -22,7 +22,7 @@ import { EditableEquipmentCardComponent } from './editable-equipment-card/editab
 import { AddEquipmentComponent } from './add-equipment/add-equipment.component';
 import { EditEquipmentComponent } from './edit-equipment/edit-equipment.component';
 import { AppointmentFormComponent } from './appointment-form/appointment-form.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ChangeCopmanyAdminPasswordComponent } from './change-company-admin-password/change-company-admin-password.component';
 
 
 @NgModule({
@@ -45,7 +45,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     AddEquipmentComponent,
     EditEquipmentComponent,
     AppointmentFormComponent,
-    ChangePasswordComponent,
+    ChangeCopmanyAdminPasswordComponent,
   ],
   imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule, ReactiveFormsModule],
   exports: [HomeComponent,
