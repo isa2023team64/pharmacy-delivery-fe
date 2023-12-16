@@ -25,7 +25,7 @@ export class RoleGuard implements CanActivate {
       return false;
     }
 
-    if (expectedRole === 'ROLE_SYSTEM_ADMIN') {
+    if (role.includes('ROLE_SYSTEM_ADMIN')) {
       const firstLogged = await this.isSystemAdminFirstLogged(this.aService.user$.value.email).toPromise();
       if (firstLogged) {
         this.router.navigate(['/change-password']);
