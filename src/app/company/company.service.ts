@@ -55,7 +55,7 @@ export class CompanyService {
     }
     
     return this.http
-    .post<AuthenticationResponse>(environment.apiHost + "companies/" + companyId, companyAdministrator,{headers: this.headers})
+    .post<AuthenticationResponse>(environment.apiHost + "companies/admin/" + companyId, companyAdministrator,{headers: this.headers})
     .pipe(
       tap((authenticationResponse) => {
         console.log("AUTHENTICATED COMPANY ADMINISTRATOR")
@@ -65,7 +65,7 @@ export class CompanyService {
     }
     
   update(companyId: number, updatedCompany: Company): Observable<Company> {
-    const route = environment.apiHost + 'companies' + '/' + companyId;
+    const route = environment.apiHost + 'companies/update/' + companyId;
     console.log(route,{headers: this.headers});
     return this.http.put<Company>(route, updatedCompany,{headers: this.headers});
   }
@@ -90,13 +90,8 @@ export class CompanyService {
     return this.http.put<AddEquipment>(route, dto,{headers: this.headers});
   }
 
-  removeEquimpentFromCompany(cId: number, eId: number): Observable<AddEquipment> {
-    const route = environment.apiHost + 'companies/remove-equipment';
-    console.log(cId, eId);
-    let dto: AddEquipment = {
-      companyId: cId,
-      equipmentId: eId
-    }
-    return this.http.put<AddEquipment>(route, dto,{headers: this.headers});
+  removeEquimpentFromCompany(cId: number, eId: number): Observable<any> {
+    const route = environment.apiHost + 'equipment/delete/' + eId;
+    return this.http.delete<any>(route, {headers: this.headers});
   }
 }

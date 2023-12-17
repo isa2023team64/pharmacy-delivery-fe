@@ -13,12 +13,20 @@
     background-color: rgba(0, 255, 0, 0.3);
 }
 
+.out-of-stock {
+    background-color: rgba(255, 0, 0, 0.3);
+}
+
 .company-card:hover {
     background-color: rgba(240, 240, 240, 1);
 }
 
 .selected:hover {
     background-color: rgba(0, 255, 0, 0.5);
+}
+
+.out-of-stock:hover {
+    background-color: rgba(255, 0, 0, 0.5);
 }
 
 .input {

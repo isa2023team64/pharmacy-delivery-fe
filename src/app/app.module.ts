@@ -11,6 +11,7 @@ import { AuthService } from './infrastructure/auth/auth.service';
 import { CompanyModule } from './company/company.module';
 import { UregisteredUserModule } from './unregistered-user/uregistered-user/uregistered-user.module';
 import { ApiService } from './infrastructure/auth';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,6 +31,7 @@ import { ApiService } from './infrastructure/auth';
         },
       },
     }),
+    FullCalendarModule
   ],
   providers: [
     {

@@ -11,7 +11,8 @@ import {
   faLocationDot,
   faStar,
   faClock,
-  faBoxOpen
+  faBoxOpen,
+  faFlask
  } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
@@ -32,6 +33,7 @@ export class EquipmentCardComponent {
   faStar = faStar;
   faClock = faClock;
   faBoxOpen = faBoxOpen;
+  faFlask = faFlask;
 
   @Input() equipment!: Equipment;
   @Input() selected: boolean = false;

@@ -15,6 +15,10 @@
         <input class="profile-input" type="text" placeholder="Type" [(ngModel)]="newEquipment.type" (input)="validate()"/>
         <div class="profile-input-error">{{errors.type}}</div>
 
+        <div class="profile-label">Stock count:</div>
+        <input class="profile-input" type="number" placeholder="Stock count" [(ngModel)]="newEquipment.stockCount" (input)="validate()"/>
+        <div class="profile-input-error">{{errors.count}}</div>
+
         <div class="profile-save-button" (click)="saveChanges()">
             <div class="profile-button-text">Save changes</div>
         </div>

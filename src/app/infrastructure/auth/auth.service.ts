@@ -12,6 +12,7 @@ import { Registration } from './model/registration.model';
 import { RegisteredUserService } from '../rest/registered-user.service';
 import { RegisteredUser } from './model/registered-user.model';
 import { CookieService } from 'ngx-cookie-service';
+import { ChangePassword } from './model/change-password.model';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class AuthService {
   
   private access_token: string | null = null; 
+  private password_changed: string | null = null;
 
   userEmail: String = "";
   
@@ -77,6 +79,24 @@ export class AuthService {
             console.log(err);
           }
         });
+        return res;
+      }));
+  }
+
+  changePassword(changePassword: ChangePassword, logout: boolean = true) {
+    const headers = new HttpHeaders({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    });
+    return this.http.post<any>('http://localhost:8080/auth/change-password', changePassword, { headers })
+      .pipe(map((res) => {
+        console.log(res);
+
+        if (res && res.success && logout) {
+          // Assuming you have a method named logout to handle the logout functionality
+          this.logout();
+        }
+
         return res;
       }));
   }

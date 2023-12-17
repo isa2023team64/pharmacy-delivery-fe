@@ -1,4 +1,4 @@
-export class CompanyAdmin {
+export class SystemAdmin {
     id: number;
     email: string;
     password: string;
@@ -7,11 +7,8 @@ export class CompanyAdmin {
     city: string;
     country: string;
     phoneNumber: string;
-    workplace: string;
-    companyName: string;
-    companyId: number;
-    firstLogin: boolean;
-  
+    firstLogged: boolean;
+
     constructor() {
       this.id = -1;
       this.email = "";
@@ -21,9 +18,6 @@ export class CompanyAdmin {
       this.city = "";
       this.country = "";
       this.phoneNumber = "";
-      this.workplace = "";
-      this.companyName = "";
-      this.companyId = -1;
-      this.firstLogin = false;
+      this.firstLogged = true;
     }
   }
