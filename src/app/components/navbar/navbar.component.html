@@ -3,7 +3,7 @@
     <button class="menuButton mat-button" [matMenuTriggerFor]="menu">Menu</button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item [routerLink]="['home']">Home</button>
-      <button mat-menu-item *ngIf="user  && user.roles.includes('ROLE_SYSTEM_ADMIN')"[routerLink]="['registerCompany']">Register Company (system admin)</button>
+      <button mat-menu-item *ngIf="user  && user.roles.includes('ROLE_SYSTEMADMIN')"[routerLink]="['registerCompany']">Register Company (system admin)</button>
       <button mat-menu-item *ngIf="user && user.email === ''" [routerLink]="['unregisteredUserEquipment']">Equipment (uregistered user)</button>
       <button mat-menu-item *ngIf="user && user.email === ''" [routerLink]="['unregisteredUserCompanies']">Companies (uregistered user)</button>
       <button mat-menu-item *ngIf="user  && user.roles.includes('ROLE_USER')" [routerLink]="['company-search']">Company search (registered user)</button>
@@ -12,7 +12,6 @@
       <button mat-menu-item *ngIf="user  && user.roles.includes('ROLE_COMPANYADMIN')"[routerLink]="['company-admin-profile']">Profile (company admin)</button>
       <button mat-menu-item *ngIf="user  && user.roles.includes('ROLE_COMPANYADMIN')"[routerLink]="['company-profile']">Company profile</button>
       <button mat-menu-item *ngIf="user  && user.roles.includes('ROLE_COMPANYADMIN')" [routerLink]="['equipment-search-company-administrator']">Equipment search (company administrator)</button>
-      <button mat-menu-item [routerLink]="['add-equipment']">Add new equipment</button>
     </mat-menu>
   </div>
   <div class="app-name-icon" [routerLink]="['']"> 

@@ -18,26 +18,6 @@ export class RegisteredUserAppointmentsComponent {
   canEdit: boolean = false;
   appointments: Appointment[] = [];
 
-  // appointmentsTryout = [
-  //   {
-  //     id: 1,
-  //     startDateTime: '2023-12-15T18:34:14.026+01:00',
-  //     duration: 30,
-  //     status: 'PENDING',
-  //     companyAdministratorFullName: 'John Doe',
-  //     company: { name: 'ABC Pharmacy' }
-  //   },
-  //   {
-  //     id: 2,
-  //     startDateTime: '2023-12-16T10:00:00.000+01:00',
-  //     duration: 45,
-  //     status: 'APPROVED',
-  //     companyAdministratorFullName: 'Jane Smith',
-  //     company: { name: 'XYZ Pharmacy' }
-  //   },
-  //   // Add more appointments as needed
-  // ];
-
   constructor(public appointmentService: AppointmentService,
               private authService: AuthService,
               private userService: RegisteredUserService,
