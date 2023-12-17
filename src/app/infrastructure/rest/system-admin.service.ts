@@ -14,19 +14,19 @@ export class SystemAdminService {
     this.basePath = environment.apiHost;
   }
 
-  getById(id: number): Observable<SystemAdmin> {
+  getById(id: number): Observable<any> {
     const path = this.basePath + "system-administrators/" + id;
-    return this.http.get<SystemAdmin>(path);
+    return this.http.get<any>(path);
   }
 
-  update(id: number, updatedUser: any): Observable<SystemAdmin> {
+  update(id: number, updatedUser: any): Observable<any> {
     const path = this.basePath + "system-administrators/" + id;
     console.log(path);
-    return this.http.put<SystemAdmin>(path, updatedUser);
+    return this.http.put<any>(path, updatedUser);
   }
 
-  getByName(name: String): Observable<SystemAdmin> {
+  getByName(name: String): Observable<any> {
     const path = this.basePath + "system-administrators/by-email";
-    return this.http.put<SystemAdmin>(path, name);
+    return this.http.put<any>(path, name);
   }
 }

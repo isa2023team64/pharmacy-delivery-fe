@@ -3,7 +3,7 @@ import { Company } from '../../company/model/company.model';
 import { CompanyService } from '../../company/company.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Equipment } from '../../infrastructure/rest/model/equipment.model';
-import { faHouse, faPlus, faMinus, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faPlus, faMinus, faEdit, faL } from '@fortawesome/free-solid-svg-icons';
 import { CompanyAdministrator } from '../../infrastructure/auth/model/company-administrator.model';
 import { CompanyEquipment } from '../../infrastructure/rest/model/company-equipment.model';
 import { EquipmentService } from '../../company/equipment.service';
@@ -14,6 +14,8 @@ import { AppointmentService } from '../../infrastructure/rest/appointment.servic
 import { AuthService } from '../../infrastructure/auth';
 import { CompanyAdminService } from '../../infrastructure/rest/company-admin.service';
 import { eq } from '@fullcalendar/core/internal-common';
+import { CalendarOptions, EventSourceInput } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
 
 @Component({
   selector: 'pd-company-profile',
@@ -38,6 +40,28 @@ export class CompanyProfileComponent implements OnInit {
   faPlus = faPlus;
   faMinus = faMinus;
   faEdit = faEdit;
+
+  optionsMonthSelected: boolean = true;
+  optionsDaySelected: boolean = false;
+  optionsYearSelected: boolean = false;
+
+  calendarOptionsMonth: CalendarOptions = {
+    initialView: 'dayGridMonth',
+    plugins: [dayGridPlugin],
+    events: []
+  }
+
+  calendarOptionsDay: CalendarOptions = {
+    initialView: 'dayGridWeek',
+    plugins: [dayGridPlugin],
+    events: [],
+}
+
+calendarOptionsYear: CalendarOptions = {
+    initialView: 'dayGridYear',
+    plugins: [dayGridPlugin],
+    events: [],
+}
 
   constructor(private companyService: CompanyService,
               private equipmentService: EquipmentService,
@@ -115,6 +139,7 @@ export class CompanyProfileComponent implements OnInit {
   getAppointments(companyId: number): void {
     this.appointmentService.getAppointmentsByCompanyId(companyId).subscribe(result => {
       this.appointments = result;
+      this.makeCalendar();
     })
   }
 
@@ -240,6 +265,43 @@ export class CompanyProfileComponent implements OnInit {
         this.equipmentSearched.push(eq);
       }
     });
+  }
+
+  selectOptionsMonth(){
+    this.optionsMonthSelected = true;
+    this.optionsDaySelected = false;
+    this.optionsYearSelected = false;
+  }
+  selectOptionsDay(){
+    this.optionsMonthSelected = false;
+    this.optionsDaySelected = true;
+    this.optionsYearSelected = false;
+  }
+  selectOptionsYear(){
+    this.optionsMonthSelected = false;
+    this.optionsDaySelected = false;
+    this.optionsYearSelected = true;
+  }
+
+  makeCalendar(){
+    const newEvents: any[] = [];
+
+    this.appointments.forEach(appointment =>{
+      const startDateTime = new Date(appointment.startDateTime);
+      const endDateTime = new Date(startDateTime.getTime() + appointment.duration * 60000);
+
+      const newEvent = {
+        title: appointment.companyAdministratorFullName + " " + appointment.duration + " Minutes",
+        start: appointment.startDateTime.toString(),
+        end: endDateTime.toISOString()
+      };
+      newEvents.push(newEvent);
+      console.log(newEvents);
+    })
+
+    this.calendarOptionsMonth.events = [...newEvents];
+    this.calendarOptionsDay.events = [...newEvents];
+    this.calendarOptionsYear.events = [...newEvents];
   }
 
 }

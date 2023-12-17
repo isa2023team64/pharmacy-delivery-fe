@@ -88,4 +88,25 @@
             <div class="profile-button-text">Add appointment</div>
         </div>
     </div>
+
+    <div class="profile-section">
+    <div class="profile-section-title">Appointments Calendar</div>
+    <div class="profile-button-row-container">
+        <div class="profile-edit-button" (click)="selectOptionsMonth()">
+            <div class="profile-button-text">Month Calendar</div>
+        </div>
+        <div class="profile-edit-button" (click)="selectOptionsDay()">
+            <div class="profile-button-text">Week Calendar</div>
+        </div>
+        <div class="profile-edit-button" (click)="selectOptionsYear()">
+            <div class="profile-button-text">Year Calendar</div>
+        </div>
+    </div>
+    </div>
+
+    <div class="calendar-wrapper">
+        <full-calendar *ngIf="optionsMonthSelected" [options]="calendarOptionsMonth"></full-calendar>
+        <full-calendar *ngIf="optionsDaySelected" [options]="calendarOptionsDay"></full-calendar>
+        <full-calendar *ngIf="optionsYearSelected" [options]="calendarOptionsYear"></full-calendar>
+    </div>
 </div>
