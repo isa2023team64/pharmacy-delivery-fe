@@ -65,7 +65,7 @@ export class CompanyService {
     }
     
   update(companyId: number, updatedCompany: Company): Observable<Company> {
-    const route = environment.apiHost + 'companies' + '/' + companyId;
+    const route = environment.apiHost + 'companies/update/' + companyId;
     console.log(route,{headers: this.headers});
     return this.http.put<Company>(route, updatedCompany,{headers: this.headers});
   }

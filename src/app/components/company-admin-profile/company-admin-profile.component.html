@@ -18,12 +18,15 @@
         <div class="profile-input-error">{{errors.lastName}}</div>
 
         <div class="profile-label">Password:</div>
-        <input class="profile-input" [class.cursor-initial]="canEdit" type="password" placeholder="Password" [(ngModel)]="companyAdminCopy.password" (input)="validate()"/>
+        <!-- <input class="profile-input" [class.cursor-initial]="canEdit" type="password" placeholder="Password" [(ngModel)]="companyAdminCopy.password" (input)="validate()"/> -->
         <div class="profile-input-error">{{errors.password}}</div>
+        <div class="profile-edit-button" (click)="changePassword()">
+            <div class="profile-button-text">Change password</div>
+        </div>
 
-        <div class="profile-label" *ngIf="canEdit">Confirm password:</div>
+        <!-- <div class="profile-label" *ngIf="canEdit">Confirm password:</div>
         <input class="profile-input" [class.cursor-initial]="canEdit" type="password" placeholder="Confirm password" *ngIf="canEdit" [(ngModel)]="companyAdminCopy.passwordConfirmation" (input)="validate()"/>
-        <div class="profile-input-error" *ngIf="canEdit">{{errors.passwordConfirmation}}</div>
+        <div class="profile-input-error" *ngIf="canEdit">{{errors.passwordConfirmation}}</div> -->
 
         <div class="profile-label">Country:</div>
         <input class="profile-input" [class.cursor-initial]="canEdit" type="text" placeholder="Country" [(ngModel)]="companyAdminCopy.country" (input)="validate()"/>
