@@ -99,8 +99,12 @@ const routes: Routes = [
     }
   },
   {
-    path: 'company-admin-profile/:id',
-    component: CompanyAdminProfileComponent
+    path: 'company-admin-profile',
+    component: CompanyAdminProfileComponent,
+    canActivate: [RoleGuard],
+    data: {
+      expectedRole: 'ROLE_COMPANY_ADMIN'
+    }
   },
   {
     path: 'company-profile',
