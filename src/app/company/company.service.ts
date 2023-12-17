@@ -28,7 +28,7 @@ export class CompanyService {
 
   registerCompany(company : Company): Observable<AuthenticationResponse>{
     return this.http
-      .post<AuthenticationResponse>(environment.apiHost + 'companies', company,{headers: this.headers})
+      .post<AuthenticationResponse>(environment.apiHost + 'companies/register', company,{headers: this.headers})
       .pipe(
         tap((authenticationResponse) => {
             console.log("AUTHENTICATED COMPANY")
