@@ -35,14 +35,14 @@ export class RoleGuard implements CanActivate {
       return false;
     }
 
-    if(expectedRole === 'ROLE_SYSTEM_ADMIN'){
+    if(expectedRole === 'ROLE_SYSTEMADMIN'){
       if(this.isSystemAdminFirstLogged(this.aService.user$.value.email)){
         this.router.navigate(['/change-password']);
         return false;
       }
     }
     // for (const r of role) {
-    //   if (r.name === 'ROLE_SYSTEM_ADMIN') {
+    //   if (r.name === 'ROLE_SYSTEMADMIN') {
     //     console.log("ACCESS SYSTEM ADMIN")
     //     if(!this.isSystemAdminFirstLogged(this.aService.user$.value.id)){
     //       this.router.navigate(['/change-password']);
