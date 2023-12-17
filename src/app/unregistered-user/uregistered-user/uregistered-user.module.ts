@@ -6,13 +6,15 @@ import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { ComponentsModule } from '../../components/components.module';
+import { UnregisteredUserCompanyCardComponent } from './unregistered-user-company-card/unregistered-user-company-card.component';
 
 
 
 @NgModule({
   declarations: [
     UregisteredUserCompaniesComponent,
-    UregisteredUserEquipmentComponent
+    UregisteredUserEquipmentComponent,
+    UnregisteredUserCompanyCardComponent
   ],
   imports: [
     CommonModule, 
