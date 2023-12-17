@@ -5,4 +5,5 @@ export interface CompanyEquipment{
     type: string;
     averageRating:string;
     isAdded:boolean;
+    stockCount: number;
 }

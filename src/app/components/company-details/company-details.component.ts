@@ -46,7 +46,9 @@ export class CompanyDetailsComponent implements OnInit {
     })
   }
 
-  toggleOrderItem(id: number | undefined): void {
+  toggleOrderItem(id: number | undefined, stockCount: number | undefined): void {
+    if(stockCount! <= 0) return;
+
     const index = this.equipmentIds.indexOf(id!);
     if (index !== -1) {
       this.equipmentIds.splice(index, 1);

@@ -61,7 +61,7 @@ const routes: Routes = [
     path: 'registerCompany',
     component: RegisterCompanyComponent,canActivate: [RoleGuard],
     data: {
-      expectedRole: 'ROLE_SYSTEM_ADMIN'
+      expectedRole: 'ROLE_SYSTEMADMIN'
     }
   },
   {
@@ -95,19 +95,23 @@ const routes: Routes = [
     path: 'register-company-administrator/:id',
     component: RegisterCompanyAdministratorComponent,canActivate: [RoleGuard],
     data: {
-      expectedRole: 'ROLE_SYSTEM_ADMIN'
+      expectedRole: 'ROLE_SYSTEMADMIN'
     }
   },
   {
-    path: 'company-admin-profile/:id',
-    component: CompanyAdminProfileComponent
+    path: 'company-admin-profile',
+    component: CompanyAdminProfileComponent,
+    canActivate: [RoleGuard],
+    data: {
+      expectedRole: 'ROLE_COMPANYADMIN'
+    }
   },
   {
     path: 'company-profile',
     component: CompanyProfileComponent,
     canActivate: [RoleGuard],
     data: {
-      expectedRole: 'ROLE_COMPANY_ADMIN'
+      expectedRole: 'ROLE_COMPANYADMIN'
     }
   },
   {
@@ -122,7 +126,7 @@ const routes: Routes = [
     path: 'company-profile/add-equipment',
     component: AddEquipmentComponent, canActivate: [RoleGuard],
     data: {
-      expectedRole: 'ROLE_COMPANY_ADMIN'
+      expectedRole: 'ROLE_COMPANYADMIN'
     }
   },
   {

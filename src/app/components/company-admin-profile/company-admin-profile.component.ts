@@ -3,6 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { CompanyAdmin } from '../../infrastructure/rest/model/company-admin.model';
 import { CompanyAdminService } from '../../infrastructure/rest/company-admin.service';
+import { AuthService } from '../../infrastructure/auth';
+import { MatDialog } from '@angular/material/dialog';
+import { ChangeCopmanyAdminPasswordComponent } from '../change-company-admin-password/change-company-admin-password.component';
 
 @Component({
   selector: 'pd-company-admin-profile',
@@ -16,8 +19,13 @@ export class CompanyAdminProfileComponent {
   companyAdminCopy: any;
   errors: any;
   canEdit: boolean = false;
+  user: any;
+  userId: number = -1;
 
-  constructor(private userService: CompanyAdminService, private route: ActivatedRoute){
+  constructor(private companyAdminService: CompanyAdminService,
+              private route: ActivatedRoute,
+              private authService: AuthService,
+              private dialogRef: MatDialog){
     this.companyAdminCopy = {
       password: "",
       passwordConfirmation: "",
@@ -46,27 +54,25 @@ export class CompanyAdminProfileComponent {
 
   ngOnInit(): void {
     this.setInputReadOnly(true);
-    this.route.params.subscribe((params) => {
-      this.companyAdminId = params['id'];
-      this.getCompanyAdminById();
-    })
-  }
+    this.fetchUser();
+  }  
 
-  getCompanyAdminById(): void {
-    this.userService.getById(this.companyAdminId).subscribe({
-      next: (result: CompanyAdmin) => {
-        this.companyAdmin = result;
+  fetchUser(): void {
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+      if (!user.id) return;
+      this.userId = user.id;
+      this.companyAdminService.getById(this.userId).subscribe(registeredUser => {
+        this.companyAdmin = registeredUser;
+        this.companyAdminId = this.userId;
         this.makeUserCopy();
-      },
-      error: (errData) => {
-        console.log(errData);
-      }
-    })
+      })
+    });
   }
 
   saveChanges(): void {
     if(this.validate()) {
-      this.userService.update(this.companyAdminId, this.companyAdminCopy).subscribe({
+      this.companyAdminService.update(this.companyAdminId, this.companyAdminCopy).subscribe({
         next: (result: CompanyAdmin) => {
           this.companyAdmin = result;
           this.makeUserCopy();
@@ -179,4 +185,13 @@ export class CompanyAdminProfileComponent {
     this.errors.workplace = "";
     this.errors.companyName = "";
   };
+
+  changePassword() {
+    this.dialogRef.open(ChangeCopmanyAdminPasswordComponent, {
+      width: '400px', // Set the width as per your requirement
+      disableClose: true, // Prevent closing the dialog by clicking outside or pressing Esc
+      autoFocus: true, // Autofocus on the first focusable element in the dialog
+      data: { companyAdmin: this.companyAdmin }  
+    });
+  }
 }
