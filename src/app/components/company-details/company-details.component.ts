@@ -18,6 +18,7 @@ export class CompanyDetailsComponent implements OnInit {
   company?: Company;
   equipment?: Equipment[];
   equipmentIds: number[] = [];
+  equipmentSearch: string = '';
 
   faLocationDot = faLocationDot;
   faStar = faStar;
@@ -70,5 +71,23 @@ export class CompanyDetailsComponent implements OnInit {
     this.dialogRef.open(ReservationComponent, {
       data: reservationData,
     });
+  }
+
+  searchEquipment() {
+    if (!this.equipmentSearch) {
+      this.getEquipmentByCompanyId(this.companyId);
+      return;
+    }
+
+    if (!this.equipment) {
+      return;
+    }
+
+    const searchTerm = this.equipmentSearch.toLowerCase(); 
+    
+    const filteredEquipment = this.equipment.filter((e) =>
+      e.name.toLowerCase().includes(searchTerm)
+    );
+    this.equipment = filteredEquipment;
   }
 }

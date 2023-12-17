@@ -16,7 +16,11 @@
     </div>
     <div class="margin-bottom">
         <div class="company-title">Equipment</div>
-        <div *ngFor="let e of equipment" (click)="toggleOrderItem(e.id, e.stockCount)">
+        <div class="search-container">
+            <input type="text" [(ngModel)]="equipmentSearch" placeholder="Search by name" />
+            <button (click)="searchEquipment()">Search</button>
+        </div>
+        <div class="margin-bottom-eq" *ngFor="let e of equipment" (click)="toggleOrderItem(e.id, e.stockCount)">
             <pd-equipment-card [equipment]="e" [selected]="isItemSelected(e.id)"></pd-equipment-card>
         </div> 
     </div>
