@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
       if (!user.id) return;
       this.userId = user.id;
 
-      if (user.roles.includes('ROLE_COMPANY_ADMIN')) {
+      if (user.roles.includes('ROLE_COMPANYADMIN')) {
         this.companyAdminService.getById(this.userId).subscribe(registeredUser => {
           this.companyAdmin = registeredUser;
           if (this.companyAdmin.firstLogin) {

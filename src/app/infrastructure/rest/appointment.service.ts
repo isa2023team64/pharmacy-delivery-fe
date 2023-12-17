@@ -23,9 +23,10 @@ export class AppointmentService {
     this.basePath = environment.apiHost;
   }
 
-  createAppointment(appointmentRequest: AppointmentRequest): Observable<Appointment> {
+  createAppointment(appointmentRequest: AppointmentRequest): Observable<any> {
     const path = this.basePath + "appointments/new";
-    return this.http.post<Appointment>(path, appointmentRequest, {headers: this.headers});
+    console.log(path);
+    return this.http.post<any>(path, appointmentRequest, {headers: this.headers});
   }
   
   getAppointmentsByCompanyId(companyId: number): Observable<Appointment[]> {

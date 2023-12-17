@@ -7,6 +7,7 @@ import { RegisteredUserService } from '../../infrastructure/rest/registered-user
 import { CompanyAdminService } from '../../infrastructure/rest/company-admin.service';
 import { CompanyService } from '../../company/company.service';
 import { Company } from '../../company/model/company.model';
+import { User } from '../../infrastructure/auth/model/user.model';
 
 @Component({
   selector: 'pd-appointment-form',
@@ -19,7 +20,7 @@ export class AppointmentFormComponent implements OnInit {
   duration: number = 60;
   companyAdministratorName: string = "";
   errors: any;
-  user: any;
+  user: User | undefined;
   companyId: number = -1;
   company?: Company;
 
@@ -58,12 +59,13 @@ export class AppointmentFormComponent implements OnInit {
   fetchCompany(): void {
     this.authService.user$.subscribe(user => {
       this.user = user;
+      console.log(user.roles)
       if (!user.id) return;
       let userId = user.id;
 
       this.companyAdminService.getById(userId).subscribe(registeredUser => {
         this.companyId = registeredUser.companyId;
-        this.user = registeredUser;
+        // this.user = registeredUser;
         this.companyService.getById(registeredUser.companyId).subscribe(result => {
           this.company = result;
         })
