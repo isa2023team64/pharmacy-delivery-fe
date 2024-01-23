@@ -28,6 +28,12 @@ export class AppointmentService {
     console.log(path);
     return this.http.post<any>(path, appointmentRequest, {headers: this.headers});
   }
+
+  cancleAppointment(appointment: Appointment): Observable<any> {
+    const path = this.basePath + "appointments/cancle/"+ appointment.id;
+    console.log(path);
+    return this.http.patch<any>(path, {headers: this.headers});
+  }
   
   getAppointmentsByCompanyId(companyId: number): Observable<Appointment[]> {
     const path = this.basePath + "appointments/by-company-id/" + companyId;

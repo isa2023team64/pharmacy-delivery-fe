@@ -17,6 +17,7 @@ export class RegisteredUserAppointmentsComponent {
   user: RegisteredUser = new RegisteredUser();
   canEdit: boolean = false;
   appointments: Appointment[] = [];
+  is24hBefore: boolean = false;
 
   constructor(public appointmentService: AppointmentService,
               private authService: AuthService,
@@ -43,6 +44,45 @@ export class RegisteredUserAppointmentsComponent {
     })
     
   }
+
+  cancelAppointment(appointment:Appointment) {
+    
+    var appointmentTimestamp = Date.parse(appointment.startDateTime);
+    var currentTimestamp = new Date().getTime();
+    var timeDifference = appointmentTimestamp - currentTimestamp;
+    var hoursDifference = timeDifference / (1000 * 60 * 60);
+    this.is24hBefore = hoursDifference <= 24;
+    console.log(appointmentTimestamp, currentTimestamp)
+    console.log(hoursDifference);
+    console.log(this.is24hBefore);
+    console.log("Cancelling appointment:", appointment);
+
+    this.userService.addPenaltyPoints(this.userId,this.is24hBefore).subscribe(registeredUser => {
+      this.user = registeredUser;
+      console.log("USER");
+      console.log(this.user)
+      this.appointmentService.cancleAppointment(appointment).subscribe({
+        next: (result: any) => {
+          console.log("Appointment cancled");
+          this.reservationService.deleteReservation(appointment.id).subscribe({
+            next: (result: any) => {
+              console.log("Reservation deleted");
+              location.reload();
+            },
+            error: (errData) => {
+              console.log("Error: " + errData);
+            }
+          })
+        },
+        error: (errData) => {
+          console.log("Error: " + errData);
+        }
+      })
+      
+      //
+    });
+    
+}
   
 
   fetchUser(): void {

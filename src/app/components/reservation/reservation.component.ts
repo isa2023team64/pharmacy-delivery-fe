@@ -64,9 +64,10 @@ export class ReservationComponent {
   getAppointments(): void {
     this.appointmentService.getAppointmentsByCompanyId(this.data.companyId).subscribe({
       next: (result: Appointment[]) => {
-        console.log(this.appointments)
+        
         const currentDate = new Date();
         this.appointments = result
+        console.log(this.appointments)
         this.freeAppointments = result.filter(appointment =>
           new Date(appointment.startDateTime) > currentDate && appointment.status === 'FREE');
       },

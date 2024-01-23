@@ -3,11 +3,12 @@
     <h2><strong>Your Appointments</strong></h2>
   
     <div *ngFor="let appointment of appointments">
-      <div class="appointment-card">
+      <div *ngIf="appointment.status" class="appointment-card">
         <p>Date and Time: {{ appointment.startDateTime | date:'medium' }}</p>
         <p>Duration: {{ appointment.duration }} minutes</p>
-        <p>Status:<strong> {{ appointment.status }}</strong></p>
+        <p>Status: <strong>{{ appointment.status }}</strong></p>
         <p>Company Employee: {{ appointment.companyAdministratorFullName }}</p>
+        <button *ngIf="appointment.status === 'RESERVED'" class="profile-edit-button" (click)="cancelAppointment(appointment)">CANCLE</button>
       </div>
     </div>
   </div>
