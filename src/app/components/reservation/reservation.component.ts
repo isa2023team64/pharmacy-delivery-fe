@@ -20,6 +20,7 @@ import { Location } from '@angular/common';
 })
 export class ReservationComponent {
   appointments: Appointment[] = []
+  userAppointments: Appointment[] = []
   freeAppointments: Appointment[] = []
   selectedAppointmentId: number = -1
   company: any
@@ -55,6 +56,7 @@ export class ReservationComponent {
     this.getAppointments();
     this.fetchUser();
     this.getCompany();
+    this.getUserAppointments(this.userId)
   }
 
   onClose(): void {
@@ -96,25 +98,59 @@ export class ReservationComponent {
   isSelected(id: number) {
     return id == this.selectedAppointmentId
   }
+  getUserAppointments(userId: number) {
+    this.reservationService.getUserAppointmentsByUserId(userId).subscribe({
+      next: (result: any) => {
+        this.userAppointments = result;
+        console.log("Appointments retrived succsessfuly");
+      },
+      error: (errData) => {
+        console.log("Error: " + errData);
+      }
+    })
+    
+  }
+
+  chekIfInUserAppointments(appointmentId: number){
+    var selectAppointment=this.findAppointmentById(appointmentId)
+    const isInAppointments = this.userAppointments.some(appointment => appointment.startDateTime === selectAppointment?.startDateTime );
+    console.log(isInAppointments)
+    return !isInAppointments;
+  }
+  findAppointmentById(appointmentId: number):Appointment|undefined{
+    return this.appointments.find(appointment => appointment.id === appointmentId);
+  }
+  chekIfInUserAppointmentsBasedOnTime(newAppointment: any){
+    const isInAppointments = this.userAppointments.some(appointment => appointment.startDateTime === newAppointment.startDateTime);
+    console.log(isInAppointments)
+    return !isInAppointments;
+  }
 
   onMakeAReservation(): void {
+    
     if(!this.extraordinary){
       const reservation = {
         userId: this.userId,
         equipmentIds: this.data.equipmentIds,
         appointmentId: this.selectedAppointmentId
       }
-      console.log(reservation);
-      this.reservationService.createReservation(reservation).subscribe({
-        next: (result: any) => {
-          console.log("Successfully made a reservation.");
-          this.onClose();
-          window.location.reload();
-        },
-        error: () => {
-          console.log("Error.")
-        }
-      });
+      console.log("Cheking if user made reservation for this appointment before");
+      if(this.chekIfInUserAppointments(this.selectedAppointmentId)){
+        console.log(reservation);
+        this.reservationService.createReservation(reservation).subscribe({
+          next: (result: any) => {
+            console.log("Successfully made a reservation.");
+            this.onClose();
+            //window.location.reload();
+          },
+          error: () => {
+            console.log("Error.")
+          }
+        });
+      }
+      else{
+        alert('You cancled appointment at this time. You cant make it then again.');
+      }
     }
     else {
       const reservation = {
@@ -128,16 +164,22 @@ export class ReservationComponent {
         }
       }
       console.log(reservation);
-      this.reservationService.createExtraordinaryReservation(reservation).subscribe({
-        next: (result: any) => {
-          console.log("Successfully made a reservation.");
-          this.onClose();
-          window.location.reload();
-        },
-        error: () => {
-          console.log("Error.")
-        }
-      });
+      if(this.chekIfInUserAppointmentsBasedOnTime(reservation.appointment)){
+        this.reservationService.createExtraordinaryReservation(reservation).subscribe({
+          next: (result: any) => {
+            console.log("Successfully made a reservation.");
+            this.onClose();
+            //window.location.reload();
+          },
+          error: () => {
+            console.log("Error.")
+          }
+        });
+      }
+      else{
+        alert('You cancled appointment at this time. You cant make it then again.');
+      }
+      
     }
   }
 
@@ -220,3 +262,4 @@ toggleExtraordinary(): void {
 
   faXmark = faXmark;
 }
+
