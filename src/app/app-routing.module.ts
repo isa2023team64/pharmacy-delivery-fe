@@ -23,6 +23,7 @@ import { AddEquipmentComponent } from './components/add-equipment/add-equipment.
 import { EditEquipmentComponent } from './components/edit-equipment/edit-equipment.component';
 import { RoleGuard } from './infrastructure/auth/auth-guard/auth-guard.guard';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { MapDeliveryComponent } from './components/map/map.component';
 
 const routes: Routes = [
   {
@@ -137,6 +138,10 @@ const routes: Routes = [
     path: 'change-password',
     component: ChangePasswordComponent,
   },
+  {
+    path: 'map-delivery',
+    component: MapDeliveryComponent,
+  }
 ];
 
 @NgModule({
