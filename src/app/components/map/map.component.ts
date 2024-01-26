@@ -28,6 +28,7 @@ export class MapDeliveryComponent implements OnInit, AfterViewInit {
 
   startCoordinates: Coordinates = new Coordinates(45.267136, 19.833549);
   endCoordinates: Coordinates = new Coordinates(45.21, 19.73);
+  deliveryCoordinates: Coordinates = new Coordinates(45.267136, 19.833549)
   coordinatesList: Coordinates[]=[];
 
   constructor() { 
@@ -88,7 +89,7 @@ export class MapDeliveryComponent implements OnInit, AfterViewInit {
 
     const goal = L.marker([this.endCoordinates.latitude,  this.endCoordinates.longitude], { icon: goalIcon }).addTo(this.map);
 
-    const delivery = L.marker([this.startCoordinates.latitude,  this.startCoordinates.longitude], { icon: deliveryIcon }).addTo(this.map);
+    const delivery = L.marker([this.deliveryCoordinates.latitude,  this.deliveryCoordinates.longitude], { icon: deliveryIcon }).addTo(this.map);
 
 
     start.bindPopup('Start').openPopup();
@@ -98,13 +99,13 @@ export class MapDeliveryComponent implements OnInit, AfterViewInit {
 
   public startDelivery(): void{
 
-    const coordinatesList: Coordinates[] = [this.startCoordinates, this.endCoordinates];
-    console.log(coordinatesList);
+    this.coordinatesList = [this.startCoordinates, this.endCoordinates];
+    // console.log(coordinatesList);
 
-    // if (!this.stompClient.connected) {
-    //   console.error('WebSocket connection is not established.');
-    //   return;
-    // }
+    if (!this.stompClient.connected) {
+      console.error('WebSocket connection is not established. Initializing...');
+      this.initializeWebSocketConnection();
+    }
 
     this.sendMessageUsingSocket();
     
@@ -136,9 +137,7 @@ export class MapDeliveryComponent implements OnInit, AfterViewInit {
   }
 
   sendMessageUsingSocket() {
-      const message = "Proba";
-      
-      this.stompClient.send("/ws-subscriber/delivery", {}, JSON.stringify(message));
+      this.stompClient.send("/ws-subscriber/delivery", {}, JSON.stringify(this.coordinatesList));
   }
 
   openGlobalSocket() {
@@ -160,8 +159,49 @@ export class MapDeliveryComponent implements OnInit, AfterViewInit {
 
   handleResult(message: { body: string; }) {
     if (message.body) {
-      let messageResult: string = JSON.parse(message.body);
+      let coordinatesList: Coordinates[] = JSON.parse(message.body);
+      console.log(coordinatesList)
+
+      if (coordinatesList.length > 0) {
+        this.updateMapWithCoordinates(coordinatesList[0]);
+      }
+
+      if (
+        this.deliveryCoordinates.latitude === this.endCoordinates.latitude &&
+        this.deliveryCoordinates.longitude === this.endCoordinates.longitude
+      ) {
+        console.log('Delivery coordinates are the same as end coordinates. Disconnecting WebSocket.');
+        this.disconnectWebSocket();
+      }
     }
   }
+
+  disconnectWebSocket() {
+    if (this.stompClient && this.stompClient.connected) {
+      this.stompClient.disconnect();
+      this.isCustomSocketOpened = false;
+      console.log('WebSocket disconnected.');
+    }
+  }
+
+  updateMapWithCoordinates(coordinates: Coordinates): void {
+    // Update the deliveryCoordinates property
+    this.deliveryCoordinates = coordinates;
+  
+    // Clear existing markers
+    this.map.eachLayer((layer) => {
+      if (layer instanceof L.Marker) {
+        this.map.removeLayer(layer);
+      }
+    });
+  
+    // Add new markers with updated coordinates
+    this.addMarkers();
+  
+    // Center the map on the updated coordinates
+    this.map.setView([coordinates.latitude, coordinates.longitude], 12);
+  }
+
+  
 
 }
