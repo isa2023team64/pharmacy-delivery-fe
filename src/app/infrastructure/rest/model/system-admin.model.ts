@@ -1,5 +1,5 @@
 export class SystemAdmin {
-    id: number;
+    id?: number;
     email: string;
     password: string;
     firstName: string;
@@ -8,6 +8,8 @@ export class SystemAdmin {
     country: string;
     phoneNumber: string;
     firstLogged: boolean;
+    lastPasswordResetDate: Date;
+    active: boolean;
 
     constructor() {
       this.id = -1;
@@ -19,5 +21,7 @@ export class SystemAdmin {
       this.country = "";
       this.phoneNumber = "";
       this.firstLogged = true;
+      this.lastPasswordResetDate = new Date();
+      this.active = true;
     }
   }

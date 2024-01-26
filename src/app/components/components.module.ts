@@ -25,6 +25,7 @@ import { RegisteredUserAppointmentsComponent } from './registered-user-appointme
 import { AppointmentFormComponent } from './appointment-form/appointment-form.component';
 import { ChangeCopmanyAdminPasswordComponent } from './change-company-admin-password/change-company-admin-password.component';
 import { ReservationComponent } from './reservation/reservation.component';
+import { RegisterSystemAdministratorComponent } from './system-administrator-registration/system-administrator-registration.component';
 
 import { CompanyCalendarComponent } from './company-calendar/company-calendar.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
@@ -55,6 +56,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     CompanyCalendarComponent,
     ChangePasswordComponent,
     ReservationComponent,
+    RegisterSystemAdministratorComponent
   ],
   imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule, ReactiveFormsModule, FullCalendarModule],
   exports: [HomeComponent,
@@ -70,6 +72,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
             AddEquipmentComponent,
             EditEquipmentComponent,
             CompanyCalendarComponent,
-            ChangePasswordComponent],
+            ChangePasswordComponent,
+            RegisterSystemAdministratorComponent],
 })
 export class ComponentsModule {}

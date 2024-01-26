@@ -24,6 +24,7 @@ import { EditEquipmentComponent } from './components/edit-equipment/edit-equipme
 import { RoleGuard } from './infrastructure/auth/auth-guard/auth-guard.guard';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { MapDeliveryComponent } from './components/map/map.component';
+import { RegisterSystemAdministratorComponent } from './components/system-administrator-registration/system-administrator-registration.component';
 
 const routes: Routes = [
   {
@@ -141,6 +142,10 @@ const routes: Routes = [
   {
     path: 'map-delivery',
     component: MapDeliveryComponent,
+  },
+  {
+    path: 'register-system-administrator',
+    component: RegisterSystemAdministratorComponent,
   }
 ];
 
