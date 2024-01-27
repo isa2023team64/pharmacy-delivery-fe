@@ -31,6 +31,7 @@
     "@stomp/stompjs": "^7.0.0",
     "@types/leaflet": "^1.9.8",
     "font-awesome": "^4.7.0",
+    "jsqr": "^1.4.0",
     "leaflet": "^1.9.4",
     "ngx-cookie-service": "^17.0.1",
     "npm": "^10.2.5",

@@ -1,0 +1,19 @@
+<div class="registration-container">
+    <h1>UPLOAD QR</h1>
+</div>
+<div class="registration-container">
+    <!-- <form [formGroup]="registrationCompanyAdministratorForm" (ngSubmit)="registerCompanyAdministrator()" class="registration-form">
+      <div class="form-group">
+      </div>
+      <div>
+        <button type="submit" class="submit-button">REGISTER</button>
+      </div>
+    </form> -->
+    <!-- reservation-takeover-qr.component.html -->
+    <input type="file" (change)="onImageInputChange($event)" accept="image/*" />
+
+    <div *ngIf="decodedResult">
+    <p>Decoded QR Code: {{ decodedResult }}</p>
+    </div>
+
+</div>
