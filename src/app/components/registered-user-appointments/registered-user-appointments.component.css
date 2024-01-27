@@ -43,3 +43,14 @@
 .sort {
   margin-bottom: 1rem;
 }
+
+.card-top{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-left {
+  
+}
