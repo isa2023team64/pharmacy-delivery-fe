@@ -24,6 +24,7 @@ import { EditEquipmentComponent } from './components/edit-equipment/edit-equipme
 import { RoleGuard } from './infrastructure/auth/auth-guard/auth-guard.guard';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { DeliveriesComponent } from './components/deliveries/deliveries.component';
+import { MapDeliveryComponent } from './components/map/map.component';
 
 const routes: Routes = [
   {
@@ -141,6 +142,10 @@ const routes: Routes = [
   {
     path: 'deliveries',
     component: DeliveriesComponent
+  },
+  {
+    path: 'map-delivery',
+    component: MapDeliveryComponent,
   }
 ];
 

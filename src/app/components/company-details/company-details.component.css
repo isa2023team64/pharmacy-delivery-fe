@@ -69,4 +69,39 @@
 
 .margin-bottom {
     margin-bottom: 1rem;
+    padding: 20px;
+}
+
+.margin-bottom-eq{
+    padding: 10px;
+}
+.search-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    width: 50vw;
+    padding: 20px;
+}
+
+.search-container input {
+    flex: 1;
+    height: 2rem;
+    padding: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 0.25rem;
+    margin-right: 0.5rem;
+}
+
+.search-container button {
+    height: 2rem;
+    background-color: rgba(107, 22, 22, 1);
+    border: rgba(107, 22, 22, 1) 1px solid;
+    color: #fff;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.search-container button:hover {
+    background-color: rgba(107, 22, 22, 0.9);
 }
