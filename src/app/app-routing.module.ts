@@ -45,11 +45,11 @@ const routes: Routes = [
   },
   {
     path: 'company-search',
-    component: CompanySearchComponent   
+    component: CompanySearchComponent,
   },
   {
     path: 'equipment-search',
-    component: EquipmentSearchComponent   
+    component: EquipmentSearchComponent,
   },
   {
     path: 'registrationConfirmation',
@@ -61,10 +61,11 @@ const routes: Routes = [
   },
   {
     path: 'registerCompany',
-    component: RegisterCompanyComponent,canActivate: [RoleGuard],
+    component: RegisterCompanyComponent,
+    canActivate: [RoleGuard],
     data: {
-      expectedRole: 'ROLE_SYSTEMADMIN'
-    }
+      expectedRole: 'ROLE_SYSTEMADMIN',
+    },
   },
   {
     path: 'unregisteredUserCompanies',
@@ -76,18 +77,19 @@ const routes: Routes = [
   },
   {
     path: 'company-details/:id',
-    component: CompanyDetailsComponent,canActivate: [RoleGuard],
+    component: CompanyDetailsComponent,
+    canActivate: [RoleGuard],
     data: {
-      expectedRole: 'ROLE_USER'
-    }
+      expectedRole: 'ROLE_USER',
+    },
   },
   {
     path: 'profile',
     component: RegisteredUserProfileComponent,
     canActivate: [RoleGuard],
     data: {
-      expectedRole: 'ROLE_USER'
-    }
+      expectedRole: 'ROLE_USER',
+    },
   },
   {
     path: 'equipment-companies-overview/:id',
@@ -95,26 +97,27 @@ const routes: Routes = [
   },
   {
     path: 'register-company-administrator/:id',
-    component: RegisterCompanyAdministratorComponent,canActivate: [RoleGuard],
+    component: RegisterCompanyAdministratorComponent,
+    canActivate: [RoleGuard],
     data: {
-      expectedRole: 'ROLE_SYSTEMADMIN'
-    }
+      expectedRole: 'ROLE_SYSTEMADMIN',
+    },
   },
   {
     path: 'company-admin-profile',
     component: CompanyAdminProfileComponent,
     canActivate: [RoleGuard],
     data: {
-      expectedRole: 'ROLE_COMPANYADMIN'
-    }
+      expectedRole: 'ROLE_COMPANYADMIN',
+    },
   },
   {
     path: 'company-profile',
     component: CompanyProfileComponent,
     canActivate: [RoleGuard],
     data: {
-      expectedRole: 'ROLE_COMPANYADMIN'
-    }
+      expectedRole: 'ROLE_COMPANYADMIN',
+    },
   },
   {
     path: 'equipment-search-company-administrator',
@@ -122,14 +125,15 @@ const routes: Routes = [
   },
   {
     path: 'company-calendar/:id',
-    component: CompanyCalendarComponent
+    component: CompanyCalendarComponent,
   },
   {
     path: 'company-profile/add-equipment',
-    component: AddEquipmentComponent, canActivate: [RoleGuard],
+    component: AddEquipmentComponent,
+    canActivate: [RoleGuard],
     data: {
-      expectedRole: 'ROLE_COMPANYADMIN'
-    }
+      expectedRole: 'ROLE_COMPANYADMIN',
+    },
   },
   {
     path: 'edit-equipment/:id',
@@ -141,12 +145,12 @@ const routes: Routes = [
   },
   {
     path: 'deliveries',
-    component: DeliveriesComponent
+    component: DeliveriesComponent,
   },
   {
-    path: 'map-delivery',
+    path: 'map-delivery/:id',
     component: MapDeliveryComponent,
-  }
+  },
 ];
 
 @NgModule({

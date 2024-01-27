@@ -25,6 +25,7 @@
       *ngIf="
         isDateToday(delivery.deliveryDate) && delivery.status != 'DELIVERED'
       "
+      [routerLink]="['/map-delivery/', delivery.id]"
     >
       <div class="start-text">Start</div>
     </div>

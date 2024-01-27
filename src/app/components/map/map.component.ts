@@ -1,66 +1,78 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { Company } from '../../company/model/company.model';
 import { CompanyService } from '../../company/company.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as L from 'leaflet';
 import { Coordinates } from '../../infrastructure/rest/model/coordinates.model';
-import {Stomp} from '@stomp/stompjs';
+import { Stomp } from '@stomp/stompjs';
 import SockJS, * as WebSocketJS from 'sockjs-client';
-
-
 
 @Component({
   selector: 'pd-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css']
+  styleUrls: ['./map.component.css'],
 })
 export class MapDeliveryComponent implements OnInit, AfterViewInit {
-
   private map!: L.Map;
 
-  private serverUrl = "http://localhost:8080/ws";
+  private serverUrl = 'http://localhost:8080/ws';
   private stompClient: any;
 
   isLoaded: boolean = false;
   isCustomSocketOpened: boolean = false;
 
+  startCoordinates!: Coordinates;
+  endCoordinates!: Coordinates;
+  deliveryCoordinates!: Coordinates;
+  coordinatesList: Coordinates[] = [];
 
+  deliveryId: number = -1;
 
-  startCoordinates: Coordinates = new Coordinates(45.267136, 19.833549);
-  endCoordinates: Coordinates = new Coordinates(45.21, 19.73);
-  deliveryCoordinates: Coordinates = new Coordinates(45.267136, 19.833549)
-  coordinatesList: Coordinates[]=[];
-
-  constructor() { 
-
-  }
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     // this.coordinatesList.push(this.startCoordinates);
     // this.coordinatesList.push(this.endCoordinates);
     this.initializeWebSocketConnection();
+    this.route.params.subscribe((params) => {
+      this.deliveryId = params['id'];
+      this.startCoordinates = new Coordinates(
+        45.267136,
+        19.833549,
+        this.deliveryId
+      );
+      this.endCoordinates = new Coordinates(45.21, 19.73, this.deliveryId);
+      this.deliveryCoordinates = new Coordinates(
+        45.267136,
+        19.833549,
+        this.deliveryId
+      );
+    });
   }
 
-  ngAfterViewInit(): void { 
+  ngAfterViewInit(): void {
     this.initMap();
     this.addMarkers();
   }
 
   private initMap(): void {
     this.map = L.map('map', {
-      center: [ 45.267136,  19.833549 ],
-      zoom: 10
+      center: [45.267136, 19.833549],
+      zoom: 10,
     });
 
-    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 18,
-      minZoom: 3,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    });
+    const tiles = L.tileLayer(
+      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      {
+        maxZoom: 18,
+        minZoom: 3,
+        attribution:
+          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      }
+    );
 
     tiles.addTo(this.map);
   }
-
 
   private addMarkers(): void {
     // Example marker at the center of the map
@@ -68,37 +80,44 @@ export class MapDeliveryComponent implements OnInit, AfterViewInit {
       iconUrl: '../../../../assets/icons/marker_icon_red.png',
       iconSize: [40, 40],
       iconAnchor: [15, 30],
-      popupAnchor: [0, -30]
+      popupAnchor: [0, -30],
     });
 
     const goalIcon = L.icon({
       iconUrl: '../../../../assets/icons/goal_icon_red.png',
       iconSize: [40, 40],
       iconAnchor: [15, 30],
-      popupAnchor: [0, -30]
+      popupAnchor: [0, -30],
     });
 
     const deliveryIcon = L.icon({
       iconUrl: '../../../../assets/icons/delivery_icon.png',
       iconSize: [40, 40],
       iconAnchor: [15, 30],
-      popupAnchor: [0, -30]
+      popupAnchor: [0, -30],
     });
-  
-    const start = L.marker([this.startCoordinates.latitude,  this.startCoordinates.longitude], { icon: markerIcon }).addTo(this.map);
 
-    const goal = L.marker([this.endCoordinates.latitude,  this.endCoordinates.longitude], { icon: goalIcon }).addTo(this.map);
+    const start = L.marker(
+      [this.startCoordinates.latitude, this.startCoordinates.longitude],
+      { icon: markerIcon }
+    ).addTo(this.map);
 
-    const delivery = L.marker([this.deliveryCoordinates.latitude,  this.deliveryCoordinates.longitude], { icon: deliveryIcon }).addTo(this.map);
+    const goal = L.marker(
+      [this.endCoordinates.latitude, this.endCoordinates.longitude],
+      { icon: goalIcon }
+    ).addTo(this.map);
 
+    const delivery = L.marker(
+      [this.deliveryCoordinates.latitude, this.deliveryCoordinates.longitude],
+      { icon: deliveryIcon }
+    ).addTo(this.map);
 
     start.bindPopup('Start').openPopup();
     goal.bindPopup('Goal').openPopup();
     delivery.bindPopup('Delivery').openPopup();
   }
 
-  public startDelivery(): void{
-
+  public startDelivery(): void {
     this.coordinatesList = [this.startCoordinates, this.endCoordinates];
     // console.log(coordinatesList);
 
@@ -108,9 +127,7 @@ export class MapDeliveryComponent implements OnInit, AfterViewInit {
     }
 
     this.sendMessageUsingSocket();
-    
-  }  
-
+  }
 
   initializeWebSocketConnection() {
     // serverUrl je vrednost koju smo definisali u registerStompEndpoints() metodi na serveru
@@ -118,49 +135,58 @@ export class MapDeliveryComponent implements OnInit, AfterViewInit {
     this.stompClient = Stomp.over(ws);
     let that = this;
 
-    const headers = { 'Authorization': `Bearer ${localStorage.getItem("jwt")}` };
+    const headers = { Authorization: `Bearer ${localStorage.getItem('jwt')}` };
 
     this.stompClient.configure({
       websocket: true,
       debug: (str: string) => {
-          console.log(str);
+        console.log(str);
       },
       headers: headers,
-      withCredentials: true  // Set withCredentials to true
-  });
+      withCredentials: true, // Set withCredentials to true
+    });
 
     this.stompClient.connect(headers, function () {
       that.isLoaded = true;
-      that.openGlobalSocket()
+      that.openGlobalSocket();
     });
-
   }
 
   sendMessageUsingSocket() {
-      this.stompClient.send("/ws-subscriber/delivery", {}, JSON.stringify(this.coordinatesList));
+    this.stompClient.send(
+      '/ws-subscriber/delivery',
+      {},
+      JSON.stringify(this.coordinatesList)
+    );
   }
 
   openGlobalSocket() {
     if (this.isLoaded) {
-      this.stompClient.subscribe("/ws-publisher", (message: { body: string; }) => {
-        this.handleResult(message);
-      });
+      this.stompClient.subscribe(
+        '/ws-publisher',
+        (message: { body: string }) => {
+          this.handleResult(message);
+        }
+      );
     }
   }
 
   openSocket() {
     if (this.isLoaded) {
       this.isCustomSocketOpened = true;
-      this.stompClient.subscribe("/ws-publisher/coordinates", (message: { body: string; }) => {
-        this.handleResult(message);
-      });
+      this.stompClient.subscribe(
+        '/ws-publisher/coordinates',
+        (message: { body: string }) => {
+          this.handleResult(message);
+        }
+      );
     }
   }
 
-  handleResult(message: { body: string; }) {
+  handleResult(message: { body: string }) {
     if (message.body) {
       let coordinatesList: Coordinates[] = JSON.parse(message.body);
-      console.log(coordinatesList)
+      console.log(coordinatesList);
 
       if (coordinatesList.length > 0) {
         this.updateMapWithCoordinates(coordinatesList[0]);
@@ -170,7 +196,9 @@ export class MapDeliveryComponent implements OnInit, AfterViewInit {
         this.deliveryCoordinates.latitude === this.endCoordinates.latitude &&
         this.deliveryCoordinates.longitude === this.endCoordinates.longitude
       ) {
-        console.log('Delivery coordinates are the same as end coordinates. Disconnecting WebSocket.');
+        console.log(
+          'Delivery coordinates are the same as end coordinates. Disconnecting WebSocket.'
+        );
         this.disconnectWebSocket();
       }
     }
@@ -187,21 +215,18 @@ export class MapDeliveryComponent implements OnInit, AfterViewInit {
   updateMapWithCoordinates(coordinates: Coordinates): void {
     // Update the deliveryCoordinates property
     this.deliveryCoordinates = coordinates;
-  
+
     // Clear existing markers
     this.map.eachLayer((layer) => {
       if (layer instanceof L.Marker) {
         this.map.removeLayer(layer);
       }
     });
-  
+
     // Add new markers with updated coordinates
     this.addMarkers();
-  
+
     // Center the map on the updated coordinates
     this.map.setView([coordinates.latitude, coordinates.longitude], 12);
   }
-
-  
-
 }
