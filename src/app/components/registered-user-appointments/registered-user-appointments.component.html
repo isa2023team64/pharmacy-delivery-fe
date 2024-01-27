@@ -13,10 +13,15 @@
   
     <div *ngFor="let appointment of appointments">
       <div *ngIf="appointment.status" class="appointment-card">
-        <p>Date and Time: {{ appointment.startDateTime | date:'medium' }}</p>
-        <p>Duration: {{ appointment.duration }} minutes</p>
-        <p>Status: <strong>{{ appointment.status }}</strong></p>
-        <p>Company Employee: {{ appointment.companyAdministratorFullName }}</p>
+        <div class="card-top">
+          <div class="card-left">
+            <p>Date and Time: {{ appointment.startDateTime | date:'medium' }}</p>
+            <p>Duration: {{ appointment.duration }} minutes</p>
+            <p>Status: <strong>{{ appointment.status }}</strong></p>
+            <p>Company Employee: {{ appointment.companyAdministratorFullName }}</p>
+          </div>
+          <qrcode [qrdata]="appointment.qrCode" [width]="128" [errorCorrectionLevel]="'M'"></qrcode>
+        </div>
         <button *ngIf="appointment.status === 'RESERVED' && !isDateTimeInPast(appointment.startDateTime)" class="profile-edit-button" (click)="cancelAppointment(appointment)">CANCEL</button>
       </div>
     </div>

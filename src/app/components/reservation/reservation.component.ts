@@ -142,7 +142,7 @@ export class ReservationComponent {
           next: (result: any) => {
             console.log("Successfully made a reservation.");
             this.onClose();
-            //window.location.reload();
+            window.location.reload();
           },
           error: () => {
             console.log("Error.")
@@ -171,7 +171,7 @@ export class ReservationComponent {
           next: (result: any) => {
             console.log("Successfully made a reservation.");
             this.onClose();
-            //window.location.reload();
+            window.location.reload();
           },
           error: () => {
             console.log("Error.")

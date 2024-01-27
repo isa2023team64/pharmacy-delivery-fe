@@ -38,6 +38,7 @@ export class RegisteredUserAppointmentsComponent {
       next: (result: any) => {
         this.appointments = result;
         console.log("Appointments retrived succsessfuly");
+        console.log(this.appointments)
       },
       error: (errData) => {
         console.log("Error: " + errData);
