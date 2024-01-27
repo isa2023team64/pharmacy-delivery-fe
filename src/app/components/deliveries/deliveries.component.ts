@@ -49,8 +49,4 @@ export class DeliveriesComponent implements OnInit {
       inputDate.getDate() === currentDate.getDate()
     );
   }
-
-  startDelivery(deliveryId: number) {
-    console.log(deliveryId);
-  }
 }
