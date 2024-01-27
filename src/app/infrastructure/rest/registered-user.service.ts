@@ -25,4 +25,9 @@ export class RegisteredUserService {
     const path = this.basePath + "registered-users/" + id;
     return this.http.put<RegisteredUser>(path, updatedUser, {headers: this.headers});
   }
+
+  addPenaltyPoints(id: number, twoPoints: boolean): Observable<RegisteredUser> {
+    const path = this.basePath + "registered-users/penaltyPoints/" + id;
+    return this.http.put<RegisteredUser>(path, twoPoints, {headers: this.headers});
+  }
 }

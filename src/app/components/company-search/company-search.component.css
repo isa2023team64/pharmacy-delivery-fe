@@ -357,7 +357,7 @@ input[type="range"]::-ms-track {
 }
 
 .company-sort-select:hover > .company-sort-options {
-    max-height: 200px;
+    max-height: 220px;
     border: rgba(0, 0, 0, 1) 1px solid;
 }
 

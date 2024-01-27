@@ -36,4 +36,9 @@ export class ReservationService {
     const path = this.basePath + "reservations/extraordinary";
     return this.http.post<any>(path, reservation, {headers: this.headers});
   }
+
+  deleteReservation(reservationId: any): Observable<any> {
+    const path = this.basePath + "reservations/deleteReservation/"+ reservationId;
+    return this.http.delete<any>(path, {headers: this.headers});
+  }
 }
