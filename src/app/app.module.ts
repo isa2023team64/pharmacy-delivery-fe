@@ -31,14 +31,14 @@ import { FullCalendarModule } from '@fullcalendar/angular';
         },
       },
     }),
-    FullCalendarModule
+    FullCalendarModule,
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
       multi: true,
-    }
+    },
   ],
   bootstrap: [AppComponent],
 })
