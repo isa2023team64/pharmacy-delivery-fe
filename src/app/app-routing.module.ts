@@ -25,6 +25,7 @@ import { RoleGuard } from './infrastructure/auth/auth-guard/auth-guard.guard';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { DeliveriesComponent } from './components/deliveries/deliveries.component';
 import { MapDeliveryComponent } from './components/map/map.component';
+import { CompanyAdminAppointmentsManagementComponent } from './components/company-admin-appointments-management/company-admin-appointments-management.component';
 
 const routes: Routes = [
   {
@@ -150,6 +151,13 @@ const routes: Routes = [
   {
     path: 'map-delivery/:id',
     component: MapDeliveryComponent,
+  },
+  {
+    path: 'appointment-management',
+    component: CompanyAdminAppointmentsManagementComponent,
+    data: {
+      expectedRole: 'ROLE_COMPANYADMIN',
+    },
   },
 ];
 
