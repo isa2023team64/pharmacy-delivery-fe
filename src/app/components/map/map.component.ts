@@ -26,9 +26,10 @@ export class MapDeliveryComponent implements OnInit, AfterViewInit {
 
 
 
-  startCoordinates: Coordinates = new Coordinates(45.267136, 19.833549);
-  endCoordinates: Coordinates = new Coordinates(45.21, 19.73);
-  deliveryCoordinates: Coordinates = new Coordinates(45.267136, 19.833549)
+  startCoordinates: Coordinates = new Coordinates(45.241628, 19.803774);
+  endCoordinates: Coordinates = new Coordinates(45.243818, 19.842154);     
+  deliveryCoordinates: Coordinates = new Coordinates(45.267136, 19.833549);
+  middleCoordinates: Coordinates = new Coordinates(45.241628, 19.803774)
   coordinatesList: Coordinates[]=[];
 
   constructor() { 
@@ -99,7 +100,7 @@ export class MapDeliveryComponent implements OnInit, AfterViewInit {
 
   public startDelivery(): void{
 
-    this.coordinatesList = [this.startCoordinates, this.endCoordinates];
+    this.coordinatesList = [this.startCoordinates, this.middleCoordinates,this.endCoordinates];
     // console.log(coordinatesList);
 
     if (!this.stompClient.connected) {
