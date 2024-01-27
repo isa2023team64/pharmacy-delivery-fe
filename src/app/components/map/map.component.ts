@@ -22,6 +22,7 @@ export class MapDeliveryComponent implements OnInit, AfterViewInit {
   isCustomSocketOpened: boolean = false;
 
   startCoordinates!: Coordinates;
+  middleCoordinates!: Coordinates;
   endCoordinates!: Coordinates;
   deliveryCoordinates!: Coordinates;
   coordinatesList: Coordinates[] = [];
@@ -36,15 +37,16 @@ export class MapDeliveryComponent implements OnInit, AfterViewInit {
     this.initializeWebSocketConnection();
     this.route.params.subscribe((params) => {
       this.deliveryId = params['id'];
-      this.startCoordinates = new Coordinates(
-        45.267136,
-        19.833549,
+      this.startCoordinates = new Coordinates(    
+        45.241603, 
+        19.803833,
         this.deliveryId
       );
-      this.endCoordinates = new Coordinates(45.21, 19.73, this.deliveryId);
+      this.middleCoordinates = new Coordinates(45.239490, 19.822771, this.deliveryId);      
+      this.endCoordinates = new Coordinates(45.243905, 19.842050, this.deliveryId); 
       this.deliveryCoordinates = new Coordinates(
-        45.267136,
-        19.833549,
+        45.241603,
+        19.803833,
         this.deliveryId
       );
     });
@@ -118,7 +120,7 @@ export class MapDeliveryComponent implements OnInit, AfterViewInit {
   }
 
   public startDelivery(): void {
-    this.coordinatesList = [this.startCoordinates, this.endCoordinates];
+    this.coordinatesList = [this.startCoordinates, this.middleCoordinates, this.endCoordinates];
     // console.log(coordinatesList);
 
     if (!this.stompClient.connected) {
