@@ -132,6 +132,7 @@ export class ReservationComponent {
       const reservation = {
         userId: this.userId,
         equipmentIds: this.data.equipmentIds,
+        equipmentQuantities: this.data.equipmentQuantities,
         appointmentId: this.selectedAppointmentId
       }
       console.log("Cheking if user made reservation for this appointment before");
@@ -156,6 +157,7 @@ export class ReservationComponent {
       const reservation = {
         userId: this.userId,
         equipmentIds: this.data.equipmentIds,
+        equipmentQuantities: this.data.equipmentQuantities,
         appointment: {
           startDateTime: this.time,
           duration: this.duration,

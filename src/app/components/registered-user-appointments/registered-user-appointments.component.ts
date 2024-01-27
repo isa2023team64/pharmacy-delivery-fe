@@ -18,6 +18,7 @@ export class RegisteredUserAppointmentsComponent {
   canEdit: boolean = false;
   appointments: Appointment[] = [];
   is24hBefore: boolean = false;
+  selectedSortingOption: String = "Date (Descending)"
 
   constructor(public appointmentService: AppointmentService,
               private authService: AuthService,
@@ -96,5 +97,28 @@ export class RegisteredUserAppointmentsComponent {
         console.log(this.user)
       })
     });
+  }
+
+  isDateTimeInPast(dateTimeString: string): boolean {
+    const dateTime = new Date(dateTimeString);
+    const currentDate = new Date();
+    return dateTime < currentDate;
+  }
+
+  sortAppointments() {
+    switch (this.selectedSortingOption) {
+      case 'Date (Ascending)':
+        this.appointments.sort((a, b) => new Date(a.startDateTime).getTime() - new Date(b.startDateTime).getTime());
+        break;
+      case 'Date (Descending)':
+        this.appointments.sort((a, b) => new Date(b.startDateTime).getTime() - new Date(a.startDateTime).getTime());
+        break;
+      case 'Duration (Ascending)':
+        this.appointments.sort((a, b) => a.duration - b.duration);
+        break;
+      case 'Duration (Descending)':
+        this.appointments.sort((a, b) => b.duration - a.duration);
+        break;
+    }
   }
 }

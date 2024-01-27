@@ -6,6 +6,9 @@ import { faLocationDot, faStar, faClock } from '@fortawesome/free-solid-svg-icon
 import { Equipment } from '../../infrastructure/rest/model/equipment.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ReservationComponent } from '../reservation/reservation.component';
+import { RegisteredUser } from '../../infrastructure/rest/model/registered-user.model';
+import { AuthService } from '../../infrastructure/auth';
+import { RegisteredUserService } from '../../infrastructure/rest/registered-user.service';
 
 @Component({
   selector: 'pd-company-details',
@@ -18,13 +21,20 @@ export class CompanyDetailsComponent implements OnInit {
   company?: Company;
   equipment?: Equipment[];
   equipmentIds: number[] = [];
+  equipmentQuantities: number[] = [];
+  user: RegisteredUser = new RegisteredUser();
+  equipmentToOrder: Equipment | undefined;
 
   faLocationDot = faLocationDot;
   faStar = faStar;
   faClock = faClock;
 
-  constructor(private route: ActivatedRoute, private service: CompanyService, 
-    public dialogRef: MatDialog) { }
+  constructor(
+    private route: ActivatedRoute, 
+    private service: CompanyService, 
+    public dialogRef: MatDialog,
+    private authService: AuthService,
+    private userService: RegisteredUserService) { }
   
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -32,6 +42,7 @@ export class CompanyDetailsComponent implements OnInit {
       this.getCompanyById(this.companyId);
       this.getEquipmentByCompanyId(this.companyId);
     })
+    this.fetchUser();
   }
 
   getCompanyById(id: number) {
@@ -52,8 +63,11 @@ export class CompanyDetailsComponent implements OnInit {
     const index = this.equipmentIds.indexOf(id!);
     if (index !== -1) {
       this.equipmentIds.splice(index, 1);
+      this.equipmentQuantities.splice(index, 1);
     } else {
         this.equipmentIds.push(id!);
+        this.equipmentToOrder = this.equipment?.find(e => e.id === id);
+        this.equipmentQuantities.push(this.equipmentToOrder!.quantity);
     }
   }
 
@@ -62,13 +76,32 @@ export class CompanyDetailsComponent implements OnInit {
   }
 
   onMakeAReservation(): void {
+    console.log(this.user.penaltyPoints)
+    if(this.user.penaltyPoints >= 3) {
+      alert("You have 3 or more penalty points. You can't make a reservation.")
+      return;
+    }
+
+
     const reservationData = {
       companyId: this.companyId,
       equipmentIds: this.equipmentIds,
+      equipmentQuantities: this.equipmentQuantities
     };
 
     this.dialogRef.open(ReservationComponent, {
       data: reservationData,
+    });
+  }
+
+  fetchUser(): void {
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+      if (!user.id) return;
+      const userId = user.id;
+      this.userService.getById(userId).subscribe(registeredUser => {
+        this.user = registeredUser;
+      })
     });
   }
 }
