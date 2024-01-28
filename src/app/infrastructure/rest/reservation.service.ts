@@ -6,6 +6,8 @@ import { environment } from '../../../env/environment';
 import { Appointment } from './model/appointmen.model';
 import { Observable } from 'rxjs';
 import { Reservation } from './model/reservation.model';
+import { User } from '../auth/model/user.model';
+import { RegisteredUser } from './model/registered-user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -54,5 +56,13 @@ export class ReservationService {
   markAsTaken(reservation: Reservation): Observable<any> {
     const path = this.basePath + 'reservations/mark-as-taken/' + reservation.id;
     return this.http.patch<any>(path, { headers: this.headers });
+  }
+
+  getUsersThatReserved(companyId: number): Observable<RegisteredUser[]> {
+    const path =
+      this.basePath +
+      'reservations/users-that-reserved-by-company/' +
+      companyId;
+    return this.http.get<RegisteredUser[]>(path, { headers: this.headers });
   }
 }

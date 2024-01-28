@@ -75,6 +75,20 @@
       >
         Equipment search (company administrator)
       </button>
+      <button
+        mat-menu-item
+        *ngIf="user && user.roles.includes('ROLE_COMPANYADMIN')"
+        [routerLink]="['reservation-management']"
+      >
+        Reservation management (company administrator)
+      </button>
+      <button
+        mat-menu-item
+        *ngIf="user && user.roles.includes('ROLE_COMPANYADMIN')"
+        [routerLink]="['reserved-users']"
+      >
+        Users that reserved (company administrator)
+      </button>
     </mat-menu>
   </div>
   <div class="app-name-icon" [routerLink]="['']">

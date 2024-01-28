@@ -31,6 +31,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { DeliveriesComponent } from './deliveries/deliveries.component';
 import { CompanyAdminAppointmentsManagementComponent } from './company-admin-appointments-management/company-admin-appointments-management.component';
+import { CompanyAdminReservedUsersComponent } from './company-admin-reserved-users/company-admin-reserved-users.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { CompanyAdminAppointmentsManagementComponent } from './company-admin-app
     ReservationComponent,
     DeliveriesComponent,
     CompanyAdminAppointmentsManagementComponent,
+    CompanyAdminReservedUsersComponent,
   ],
   imports: [CommonModule, RouterModule,MaterialModule, FontAwesomeModule, FormsModule, ReactiveFormsModule, FullCalendarModule, QRCodeModule],
   exports: [HomeComponent,

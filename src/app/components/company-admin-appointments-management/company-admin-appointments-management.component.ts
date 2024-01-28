@@ -15,13 +15,11 @@ import { ReservationService } from '../../infrastructure/rest/reservation.servic
 })
 export class CompanyAdminAppointmentsManagementComponent implements OnInit {
   companyAdmin?: CompanyAdmin;
-  company?: Company;
   reservations: Reservation[] = [];
 
   constructor(
     private authService: AuthService,
     private companyAdminService: CompanyAdminService,
-    private appointmentService: AppointmentService,
     private reservationService: ReservationService
   ) {}
 

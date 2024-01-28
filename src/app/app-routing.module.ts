@@ -26,6 +26,7 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { DeliveriesComponent } from './components/deliveries/deliveries.component';
 import { MapDeliveryComponent } from './components/map/map.component';
 import { CompanyAdminAppointmentsManagementComponent } from './components/company-admin-appointments-management/company-admin-appointments-management.component';
+import { CompanyAdminReservedUsersComponent } from './components/company-admin-reserved-users/company-admin-reserved-users.component';
 
 const routes: Routes = [
   {
@@ -153,8 +154,15 @@ const routes: Routes = [
     component: MapDeliveryComponent,
   },
   {
-    path: 'appointment-management',
+    path: 'reservation-management',
     component: CompanyAdminAppointmentsManagementComponent,
+    data: {
+      expectedRole: 'ROLE_COMPANYADMIN',
+    },
+  },
+  {
+    path: 'reserved-users',
+    component: CompanyAdminReservedUsersComponent,
     data: {
       expectedRole: 'ROLE_COMPANYADMIN',
     },
