@@ -23,6 +23,15 @@ export class MapDeliveryComponent implements OnInit, AfterViewInit {
 
   startCoordinates!: Coordinates;
   middleCoordinates!: Coordinates;
+  middleCoordinates1!: Coordinates;
+  middleCoordinates2!: Coordinates;
+  middleCoordinates3!: Coordinates;
+  middleCoordinates4!: Coordinates;
+  middleCoordinates5!: Coordinates;
+  middleCoordinates6!: Coordinates;
+  middleCoordinates7!: Coordinates;
+  middleCoordinates8!: Coordinates;
+  middleCoordinates9!: Coordinates;
   endCoordinates!: Coordinates;
   deliveryCoordinates!: Coordinates;
   coordinatesList: Coordinates[] = [];
@@ -42,7 +51,16 @@ export class MapDeliveryComponent implements OnInit, AfterViewInit {
         19.803833,
         this.deliveryId
       );
-      this.middleCoordinates = new Coordinates(45.239490, 19.822771, this.deliveryId);      
+      this.middleCoordinates = new Coordinates(45.241090, 19.806909, this.deliveryId);
+      this.middleCoordinates1 = new Coordinates(45.240892, 19.808827, this.deliveryId);
+      this.middleCoordinates2 = new Coordinates(45.240781, 19.809740, this.deliveryId);
+      this.middleCoordinates3 = new Coordinates(45.240680, 19.811053, this.deliveryId);
+      this.middleCoordinates4 = new Coordinates(45.240432, 19.813633, this.deliveryId);
+      this.middleCoordinates5 = new Coordinates(45.240021, 19.817796, this.deliveryId);
+      this.middleCoordinates6 = new Coordinates(45.239566, 19.824328, this.deliveryId);
+      this.middleCoordinates7 = new Coordinates(45.240797, 19.829137, this.deliveryId);
+      this.middleCoordinates8 = new Coordinates(45.241508, 19.832023, this.deliveryId);
+      this.middleCoordinates9 = new Coordinates(45.242515, 19.836531, this.deliveryId); 
       this.endCoordinates = new Coordinates(45.243905, 19.842050, this.deliveryId); 
       this.deliveryCoordinates = new Coordinates(
         45.241603,
@@ -120,7 +138,7 @@ export class MapDeliveryComponent implements OnInit, AfterViewInit {
   }
 
   public startDelivery(): void {
-    this.coordinatesList = [this.startCoordinates, this.middleCoordinates, this.endCoordinates];
+    this.coordinatesList = [this.startCoordinates, this.middleCoordinates, this.middleCoordinates1,this.middleCoordinates2,this.middleCoordinates3,this.middleCoordinates4,this.middleCoordinates5,this.middleCoordinates6,this.middleCoordinates7,this.middleCoordinates8,this.middleCoordinates9, this.endCoordinates];
     // console.log(coordinatesList);
 
     if (!this.stompClient.connected) {
