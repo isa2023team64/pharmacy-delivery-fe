@@ -6,6 +6,7 @@ import { environment } from '../../../env/environment';
 import { Appointment } from './model/appointmen.model';
 import { Observable } from 'rxjs';
 import { AppointmentRequest } from './model/appointment-request.model';
+import { ReservationItem } from './model/reservation-item-qr';
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +36,10 @@ export class ReservationService {
   createExtraordinaryReservation(reservation: any): Observable<any> {
     const path = this.basePath + "reservations/extraordinary";
     return this.http.post<any>(path, reservation, {headers: this.headers});
+  }
+
+  getReservationItemsByReservationId(reservationId: number): Observable<ReservationItem[]> {
+    const path = this.basePath + "reservations/reservation-items-by-reservation-id/" + reservationId;
+    return this.http.get<ReservationItem[]>(path, { headers: this.headers });
   }
 }
