@@ -7,6 +7,7 @@ import { Appointment } from './model/appointmen.model';
 import { Observable } from 'rxjs';
 import { AppointmentRequest } from './model/appointment-request.model';
 import { ReservationItem } from './model/reservation-item-qr';
+import { Reservation } from './model/reservation-qr';
 
 @Injectable({
   providedIn: 'root'
@@ -42,4 +43,15 @@ export class ReservationService {
     const path = this.basePath + "reservations/reservation-items-by-reservation-id/" + reservationId;
     return this.http.get<ReservationItem[]>(path, { headers: this.headers });
   }
+
+  getById(reservationId: number): Observable<any>{
+    const path = this.basePath + "reservations/" + reservationId;
+    return this.http.get<Reservation>(path, { headers: this.headers });    
+  }
+
+  markAsTakenQR(reservationId: number): Observable<any>{
+    const path = this.basePath + "reservations/mark-as-taken/" + reservationId;
+    return this.http.patch<any>(path, { headers: this.headers });
+  }
+
 }

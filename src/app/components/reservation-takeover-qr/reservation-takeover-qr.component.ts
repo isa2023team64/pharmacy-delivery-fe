@@ -3,6 +3,9 @@ import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/fo
 import { AuthService } from '../../infrastructure/auth/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import jsQR from 'jsqr'; 
+import { ReservationService } from '../../infrastructure/rest/reservation.service';
+import { Reservation } from '../../infrastructure/rest/model/reservation-qr';
+import { ReservationItem } from '../../infrastructure/rest/model/reservation-item-qr';
 
 
 @Component({
@@ -15,19 +18,27 @@ export class ReservationTakeoverQRComponent {
     qrCodeValue: string = ''; // Set a default QR code value
     decodedResult: string | null = null;
 
-
+    isDecoded: boolean = false;    
+    reservationItems: ReservationItem[]=[];
+    reservationId!: number;
+    markAsTakenMessage: string = '';
+    isSuccessfullyTaken: boolean = false;
+    reservation!: Reservation;
 
     constructor(
         private authService: AuthService,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private reservationService: ReservationService
     ) {}
 
     ngOnInit(): void {
 
     }
 
+
     
+
   onImageInputChange(event: any): void {
     const file = event.target.files[0];
 
@@ -51,13 +62,37 @@ export class ReservationTakeoverQRComponent {
             const decodedData = this.decodeQrCode(imageData.data, img.width, img.height);
 
             if (decodedData) {
-              console.log('Decoded QR Code:', decodedData);
-              this.decodedResult = decodedData;
+                console.log('Decoded QR Code:', decodedData);
+                this.decodedResult = decodedData;
+
+                this.reservationId = JSON.parse(decodedData).reservationId;
+                
+                this.reservationService.getById(this.reservationId)
+                .subscribe((reservation: Reservation) => {
+
+                    this.reservation = reservation;
+
+                    this.reservationService.getReservationItemsByReservationId(this.reservationId)
+                    .subscribe((reservationItems: ReservationItem[]) => {
+                        console.log('Reservation Items:', reservationItems);
+                        this.reservationItems = reservationItems;
+                        this.isDecoded = true;
+                    });
+
+                });
+            } 
+            else {
+                console.log('No QR Code found in the image.');
+                this.decodedResult = null;
+            }
+
+
+
             } else {
               console.log('No QR Code found in the image.');
               this.decodedResult = null;
             }
-          }
+          
         };
 
         img.src = e.target?.result as string;
@@ -71,5 +106,33 @@ export class ReservationTakeoverQRComponent {
     const code = jsQR(imageData, width, height);
     return code ? code.data : null;
   }
+
+  public onMarkAsTakenClicked(){
+
+    this.reservationService.markAsTakenQR(this.reservationId)
+      .subscribe(
+        () => {
+          console.log('Reservation marked as taken successfully.');
+          this.markAsTakenMessage = "Reservation taken successfully!"
+          this.isSuccessfullyTaken = true;
+        },
+        (error) => {
+          if (error.status === 400) {
+            console.error('Unauthorized. Redirecting to error page.');
+
+            this.markAsTakenMessage = "Reservation not successfully taken!"
+          } else if (error.status === 404) {
+            console.error('Resource not found. Redirecting to error page.');
+
+            this.markAsTakenMessage = "Reservation not successfully taken!"
+          } else {
+            console.error('Error marking reservation as taken:', error);
+
+          }
+        }
+      );
+  }
+
+
 
 }
