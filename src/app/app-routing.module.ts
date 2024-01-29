@@ -163,13 +163,15 @@ const routes: Routes = [
     component: CompanyAdminAppointmentsManagementComponent,
     data: {
       expectedRole: 'ROLE_COMPANYADMIN',
+    }
   },
   {
     path: 'reserved-users',
     component: CompanyAdminReservedUsersComponent,
     data: {
       expectedRole: 'ROLE_COMPANYADMIN',
-  },  
+  },
+  }
 ];
 
 @NgModule({
