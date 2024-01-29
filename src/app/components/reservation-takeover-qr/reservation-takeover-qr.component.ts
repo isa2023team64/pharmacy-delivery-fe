@@ -65,21 +65,26 @@ export class ReservationTakeoverQRComponent {
                 console.log('Decoded QR Code:', decodedData);
                 this.decodedResult = decodedData;
 
-                this.reservationId = JSON.parse(decodedData).reservationId;
-                
-                this.reservationService.getById(this.reservationId)
-                .subscribe((reservation: Reservation) => {
+                const match = decodedData.match(/Id: (\d+)/);
+                if(match && match[1]){
 
-                    this.reservation = reservation;
+                    const reservationId = match[1];                
+                    this.reservationId = +reservationId;
 
-                    this.reservationService.getReservationItemsByReservationId(this.reservationId)
-                    .subscribe((reservationItems: ReservationItem[]) => {
-                        console.log('Reservation Items:', reservationItems);
-                        this.reservationItems = reservationItems;
-                        this.isDecoded = true;
+                    this.reservationService.getById(this.reservationId)
+                    .subscribe((reservation: Reservation) => {
+
+                        this.reservation = reservation;
+
+                        this.reservationService.getReservationItemsByReservationId(this.reservationId)
+                        .subscribe((reservationItems: ReservationItem[]) => {
+                            console.log('Reservation Items:', reservationItems);
+                            this.reservationItems = reservationItems;
+                            this.isDecoded = true;
+                        });
+
                     });
-
-                });
+                }
             } 
             else {
                 console.log('No QR Code found in the image.');
@@ -117,6 +122,7 @@ export class ReservationTakeoverQRComponent {
           this.isSuccessfullyTaken = true;
         },
         (error) => {
+            this.isSuccessfullyTaken = false;
           if (error.status === 400) {
             console.error('Unauthorized. Redirecting to error page.');
 
@@ -127,7 +133,7 @@ export class ReservationTakeoverQRComponent {
             this.markAsTakenMessage = "Reservation not successfully taken!"
           } else {
             console.error('Error marking reservation as taken:', error);
-
+            this.markAsTakenMessage = "Reservation not successfully taken!"
           }
         }
       );
