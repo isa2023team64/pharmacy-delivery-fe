@@ -17,6 +17,8 @@ export class RegisteredUserAppointmentsComponent {
   user: RegisteredUser = new RegisteredUser();
   canEdit: boolean = false;
   appointments: Appointment[] = [];
+  is24hBefore: boolean = false;
+  selectedSortingOption: String = "Date (Descending)"
 
   constructor(public appointmentService: AppointmentService,
               private authService: AuthService,
@@ -36,6 +38,7 @@ export class RegisteredUserAppointmentsComponent {
       next: (result: any) => {
         this.appointments = result;
         console.log("Appointments retrived succsessfuly");
+        console.log(this.appointments)
       },
       error: (errData) => {
         console.log("Error: " + errData);
@@ -43,6 +46,45 @@ export class RegisteredUserAppointmentsComponent {
     })
     
   }
+
+  cancelAppointment(appointment:Appointment) {
+    
+    var appointmentTimestamp = Date.parse(appointment.startDateTime);
+    var currentTimestamp = new Date().getTime();
+    var timeDifference = appointmentTimestamp - currentTimestamp;
+    var hoursDifference = timeDifference / (1000 * 60 * 60);
+    this.is24hBefore = hoursDifference <= 24;
+    console.log(appointmentTimestamp, currentTimestamp)
+    console.log(hoursDifference);
+    console.log(this.is24hBefore);
+    console.log("Cancelling appointment:", appointment);
+
+    this.userService.addPenaltyPoints(this.userId,this.is24hBefore).subscribe(registeredUser => {
+      this.user = registeredUser;
+      console.log("USER");
+      console.log(this.user)
+      this.appointmentService.cancleAppointment(appointment).subscribe({
+        next: (result: any) => {
+          console.log("Appointment cancled");
+          this.reservationService.deleteReservation(appointment.id).subscribe({
+            next: (result: any) => {
+              console.log("Reservation deleted");
+              location.reload();
+            },
+            error: (errData) => {
+              console.log("Error: " + errData);
+            }
+          })
+        },
+        error: (errData) => {
+          console.log("Error: " + errData);
+        }
+      })
+      
+      //
+    });
+    
+}
   
 
   fetchUser(): void {
@@ -56,5 +98,28 @@ export class RegisteredUserAppointmentsComponent {
         console.log(this.user)
       })
     });
+  }
+
+  isDateTimeInPast(dateTimeString: string): boolean {
+    const dateTime = new Date(dateTimeString);
+    const currentDate = new Date();
+    return dateTime < currentDate;
+  }
+
+  sortAppointments() {
+    switch (this.selectedSortingOption) {
+      case 'Date (Ascending)':
+        this.appointments.sort((a, b) => new Date(a.startDateTime).getTime() - new Date(b.startDateTime).getTime());
+        break;
+      case 'Date (Descending)':
+        this.appointments.sort((a, b) => new Date(b.startDateTime).getTime() - new Date(a.startDateTime).getTime());
+        break;
+      case 'Duration (Ascending)':
+        this.appointments.sort((a, b) => a.duration - b.duration);
+        break;
+      case 'Duration (Descending)':
+        this.appointments.sort((a, b) => b.duration - a.duration);
+        break;
+    }
   }
 }

@@ -12,6 +12,7 @@ export interface RegisteredUser {
     workplace: string;
     companyName: string;
     roles: Role[]; 
+    penaltyPoints: number; 
   }
   
   export interface Role {

@@ -99,6 +99,14 @@
                             <fa-icon class="company-sort-option-way" [icon]="faArrowDownWideShort" />
                             <div class="company-sort-option-current">Name</div>
                         </div>
+                        <div class="company-sort-option" (click)="changeSortCriteria('City(ascending)', 'City', 'ascending')">
+                            <fa-icon class="company-sort-option-way" [icon]="faArrowUpWideShort" />
+                            <div class="company-sort-option-current">City</div>
+                        </div>
+                        <div class="company-sort-option" (click)="changeSortCriteria('City(descending)', 'City', 'descending')">
+                            <fa-icon class="company-sort-option-way" [icon]="faArrowDownWideShort" />
+                            <div class="company-sort-option-current">City</div>
+                        </div>
                         <div class="company-sort-option" (click)="changeSortCriteria('Rating(ascending)', 'Rating', 'ascending')">
                             <fa-icon class="company-sort-option-way" [icon]="faArrowUpWideShort" />
                             <div class="company-sort-option-current">Rating</div>

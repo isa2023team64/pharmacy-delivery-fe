@@ -91,6 +91,8 @@ export class RegisterComponent {
       phoneNumber: this.registrationForm.value.phoneNumber || "",
       workplace: this.registrationForm.value.workplace || "",
       companyName: this.registrationForm.value.companyName || "",
+      longitude: Math.random() * (19.89 - 19.79) + 19.79,
+      latitude: Math.random() * (45.32 - 45.22) + 45.22
     };
     
     console.log("Registration Data:", registration);
