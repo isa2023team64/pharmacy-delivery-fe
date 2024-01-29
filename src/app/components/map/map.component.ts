@@ -247,6 +247,6 @@ export class MapDeliveryComponent implements OnInit, AfterViewInit {
     this.addMarkers();
 
     // Center the map on the updated coordinates
-    this.map.setView([coordinates.latitude, coordinates.longitude], 12);
+    this.map.setView([coordinates.latitude, coordinates.longitude], 16);
   }
 }
