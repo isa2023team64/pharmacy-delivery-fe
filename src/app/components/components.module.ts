@@ -29,6 +29,7 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { CompanyCalendarComponent } from './company-calendar/company-calendar.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ReservationTakeoverQRComponent } from './reservation-takeover-qr/reservation-takeover-qr.component';
 import { DeliveriesComponent } from './deliveries/deliveries.component';
 import { CompanyAdminAppointmentsManagementComponent } from './company-admin-appointments-management/company-admin-appointments-management.component';
 import { CompanyAdminReservedUsersComponent } from './company-admin-reserved-users/company-admin-reserved-users.component';
@@ -58,6 +59,7 @@ import { CompanyAdminReservedUsersComponent } from './company-admin-reserved-use
     CompanyCalendarComponent,
     ChangePasswordComponent,
     ReservationComponent,
+    ReservationTakeoverQRComponent,
     DeliveriesComponent,
     CompanyAdminAppointmentsManagementComponent,
     CompanyAdminReservedUsersComponent,
@@ -76,6 +78,7 @@ import { CompanyAdminReservedUsersComponent } from './company-admin-reserved-use
             AddEquipmentComponent,
             EditEquipmentComponent,
             CompanyCalendarComponent,
-            ChangePasswordComponent],
+            ChangePasswordComponent,
+            ReservationTakeoverQRComponent,],
 })
 export class ComponentsModule {}
