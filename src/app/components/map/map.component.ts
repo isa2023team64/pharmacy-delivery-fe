@@ -6,6 +6,7 @@ import * as L from 'leaflet';
 import { Coordinates } from '../../infrastructure/rest/model/coordinates.model';
 import { Stomp } from '@stomp/stompjs';
 import SockJS, * as WebSocketJS from 'sockjs-client';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'pd-map',
@@ -162,9 +163,13 @@ export class MapDeliveryComponent implements OnInit, AfterViewInit {
       debug: (str: string) => {
         console.log(str);
       },
-      headers: headers,
-      withCredentials: true, // Set withCredentials to true
-    });
+      headers:  new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+      }),
+      withCredentials: true, // Set withCredentials to true
+
+    });
 
     this.stompClient.connect(headers, function () {
       that.isLoaded = true;
@@ -247,6 +252,6 @@ export class MapDeliveryComponent implements OnInit, AfterViewInit {
     this.addMarkers();
 
     // Center the map on the updated coordinates
-    this.map.setView([coordinates.latitude, coordinates.longitude], 16);
+    this.map.setView([coordinates.latitude, coordinates.longitude], 13);
   }
 }
