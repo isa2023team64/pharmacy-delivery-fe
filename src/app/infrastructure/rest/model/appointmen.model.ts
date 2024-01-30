@@ -4,4 +4,5 @@ export interface Appointment {
     duration: number;
     companyAdministratorFullName: string;
     status: string;
+    qrCode: string;
 }

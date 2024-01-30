@@ -9,10 +9,9 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'pd-change-password',
   templateUrl: './change-company-admin-password.component.html',
-  styleUrl: './change-company-admin-password.component.css'
+  styleUrl: './change-company-admin-password.component.css',
 })
 export class ChangeCopmanyAdminPasswordComponent implements OnInit {
-
   password: string = '';
   newPassword: string = '';
   errors: any;
@@ -22,40 +21,59 @@ export class ChangeCopmanyAdminPasswordComponent implements OnInit {
     public dialog: MatDialogRef<ChangeCopmanyAdminPasswordComponent>,
     private authService: AuthService,
     private router: Router,
-    @Inject(MAT_DIALOG_DATA) public data: any)
-  {
+    private companyAdminService: CompanyAdminService,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
     this.companyAdmin = data.companyAdmin;
     this.errors = {
-      password: "",
-      newPassword: "",
+      password: '',
+      newPassword: '',
     };
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.companyAdmin.password);
+  }
 
   changePassword(): void {
     if (this.validate()) {
       let cp: ChangePassword = {
         username: this.companyAdmin.email,
         password: this.password,
-        newPassword: this.newPassword
-      }
-      this.authService.changePassword(cp, false).subscribe(() => {
-        console.log('Password changed successfully!');
-        location.reload();
+        newPassword: this.newPassword,
+      };
+      this.authService.changePassword(cp, false).subscribe({
+        next: (result: any) => {
+          console.log('Password changed successfully!');
+          location.reload();
+        },
+        error: (result: any) => {
+          this.errors.password = 'Old password not correct.';
+        },
       });
     }
   }
 
   validate(): boolean {
+    this.resetErrors();
+
     let isValid = true;
 
-    if (this.password == '' || this.newPassword == '') {
-      this.errors.password = 'Password must not be empty.'
+    if (this.password == '') {
+      this.errors.password = 'Password must not be empty.';
+      isValid = false;
+    }
+
+    if (this.newPassword == '') {
+      this.errors.newPassword = 'New password must not be empty.';
       isValid = false;
     }
 
     return isValid;
   }
 
+  resetErrors(): void {
+    this.errors.password = '';
+    this.errors.newPassword = '';
+  }
 }

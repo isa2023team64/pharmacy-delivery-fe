@@ -8,6 +8,7 @@ export class RegisteredUser {
   phoneNumber: string;
   workplace: string;
   companyName: string;
+  penaltyPoints: number; 
 
   constructor() {
     this.email = "";
@@ -19,6 +20,7 @@ export class RegisteredUser {
     this.phoneNumber = "";
     this.workplace = "";
     this.companyName = "";
+    this.penaltyPoints = 0; 
   }
 }
   

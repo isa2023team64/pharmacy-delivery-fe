@@ -1,6 +1,6 @@
 export interface AppointmentRequest {
-    startDateTime: string;
-    duration: number;
-    companyAdministratorFullName: string;
-    companyId: number;
+  startDateTime: string;
+  duration: number;
+  companyAdministratorId: number;
+  companyId: number;
 }

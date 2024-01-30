@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Equipment } from '../../infrastructure/rest/model/equipment.model';
 import { 
   faFilter,
@@ -37,4 +37,12 @@ export class EquipmentCardComponent {
 
   @Input() equipment!: Equipment;
   @Input() selected: boolean = false;
+
+  ngOnInit(): void {
+    this.equipment.quantity = 1;
+  }
+
+  childClick(event: Event) {
+    event.stopPropagation();
+  }
 }

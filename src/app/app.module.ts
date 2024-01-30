@@ -12,6 +12,7 @@ import { CompanyModule } from './company/company.module';
 import { UregisteredUserModule } from './unregistered-user/uregistered-user/uregistered-user.module';
 import { ApiService } from './infrastructure/auth';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +25,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     HttpClientModule,
     BrowserAnimationsModule,
     UregisteredUserModule,
+    QRCodeModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
@@ -31,14 +33,14 @@ import { FullCalendarModule } from '@fullcalendar/angular';
         },
       },
     }),
-    FullCalendarModule
+    FullCalendarModule,
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
       multi: true,
-    }
+    },
   ],
   bootstrap: [AppComponent],
 })

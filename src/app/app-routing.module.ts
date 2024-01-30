@@ -23,8 +23,12 @@ import { AddEquipmentComponent } from './components/add-equipment/add-equipment.
 import { EditEquipmentComponent } from './components/edit-equipment/edit-equipment.component';
 import { RoleGuard } from './infrastructure/auth/auth-guard/auth-guard.guard';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { DeliveriesComponent } from './components/deliveries/deliveries.component';
 import { MapDeliveryComponent } from './components/map/map.component';
 import { RegisterSystemAdministratorComponent } from './components/system-administrator-registration/system-administrator-registration.component';
+import { ReservationTakeoverQRComponent } from './components/reservation-takeover-qr/reservation-takeover-qr.component';
+import { CompanyAdminAppointmentsManagementComponent } from './components/company-admin-appointments-management/company-admin-appointments-management.component';
+import { CompanyAdminReservedUsersComponent } from './components/company-admin-reserved-users/company-admin-reserved-users.component';
 
 const routes: Routes = [
   {
@@ -45,11 +49,11 @@ const routes: Routes = [
   },
   {
     path: 'company-search',
-    component: CompanySearchComponent   
+    component: CompanySearchComponent,
   },
   {
     path: 'equipment-search',
-    component: EquipmentSearchComponent   
+    component: EquipmentSearchComponent,
   },
   {
     path: 'registrationConfirmation',
@@ -61,10 +65,11 @@ const routes: Routes = [
   },
   {
     path: 'registerCompany',
-    component: RegisterCompanyComponent,canActivate: [RoleGuard],
+    component: RegisterCompanyComponent,
+    canActivate: [RoleGuard],
     data: {
-      expectedRole: 'ROLE_SYSTEMADMIN'
-    }
+      expectedRole: 'ROLE_SYSTEMADMIN',
+    },
   },
   {
     path: 'unregisteredUserCompanies',
@@ -76,18 +81,19 @@ const routes: Routes = [
   },
   {
     path: 'company-details/:id',
-    component: CompanyDetailsComponent,canActivate: [RoleGuard],
+    component: CompanyDetailsComponent,
+    canActivate: [RoleGuard],
     data: {
-      expectedRole: 'ROLE_USER'
-    }
+      expectedRole: 'ROLE_USER',
+    },
   },
   {
     path: 'profile',
     component: RegisteredUserProfileComponent,
     canActivate: [RoleGuard],
     data: {
-      expectedRole: 'ROLE_USER'
-    }
+      expectedRole: 'ROLE_USER',
+    },
   },
   {
     path: 'equipment-companies-overview/:id',
@@ -95,26 +101,27 @@ const routes: Routes = [
   },
   {
     path: 'register-company-administrator/:id',
-    component: RegisterCompanyAdministratorComponent,canActivate: [RoleGuard],
+    component: RegisterCompanyAdministratorComponent,
+    canActivate: [RoleGuard],
     data: {
-      expectedRole: 'ROLE_SYSTEMADMIN'
-    }
+      expectedRole: 'ROLE_SYSTEMADMIN',
+    },
   },
   {
     path: 'company-admin-profile',
     component: CompanyAdminProfileComponent,
     canActivate: [RoleGuard],
     data: {
-      expectedRole: 'ROLE_COMPANYADMIN'
-    }
+      expectedRole: 'ROLE_COMPANYADMIN',
+    },
   },
   {
     path: 'company-profile',
     component: CompanyProfileComponent,
     canActivate: [RoleGuard],
     data: {
-      expectedRole: 'ROLE_COMPANYADMIN'
-    }
+      expectedRole: 'ROLE_COMPANYADMIN',
+    },
   },
   {
     path: 'equipment-search-company-administrator',
@@ -122,14 +129,15 @@ const routes: Routes = [
   },
   {
     path: 'company-calendar/:id',
-    component: CompanyCalendarComponent
+    component: CompanyCalendarComponent,
   },
   {
     path: 'company-profile/add-equipment',
-    component: AddEquipmentComponent, canActivate: [RoleGuard],
+    component: AddEquipmentComponent,
+    canActivate: [RoleGuard],
     data: {
-      expectedRole: 'ROLE_COMPANYADMIN'
-    }
+      expectedRole: 'ROLE_COMPANYADMIN',
+    },
   },
   {
     path: 'edit-equipment/:id',
@@ -140,12 +148,34 @@ const routes: Routes = [
     component: ChangePasswordComponent,
   },
   {
-    path: 'map-delivery',
+    path: 'deliveries',
+    component: DeliveriesComponent,
+  },
+  {
+    path: 'map-delivery/:id',
     component: MapDeliveryComponent,
   },
   {
     path: 'register-system-administrator',
     component: RegisterSystemAdministratorComponent,
+  },
+  {
+    path: 'reservation-takeover-qr',
+    component: ReservationTakeoverQRComponent,
+  },
+  {
+    path: 'reservation-management',
+    component: CompanyAdminAppointmentsManagementComponent,
+    data: {
+      expectedRole: 'ROLE_COMPANYADMIN',
+    }
+  },
+  {
+    path: 'reserved-users',
+    component: CompanyAdminReservedUsersComponent,
+    data: {
+      expectedRole: 'ROLE_COMPANYADMIN',
+    },
   }
 ];
 

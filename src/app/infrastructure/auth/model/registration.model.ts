@@ -8,5 +8,7 @@ export interface Registration {
     phoneNumber: string;
     workplace: string;
     companyName: string;
+    longitude: number;
+    latitude: number;
   }
   

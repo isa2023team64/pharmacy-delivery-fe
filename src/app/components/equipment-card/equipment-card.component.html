@@ -18,5 +18,6 @@
             <fa-icon [icon]="faBoxOpen" />
             Out of stock
         </div>
+        <input *ngIf="equipment.stockCount > 0" type="number" min="1" [max]="equipment.stockCount" (click)="childClick($event)" [(ngModel)]="equipment.quantity"/>
     </div>
 </div>
