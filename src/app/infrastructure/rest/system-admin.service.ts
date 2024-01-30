@@ -19,22 +19,22 @@ export class SystemAdminService {
 
   getById(id: number): Observable<any> {
     const path = this.basePath + 'system-administrators/' + id;
-    return this.http.get<any>(path);
+    return this.http.get<any>(path, {headers: this.headers});
   }
 
   update(id: number, updatedUser: any): Observable<any> {
     const path = this.basePath + 'system-administrators/' + id;
     console.log(path);
-    return this.http.put<any>(path, updatedUser);
+    return this.http.put<any>(path, updatedUser, {headers: this.headers});
   }
 
   getByName(name: String): Observable<any> {
     const path = this.basePath + 'system-administrators/by-email';
-    return this.http.put<any>(path, name);
+    return this.http.put<any>(path, name, {headers: this.headers});
   }
 
   getAllDeliveries(): Observable<any> {
     const path = this.basePath + 'deliveries';
-    return this.http.get<any>(path);
+    return this.http.get<any>(path, {headers: this.headers});
   }
 }

@@ -58,7 +58,7 @@ export class ReservationService {
 
   markAsTaken(reservation: Reservation): Observable<any> {
     const path = this.basePath + 'reservations/mark-as-taken/' + reservation.id;
-    return this.http.patch<any>(path, { headers: this.headers });
+    return this.http.patch<any>(path, {}, { headers: this.headers });
   }
 
   getUsersThatReserved(companyId: number): Observable<RegisteredUser[]> {
@@ -81,7 +81,7 @@ export class ReservationService {
 
   markAsTakenQR(reservationId: number): Observable<any>{
     const path = this.basePath + "reservations/mark-as-taken/" + reservationId;
-    return this.http.patch<any>(path, { headers: this.headers });
+    return this.http.patch<any>(path, {}, { headers: this.headers });
   }
 
 }

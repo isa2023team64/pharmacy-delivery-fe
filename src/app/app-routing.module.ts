@@ -65,7 +65,6 @@ const routes: Routes = [
   {
     path: 'registerCompany',
     component: RegisterCompanyComponent,
-    canActivate: [RoleGuard],
     data: {
       expectedRole: 'ROLE_SYSTEMADMIN',
     },
@@ -97,6 +96,10 @@ const routes: Routes = [
   {
     path: 'equipment-companies-overview/:id',
     component: EquipmentCompaniesOverviewComponent,
+    canActivate: [RoleGuard],
+    data: {
+      expectedRole: 'ROLE_USER',
+    },
   },
   {
     path: 'register-company-administrator/:id',
@@ -125,10 +128,18 @@ const routes: Routes = [
   {
     path: 'equipment-search-company-administrator',
     component: EquipmentSearchCompanyAdministratorComponent,
+    canActivate: [RoleGuard],
+    data: {
+      expectedRole: 'ROLE_COMPANYADMIN',
+    },
   },
   {
     path: 'company-calendar/:id',
     component: CompanyCalendarComponent,
+    canActivate: [RoleGuard],
+    data: {
+      expectedRole: 'ROLE_COMPANYADMIN',
+    },
   },
   {
     path: 'company-profile/add-equipment',
@@ -141,22 +152,40 @@ const routes: Routes = [
   {
     path: 'edit-equipment/:id',
     component: EditEquipmentComponent,
+    canActivate: [RoleGuard],
+    data: {
+      expectedRole: 'ROLE_COMPANYADMIN',
+    },
   },
   {
     path: 'change-password',
     component: ChangePasswordComponent,
+    canActivate: [RoleGuard],
+    data: {
+      expectedRole: 'ROLE_SYSTEMADMIN',
+    },
   },
   {
     path: 'deliveries',
     component: DeliveriesComponent,
+    data: {
+      expectedRole: 'ROLE_SYSTEMADMIN',
+    },
   },
   {
     path: 'map-delivery/:id',
     component: MapDeliveryComponent,
+    data: {
+      expectedRole: 'ROLE_SYSTEMADMIN',
+    },
   },
   {
     path: 'reservation-takeover-qr',
     component: ReservationTakeoverQRComponent,
+    canActivate: [RoleGuard],
+    data: {
+      expectedRole: 'ROLE_COMPANYADMIN',
+    },
   },
   {
     path: 'reservation-management',

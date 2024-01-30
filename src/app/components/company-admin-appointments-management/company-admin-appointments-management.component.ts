@@ -56,6 +56,9 @@ export class CompanyAdminAppointmentsManagementComponent implements OnInit {
       next: () => {
         location.reload();
       },
+      error: () => {
+        console.log('error');
+      }
     });
   }
 }

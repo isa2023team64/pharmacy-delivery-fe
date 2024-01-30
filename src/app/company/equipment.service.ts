@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TokenStorage } from '../infrastructure/auth/jwt/token.service';
 import { Router } from '@angular/router';
@@ -12,6 +12,11 @@ import { EquipmentRequest } from '../infrastructure/rest/model/equipment-request
 })
 export class EquipmentService {
 
+  headers: HttpHeaders = new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+  });
+
   constructor(
     private http: HttpClient,
     private tokenStorage: TokenStorage,
@@ -20,16 +25,16 @@ export class EquipmentService {
 
   addNewEquipment(equipment: EquipmentRequest): Observable<Equipment> {
     const route = environment.apiHost + 'equipment';
-    return this.http.post<Equipment>(route, equipment);
+    return this.http.post<Equipment>(route, equipment, {headers: this.headers});
   }
 
   getById(id: number): Observable<Equipment> {
     const route = environment.apiHost + 'equipment/' + id;
-    return this.http.get<Equipment>(route);
+    return this.http.get<Equipment>(route, {headers: this.headers});
   }
   
   updateEquipment(id: number, equipment: Equipment): Observable<Equipment> {
     const route = environment.apiHost + 'equipment/' + id;
-    return this.http.put<Equipment>(route, equipment);
+    return this.http.put<Equipment>(route, equipment, {headers: this.headers});
   }
 }

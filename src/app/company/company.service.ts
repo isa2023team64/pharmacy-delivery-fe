@@ -17,7 +17,7 @@ import { AddEquipment } from '../infrastructure/rest/model/add-equipment.model';
 })
 export class CompanyService {
   headers: HttpHeaders = new HttpHeaders({
-    'COntent-Type': 'application/json',
+    'Content-Type': 'application/json',
     Authorization: `Bearer ${localStorage.getItem('jwt')}`,
   });
 
@@ -47,7 +47,6 @@ export class CompanyService {
   }
 
   getEquipmentByCompanyId(id: number): Observable<Equipment[]> {
-    console.log(localStorage.getItem('jwt'));
     const route = environment.apiHost + 'companies/' + id + '/equipment';
     return this.http.get<Equipment[]>(route, { headers: this.headers });
   }
@@ -81,9 +80,10 @@ export class CompanyService {
     });
   }
 
-  getCompanyEquipmentByCompanyId(id: number): Observable<CompanyEquipment[]> {
+  getCompanyEquipmentByCompanyId(id: number): Observable<any> {
     const route = environment.apiHost + 'companies/' + id + '/equipment';
-    return this.http.get<CompanyEquipment[]>(route, { headers: this.headers });
+    console.log()
+    return this.http.get<any>(route, { headers: this.headers });
   }
 
   getNotAddedCompanyEquipmentByCompanyId(

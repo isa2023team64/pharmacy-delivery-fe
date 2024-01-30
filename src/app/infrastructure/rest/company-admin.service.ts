@@ -27,6 +27,6 @@ export class CompanyAdminService {
   update(id: number, updatedUser: any): Observable<CompanyAdmin> {
     const path = this.basePath + 'company-administrators/' + id;
     console.log(path);
-    return this.http.put<CompanyAdmin>(path, updatedUser);
+    return this.http.put<CompanyAdmin>(path, updatedUser, { headers: this.headers });
   }
 }

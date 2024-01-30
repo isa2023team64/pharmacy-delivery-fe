@@ -42,8 +42,12 @@ export class LoginComponent {
 
     if (this.loginForm.valid) {
       this.authService.login(login).subscribe({
-          next: () => {
-              this.router.navigate(['/']);          
+          next: (res) => {
+              // console.log('TOKENNNN' + res.accessToken);
+              // const token = res.accessToken;
+              // localStorage.setItem('jwt', token);
+              // this.authService.setUser();
+              // this.router.navigate(['/']);
         },
         error: (error) => {
           console.error('Error occurred during login:', error);

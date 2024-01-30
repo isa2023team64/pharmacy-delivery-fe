@@ -5,6 +5,7 @@ import { User } from '../../infrastructure/auth/model/user.model';
 import { CompanyAdmin } from '../../infrastructure/rest/model/company-admin.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ChangeCopmanyAdminPasswordComponent } from '../change-company-admin-password/change-company-admin-password.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'pd-home',
@@ -21,7 +22,14 @@ export class HomeComponent implements OnInit {
               private companyAdminService: CompanyAdminService,
               private dialogRef: MatDialog) { }
 
+  isAuthenticated$ = this.authService.isAuthenticated$;
+
   ngOnInit(): void {
+    // this.isAuthenticated$.subscribe((isAuthenticated) => {
+    //   window.location.reload();
+    // });
+    
+
     this.fetchUser();
   }
 

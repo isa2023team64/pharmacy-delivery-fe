@@ -22,6 +22,11 @@ export class AuthService {
   private access_token: string | null = null; 
   private password_changed: string | null = null;
 
+  headers: HttpHeaders = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
+  });
+
   userEmail: String = "";
   
   use: RegisteredUser | undefined;
@@ -31,6 +36,9 @@ export class AuthService {
     email: '',
     roles: []
   });
+
+  private isAuthenticatedSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  isAuthenticated$: Observable<boolean> = this.isAuthenticatedSubject.asObservable();
     
   constructor(
     private http: HttpClient,
@@ -45,6 +53,10 @@ export class AuthService {
       this.setUser();
     }
   }
+
+  setAuthenticationStatus(isAuthenticated: boolean): void {
+    this.isAuthenticatedSubject.next(isAuthenticated);
+  }
   
   isAuthenticatedSrc: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.cookieService.get('LoggedIn') === 'true');
 
@@ -52,7 +64,16 @@ export class AuthService {
   return this.isAuthenticatedSrc.asObservable();
   }
 
-  login(login: Login) {
+  getAccessToken() {
+    return this.access_token;
+  }
+
+  setAccessToken(token: string) {
+    this.access_token = token;
+  }
+
+  login(login: Login) : Observable<AuthenticationResponse> {
+    // this.isAuthenticated$ = false;
     const headers = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json'
@@ -77,8 +98,10 @@ export class AuthService {
           },
           error: (err: any) => {
             console.log(err);
+            window.location.reload();
           }
         });
+        this.router.navigate(['/']);
         return res;
       }));
   }
@@ -165,8 +188,9 @@ export class AuthService {
   }
 
   findRegisteredUserById():Observable<RegisteredUser>{
-    return this.http.get<RegisteredUser>(`${environment.apiHost}registered-users/by-id/${this.user$.value.id}`);
+    return this.http.get<RegisteredUser>(`${environment.apiHost}registered-users/by-id/${this.user$.value.id}`, { headers: this.headers });
   }
+
   tokenIsPresent() {
     console.log("Token is present" + this.access_token != undefined && this.access_token != null)
     return this.access_token != undefined && this.access_token != null;
