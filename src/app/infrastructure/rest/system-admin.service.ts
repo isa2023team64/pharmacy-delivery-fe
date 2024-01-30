@@ -17,6 +17,11 @@ export class SystemAdminService {
     this.basePath = environment.apiHost;
   }
 
+  registerSystemAdministrator(systemAdmin: SystemAdmin): Observable<any> {
+    const path = `${this.basePath}system-administrators`;
+    return this.http.post<any>(path, systemAdmin, { headers: this.headers });
+  }
+
   getById(id: number): Observable<any> {
     const path = this.basePath + 'system-administrators/' + id;
     return this.http.get<any>(path, {headers: this.headers});

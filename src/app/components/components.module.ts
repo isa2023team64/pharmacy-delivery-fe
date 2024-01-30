@@ -25,6 +25,7 @@ import { RegisteredUserAppointmentsComponent } from './registered-user-appointme
 import { AppointmentFormComponent } from './appointment-form/appointment-form.component';
 import { ChangeCopmanyAdminPasswordComponent } from './change-company-admin-password/change-company-admin-password.component';
 import { ReservationComponent } from './reservation/reservation.component';
+import { RegisterSystemAdministratorComponent } from './system-administrator-registration/system-administrator-registration.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { CompanyCalendarComponent } from './company-calendar/company-calendar.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
@@ -59,6 +60,7 @@ import { CompanyAdminReservedUsersComponent } from './company-admin-reserved-use
     CompanyCalendarComponent,
     ChangePasswordComponent,
     ReservationComponent,
+    RegisterSystemAdministratorComponent,
     ReservationTakeoverQRComponent,
     DeliveriesComponent,
     CompanyAdminAppointmentsManagementComponent,
@@ -79,6 +81,7 @@ import { CompanyAdminReservedUsersComponent } from './company-admin-reserved-use
             EditEquipmentComponent,
             CompanyCalendarComponent,
             ChangePasswordComponent,
+            RegisterSystemAdministratorComponent,
             ReservationTakeoverQRComponent,],
 })
 export class ComponentsModule {}

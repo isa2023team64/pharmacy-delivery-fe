@@ -5,6 +5,7 @@
     </button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item [routerLink]="['home']">Home</button>
+      
       <button
         mat-menu-item
         *ngIf="user && user.roles.includes('ROLE_SYSTEMADMIN')"
@@ -96,6 +97,14 @@
       >
       
         Reservation Takeover QR (company administrator)
+      </button>
+      <button
+        mat-menu-item
+        *ngIf="user && user.roles.includes('ROLE_SYSTEMADMIN')"
+        [routerLink]="['register-system-administrator']"
+      >
+      
+        Register System Administrator (system admin)
       </button>
     </mat-menu>
   </div>

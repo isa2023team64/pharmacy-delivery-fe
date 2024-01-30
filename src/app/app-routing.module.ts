@@ -25,6 +25,7 @@ import { RoleGuard } from './infrastructure/auth/auth-guard/auth-guard.guard';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { DeliveriesComponent } from './components/deliveries/deliveries.component';
 import { MapDeliveryComponent } from './components/map/map.component';
+import { RegisterSystemAdministratorComponent } from './components/system-administrator-registration/system-administrator-registration.component';
 import { ReservationTakeoverQRComponent } from './components/reservation-takeover-qr/reservation-takeover-qr.component';
 import { CompanyAdminAppointmentsManagementComponent } from './components/company-admin-appointments-management/company-admin-appointments-management.component';
 import { CompanyAdminReservedUsersComponent } from './components/company-admin-reserved-users/company-admin-reserved-users.component';
@@ -180,6 +181,10 @@ const routes: Routes = [
     },
   },
   {
+    path: 'register-system-administrator',
+    component: RegisterSystemAdministratorComponent,
+  },
+  {
     path: 'reservation-takeover-qr',
     component: ReservationTakeoverQRComponent,
     canActivate: [RoleGuard],
@@ -199,7 +204,7 @@ const routes: Routes = [
     component: CompanyAdminReservedUsersComponent,
     data: {
       expectedRole: 'ROLE_COMPANYADMIN',
-  },
+    },
   }
 ];
 
