@@ -17,8 +17,10 @@ export class RegisteredUserAppointmentsComponent {
   user: RegisteredUser = new RegisteredUser();
   canEdit: boolean = false;
   appointments: Appointment[] = [];
+  displayedAppointments: Appointment[] = [];
   is24hBefore: boolean = false;
-  selectedSortingOption: String = "Date (Descending)"
+  selectedSortingOption: String = "Date (Descending)";
+  selectedOption: String = "ALL"
 
   constructor(public appointmentService: AppointmentService,
               private authService: AuthService,
@@ -37,6 +39,8 @@ export class RegisteredUserAppointmentsComponent {
     this.reservationService.getUserAppointmentsByUserId(userId).subscribe({
       next: (result: any) => {
         this.appointments = result;
+        this.displayedAppointments = this.appointments;
+        this.sortAppointments();
         console.log("Appointments retrived succsessfuly");
         console.log(this.appointments)
       },
@@ -109,17 +113,35 @@ export class RegisteredUserAppointmentsComponent {
   sortAppointments() {
     switch (this.selectedSortingOption) {
       case 'Date (Ascending)':
-        this.appointments.sort((a, b) => new Date(a.startDateTime).getTime() - new Date(b.startDateTime).getTime());
+        this.displayedAppointments.sort((a, b) => new Date(a.startDateTime).getTime() - new Date(b.startDateTime).getTime());
         break;
       case 'Date (Descending)':
-        this.appointments.sort((a, b) => new Date(b.startDateTime).getTime() - new Date(a.startDateTime).getTime());
+        this.displayedAppointments.sort((a, b) => new Date(b.startDateTime).getTime() - new Date(a.startDateTime).getTime());
         break;
       case 'Duration (Ascending)':
-        this.appointments.sort((a, b) => a.duration - b.duration);
+        this.displayedAppointments.sort((a, b) => a.duration - b.duration);
         break;
       case 'Duration (Descending)':
-        this.appointments.sort((a, b) => b.duration - a.duration);
+        this.displayedAppointments.sort((a, b) => b.duration - a.duration);
         break;
     }
+  }
+
+  filterAppointments() {
+    switch (this.selectedOption) {
+      case 'ALL':
+        this.displayedAppointments = this.appointments; 
+        break;
+      case 'RESERVED':
+        this.displayedAppointments = this.appointments.filter(a => a.status == 'RESERVED');
+        break;
+      case 'TAKEN':
+        this.displayedAppointments = this.appointments.filter(a => a.status == 'TAKEN');
+        break;
+      case 'CANCELED':
+        this.displayedAppointments = this.appointments.filter(a => a.status == 'CANCELED');
+        break;
+    }
+    this.sortAppointments();
   }
 }
