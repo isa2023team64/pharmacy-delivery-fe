@@ -75,6 +75,7 @@ export class EquipmentCompaniesOverviewComponent {
         this.companies = result.results;
         this.totalCount = result.totalCount;
         this.setPages();
+        console.log(result);
       },
       error: (errData) => {
         console.log(errData);

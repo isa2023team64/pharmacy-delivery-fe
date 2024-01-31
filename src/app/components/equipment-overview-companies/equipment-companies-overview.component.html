@@ -9,15 +9,7 @@
         </div>
     </div>
     <div class="company-search-body">
-        <div class="company-search-filters">
-
-        </div>
         <div class="company-search-results">
-            <div class="company-search-results-header">
-                <div class="company-search-results-count">Companies ({{totalCount}})</div>
-                <div class="company-sort-select">
-                </div>
-            </div>
             <div class="company-search-result-companies">
                 <div class="company-card" *ngFor="let company of companies">
                     <img class="company-image" src="https://pactandpartners.com/wp-content/uploads/2020/02/Medical-Devices-scaled.jpeg"/>
@@ -34,9 +26,6 @@
                         <div class="company-label">
                             <fa-icon [icon]="faClock" />
                             Working time: {{company.openingTime}} - {{company.closingTime}}
-                        </div>
-                        <div class="company-search-button" [routerLink]="['/register-company-administrator', company.id]">
-                            <div class="company-search-button-text">Companies Administrator Registration</div>
                         </div>
                     </div>
                 </div>
