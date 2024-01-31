@@ -6,6 +6,8 @@ import { RegisteredUserService } from '../../infrastructure/rest/registered-user
 import { RegisteredUser } from '../../infrastructure/rest/model/registered-user.model';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../infrastructure/auth';
+import { MatDialog } from '@angular/material/dialog';
+import { ChangeCopmanyAdminPasswordComponent } from '../change-company-admin-password/change-company-admin-password.component';
 
 @Component({
   selector: 'pd-registered-user-profile',
@@ -22,6 +24,7 @@ export class RegisteredUserProfileComponent {
 
   constructor(private authService: AuthService,
               private userService: RegisteredUserService,
+              private dialogRef: MatDialog,
               private route: ActivatedRoute){
     this.userCopy = {
       password: "",
@@ -182,4 +185,17 @@ export class RegisteredUserProfileComponent {
     this.errors.workplace = "";
     this.errors.companyName = "";
   };
+
+  changePassword() {
+    let user = {
+      email: this.user.email,
+      password: this.user.password
+    }
+    this.dialogRef.open(ChangeCopmanyAdminPasswordComponent, {
+      width: '400px', // Set the width as per your requirement
+      disableClose: true, // Prevent closing the dialog by clicking outside or pressing Esc
+      autoFocus: true, // Autofocus on the first focusable element in the dialog
+      data: { user: user }
+    });
+  }
 }
