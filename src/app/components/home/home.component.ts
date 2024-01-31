@@ -51,11 +51,15 @@ export class HomeComponent implements OnInit {
   }  
 
   changePassword() {
+    let user = {
+      email: this.companyAdmin!.email,
+      password: this.companyAdmin!.password
+    }
     this.dialogRef.open(ChangeCopmanyAdminPasswordComponent, {
       width: '400px', // Set the width as per your requirement
       disableClose: true, // Prevent closing the dialog by clicking outside or pressing Esc
       autoFocus: true, // Autofocus on the first focusable element in the dialog
-      data: { companyAdmin: this.companyAdmin }  
+      data: { companyAdmin: this.companyAdmin, user: user }  
     });
   }
 

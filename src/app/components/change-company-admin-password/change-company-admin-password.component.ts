@@ -16,6 +16,7 @@ export class ChangeCopmanyAdminPasswordComponent implements OnInit {
   newPassword: string = '';
   errors: any;
   companyAdmin!: CompanyAdmin;
+  user!: any;
 
   constructor(
     public dialog: MatDialogRef<ChangeCopmanyAdminPasswordComponent>,
@@ -25,6 +26,7 @@ export class ChangeCopmanyAdminPasswordComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.companyAdmin = data.companyAdmin;
+    this.user = data.user;
     this.errors = {
       password: '',
       newPassword: '',
@@ -32,13 +34,13 @@ export class ChangeCopmanyAdminPasswordComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.companyAdmin.password);
+    // console.log(this.companyAdmin.password);
   }
 
   changePassword(): void {
     if (this.validate()) {
       let cp: ChangePassword = {
-        username: this.companyAdmin.email,
+        username: this.user.email,
         password: this.password,
         newPassword: this.newPassword,
       };
